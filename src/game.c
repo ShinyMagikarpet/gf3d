@@ -12,6 +12,7 @@
 #include "gf3d_texture.h"
 
 #include "entity.h"
+#include "gfc_input.h"
 
 int main(int argc,char *argv[])
 {
@@ -44,13 +45,16 @@ int main(int argc,char *argv[])
         0,                      //fullscreen
         validate                //validation
     );
+
+	
     
 	gf3d_entity_manager_init(16);
 
 	Entity *player = gf3d_entity_new();
-	player->model = gf3d_model_load("dino");
+	player->model = gf3d_model_load("w1");
 	gfc_matrix_identity(player->modelMat);
 	
+	gfc_input_init("config/input.cfg");
 	
 
     // main game loop
@@ -69,6 +73,8 @@ int main(int argc,char *argv[])
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
         //update game things here
         
+
+		gfc_input_update();
 		//slog("Entity name is %s", player->name);
 
         //gf3d_vgraphics_rotate_camera(0.001);
@@ -93,7 +99,7 @@ int main(int argc,char *argv[])
                 //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-			if (keys[SDL_SCANCODE_A]) {
+			if (gfc_input_key_down("a")) {
 
 				/*gfc_matrix_rotate(
 					player->modelMat,
@@ -101,13 +107,12 @@ int main(int argc,char *argv[])
 					0.002,
 					vector3d(0, 0, -1)
 				);*/
-
 				gfc_matrix_translate(player->modelMat, vector3d(.01, 0, 0));
 
 				
 			}
 
-			if (keys[SDL_SCANCODE_D]) {
+			if (gfc_input_key_down("d")) {
 
 				/*gfc_matrix_rotate(
 					player->modelMat,
@@ -120,6 +125,48 @@ int main(int argc,char *argv[])
 
 
 			}
+
+			if (gfc_input_key_down("w")) {
+
+				/*gfc_matrix_rotate(
+					player->modelMat,
+					player->modelMat,
+					0.002,
+					vector3d(0, 0, -1)
+				);*/
+				gfc_matrix_translate(player->modelMat, vector3d(0, -0.01, 0));
+
+
+			}
+
+			if (gfc_input_key_down("s")) {
+
+				/*gfc_matrix_rotate(
+					player->modelMat,
+					player->modelMat,
+					0.002,
+					vector3d(0, 0, -1)
+				);*/
+
+				gfc_matrix_translate(player->modelMat, vector3d(0, 0.01, 0));
+
+
+			}
+
+			if (gfc_input_key_down("q")) {
+
+				gfc_matrix_rotate(
+					player->modelMat,
+					player->modelMat,
+					0.002,
+					vector3d(0, 0, -1)
+				);
+
+				//gfc_matrix_translate(player->modelMat, vector3d(0, 0.01, 0));
+
+
+			}
+
                 
             gf3d_command_rendering_end(commandBuffer);
             

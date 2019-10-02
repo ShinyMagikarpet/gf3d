@@ -1,0 +1,69 @@
+{
+    "commands":
+    [
+        {
+          "command": "exit",
+          "keys": [ "escape" ]
+        },
+        {
+          "command": "save",
+          "keys": [ "F5" ]
+        },
+        {
+          "command": "load",
+          "keys": [ "l" ]
+        },
+        {
+            "command":"ok",
+            "keys":["RETURN"]
+        },
+        {
+            "command":"cancel",
+            "keys":["ESCAPE"]
+        },
+        {
+            "command":"yes",
+            "keys":["y"]
+        },
+        {
+            "command":"no",
+            "keys":["n"]
+        },
+        {
+            "command":"move_left",
+            "keys":["a"]
+        },
+        {
+            "command":"move_right",
+            "keys":["d"]
+        },
+        {
+            "command":"move_back",
+            "keys":["s"]
+        },
+        {
+            "command":"move_forward",
+            "keys":["w"]
+        },
+        {
+            "command":"rotate_Left",
+            "keys":["q"]
+        },
+        {
+            "command":"melee",
+            "keys":[" "]
+        },
+        {
+          "command": "case",
+          "keys": [ "'" ]
+        },
+        {
+          "command": "pause",
+          "keys": [ "p" ]
+        },
+        {
+          "command": "mute",
+          "keys":  [ "m" ]
+        }
+    ]
+}
