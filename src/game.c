@@ -11,18 +11,20 @@
 #include "gf3d_camera.h"
 #include "gf3d_texture.h"
 
+#include "entity.h"
+
 int main(int argc,char *argv[])
 {
     int done = 0;
     int a;
-    Uint8 validate = 1;
+    Uint8 validate = 0;
     const Uint8 * keys;
     Uint32 bufferFrame = 0;
     VkCommandBuffer commandBuffer;
-    Model *model;
-    Matrix4 modelMat;
-    Model *model2;
-    Matrix4 modelMat2;
+    //Model *model;
+    //Matrix4 modelMat;
+    //Model *model2;
+    //Matrix4 modelMat2;
     
     for (a = 1; a < argc;a++)
     {
@@ -43,33 +45,43 @@ int main(int argc,char *argv[])
         validate                //validation
     );
     
+	gf3d_entity_manager_init(16);
+
+	Entity *player = gf3d_entity_new();
+	player->model = gf3d_model_load("dino");
+	gfc_matrix_identity(player->modelMat);
+	
+	
+
     // main game loop
     slog("gf3d main loop begin");
-    model = gf3d_model_load("dino");
-    gfc_matrix_identity(modelMat);
-    model2 = gf3d_model_load("dino");
-    gfc_matrix_identity(modelMat2);
-    gfc_matrix_make_translation(
+    //model = gf3d_model_load("dino");
+    //gfc_matrix_identity(modelMat);
+    //model2 = gf3d_model_load("dino");
+    //gfc_matrix_identity(modelMat2);
+    /*gfc_matrix_make_translation(
             modelMat2,
             vector3d(10,0,0)
-        );
+        );*/
     while(!done)
     {
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
         //update game things here
         
-        gf3d_vgraphics_rotate_camera(0.001);
-        gfc_matrix_rotate(
+		//slog("Entity name is %s", player->name);
+
+        //gf3d_vgraphics_rotate_camera(0.001);
+        /*gfc_matrix_rotate(
             modelMat,
             modelMat,
             0.002,
-            vector3d(1,0,0));
-        gfc_matrix_rotate(
+            vector3d(1,0,0));*/
+        /*gfc_matrix_rotate(
             modelMat2,
             modelMat2,
             0.002,
-            vector3d(0,0,1));
+            vector3d(0,0,1));*/
 
         // configure render command for graphics command pool
         // for each mesh, get a command and configure it from the pool
@@ -77,8 +89,37 @@ int main(int argc,char *argv[])
         gf3d_pipeline_reset_frame(gf3d_vgraphics_get_graphics_pipeline(),bufferFrame);
             commandBuffer = gf3d_command_rendering_begin(bufferFrame);
 
-                gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
-                gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
+			gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
+                //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
+                //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
+
+			if (keys[SDL_SCANCODE_A]) {
+
+				/*gfc_matrix_rotate(
+					player->modelMat,
+					player->modelMat,
+					0.002,
+					vector3d(0, 0, -1)
+				);*/
+
+				gfc_matrix_translate(player->modelMat, vector3d(.01, 0, 0));
+
+				
+			}
+
+			if (keys[SDL_SCANCODE_D]) {
+
+				/*gfc_matrix_rotate(
+					player->modelMat,
+					player->modelMat,
+					0.002,
+					vector3d(0, 0, -1)
+				);*/
+
+				gfc_matrix_translate(player->modelMat, vector3d(-0.01, 0, 0));
+
+
+			}
                 
             gf3d_command_rendering_end(commandBuffer);
             

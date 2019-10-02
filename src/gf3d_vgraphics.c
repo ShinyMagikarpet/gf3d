@@ -128,10 +128,12 @@ void gf3d_vgraphics_init(
         bgcolor,
         fullscreen,
         enableValidation);
-    
+	slog("Made it here");
     device = gf3d_vgraphics_get_default_logical_device();
+	slog("Made it here");
 
     gf3d_vqueues_setup_device_queues(gf3d_vgraphics.device);
+	slog("Made it here");
 
     // swap chain!!!
     gf3d_swapchain_init(gf3d_vgraphics.gpu,gf3d_vgraphics.device,gf3d_vgraphics.surface,renderWidth,renderHeight);
