@@ -56,6 +56,9 @@ void    gf3d_entity_free(Entity* self);
 
 /**
 *@brief draw entity
+*@param self the entity to draw
+*@param bufferFrame
+*@param commandBuffer
 */
 
 void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
@@ -64,6 +67,14 @@ void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandB
 * @brief draw all entities
 */
 void gf3d_entity_draw_all(Uint32 bufferFrame, VkCommandBuffer commandBuffer);
+
+void gf3d_entity_think(Entity* self);
+
+void gf3d_entity_think_all();
+
+void gf3d_entity_update(Entity* self);
+
+void gf3d_entity_update_all();
 
 #endif // !__ENTITY_H__
 

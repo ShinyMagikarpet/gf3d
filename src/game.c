@@ -13,6 +13,7 @@
 
 #include "entity.h"
 #include "gfc_input.h"
+#include "Player.h"
 
 int main(int argc,char *argv[])
 {
@@ -49,10 +50,10 @@ int main(int argc,char *argv[])
 	
     
 	gf3d_entity_manager_init(16);
-
-	Entity *player = gf3d_entity_new();
-	player->model = gf3d_model_load("dino");
-	gfc_matrix_identity(player->modelMat);
+	
+	Entity *player = Player_New();
+	//player->model = gf3d_model_load("dino");
+	//gfc_matrix_identity(player->modelMat);
 	
 	gfc_input_init("config/input.cfg");
 	
@@ -75,6 +76,7 @@ int main(int argc,char *argv[])
         
 
 		gfc_input_update();
+		gf3d_entity_think(player);
 		//slog("Entity name is %s", player->name);
 
         //gf3d_vgraphics_rotate_camera(0.001);
@@ -101,76 +103,7 @@ int main(int argc,char *argv[])
                 //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-			if (gfc_input_key_down("a")) {
-
-				/*gfc_matrix_rotate(
-					player->modelMat,
-					player->modelMat,
-					0.002,
-					vector3d(0, 0, -1)
-				);*/
-				gfc_matrix_translate(player->modelMat, vector3d(.01, 0, 0));
-
-				
-			}
-
-			if (gfc_input_key_down("d")) {
-
-				/*gfc_matrix_rotate(
-					player->modelMat,
-					player->modelMat,
-					0.002,
-					vector3d(0, 0, -1)
-				);*/
-
-				gfc_matrix_translate(player->modelMat, vector3d(-0.01, 0, 0));
-
-
-			}
-
-			if (gfc_input_key_down("w")) {
-
-				/*gfc_matrix_rotate(
-					player->modelMat,
-					player->modelMat,
-					0.002,
-					vector3d(0, 0, -1)
-				);*/
-				gfc_matrix_translate(player->modelMat, vector3d(0, -0.01, 0));
-
-
-			}
-
-			if (gfc_input_key_down("s")) {
-
-				/*gfc_matrix_rotate(
-					player->modelMat,
-					player->modelMat,
-					0.002,
-					vector3d(0, 0, -1)
-				);*/
-
-				gfc_matrix_translate(player->modelMat, vector3d(0, 0.01, 0));
-
-
-			}
-
 			
-
-			if (gfc_input_key_down("q")) {
-
-				gfc_matrix_rotate(
-					player->modelMat,
-					player->modelMat,
-					0.002,
-					vector3d(0, 0, -1)
-				);
-
-				//gfc_matrix_translate(player->modelMat, vector3d(0, 0.01, 0));
-
-
-			}
-
                 
             gf3d_command_rendering_end(commandBuffer);
             
