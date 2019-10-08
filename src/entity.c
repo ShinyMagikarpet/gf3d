@@ -67,3 +67,31 @@ void gf3d_entity_free(Entity* self)
 	}
 }
 
+void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer)
+{
+
+	if (!self)return;
+	
+	gf3d_model_draw(self->model, bufferFrame, commandBuffer, self->modelMat);
+
+}
+
+void gf3d_entity_draw_all(Uint32 bufferFrame, VkCommandBuffer commandBuffer) {
+
+	int i;
+	for (i = 0; i < gf3d_entity_manager.entity_max; i++) {
+		if (gf3d_entity_manager.entity_list[i]._inuse == 0) {
+			continue;
+		}
+		gf3d_entity_draw(&gf3d_entity_manager.entity_list[i], bufferFrame, commandBuffer);
+	}
+}
+
+//void gf2d_entity_draw_all() {
+//	int i;
+//	for (i = 0; i < entityManager.maxEntities; i++) {
+//		if (entityManager.entityList[i].inuse == 0)continue;
+//		gf2d_entity_draw(&entityManager.entityList[i]);
+//	}
+//}
+

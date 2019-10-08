@@ -25,6 +25,7 @@ typedef struct Entity_S
 	void (*think)(struct Entity_S* self);   /**<function called on entity think*/
 	void (*update)(struct Entity_S* self);   /**<function called on entity update*/
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/
+	void(*draw)(struct Entity_S* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
 	float           health;
 	float           healthmax;
 	float           armor;
@@ -52,6 +53,17 @@ Entity* gf3d_entity_new();
  * @param self the entity to free
  */
 void    gf3d_entity_free(Entity* self);
+
+/**
+*@brief draw entity
+*/
+
+void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
+
+/**
+* @brief draw all entities
+*/
+void gf3d_entity_draw_all(Uint32 bufferFrame, VkCommandBuffer commandBuffer);
 
 #endif // !__ENTITY_H__
 

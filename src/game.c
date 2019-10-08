@@ -51,7 +51,7 @@ int main(int argc,char *argv[])
 	gf3d_entity_manager_init(16);
 
 	Entity *player = gf3d_entity_new();
-	player->model = gf3d_model_load("w1");
+	player->model = gf3d_model_load("dino");
 	gfc_matrix_identity(player->modelMat);
 	
 	gfc_input_init("config/input.cfg");
@@ -93,9 +93,11 @@ int main(int argc,char *argv[])
         // for each mesh, get a command and configure it from the pool
         bufferFrame = gf3d_vgraphics_render_begin();
         gf3d_pipeline_reset_frame(gf3d_vgraphics_get_graphics_pipeline(),bufferFrame);
-            commandBuffer = gf3d_command_rendering_begin(bufferFrame);
+        commandBuffer = gf3d_command_rendering_begin(bufferFrame);
 
-			gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
+			//gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
+			//gf3d_entity_draw(player, bufferFrame, commandBuffer);
+			gf3d_entity_draw_all(bufferFrame, commandBuffer);
                 //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
@@ -152,6 +154,8 @@ int main(int argc,char *argv[])
 
 
 			}
+
+			
 
 			if (gfc_input_key_down("q")) {
 
