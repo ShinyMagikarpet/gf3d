@@ -28,7 +28,7 @@ typedef struct
     VkDeviceQueueCreateInfo    *transfer_queue_info;
 }vQueues;
 
-static vQueues gf3d_vqueues = {0};
+static vQueues gf3d_vqueues = {(VkStructureType)0};
 
 void gf3d_vqueues_close();
 VkDeviceQueueCreateInfo gf3d_vqueues_get_graphics_queue_info();
@@ -141,7 +141,7 @@ const VkDeviceQueueCreateInfo *gf3d_vqueues_get_queue_create_info(Uint32 *count)
 
 VkDeviceQueueCreateInfo gf3d_vqueues_get_graphics_queue_info()
 {
-    VkDeviceQueueCreateInfo queueCreateInfo = {0};
+    VkDeviceQueueCreateInfo queueCreateInfo = {(VkStructureType)0};
     queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo.queueFamilyIndex = gf3d_vqueues.graphics_queue_family;
     queueCreateInfo.queueCount = 1;
@@ -151,7 +151,7 @@ VkDeviceQueueCreateInfo gf3d_vqueues_get_graphics_queue_info()
 
 VkDeviceQueueCreateInfo gf3d_vqueues_get_present_queue_info()
 {
-    VkDeviceQueueCreateInfo queueCreateInfo = {0};
+    VkDeviceQueueCreateInfo queueCreateInfo = {(VkStructureType)0};
     queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo.queueFamilyIndex = gf3d_vqueues.present_queue_family;
     queueCreateInfo.queueCount = 1;
@@ -161,7 +161,7 @@ VkDeviceQueueCreateInfo gf3d_vqueues_get_present_queue_info()
 
 VkDeviceQueueCreateInfo gf3d_vqueues_get_transfer_queue_info()
 {
-    VkDeviceQueueCreateInfo queueCreateInfo = {0};
+    VkDeviceQueueCreateInfo queueCreateInfo = { (VkStructureType)0};
     queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo.queueFamilyIndex = gf3d_vqueues.transfer_queue_family;
     queueCreateInfo.queueCount = 1;

@@ -1,6 +1,5 @@
 #include "gfc_matrix.h"
-
-#include <string.h>
+#include "gf3d_vgraphics.h"
 
 Matrix4 gf3d_camera = {0};
 
@@ -39,6 +38,7 @@ void gf3d_camera_set_position(Vector3D position)
 
 void gf3d_camera_move(Vector3D move)
 {
+	//gf3d_vgraphics_move_camera(move.x);
     gf3d_camera[0][3] += move.x;
     gf3d_camera[1][3] += move.y;
     gf3d_camera[2][3] += move.z;

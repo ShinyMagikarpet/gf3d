@@ -9,10 +9,6 @@
  */
 void gf3d_camera_get_view(Matrix4 view);
 
-/**
- * @brief set the current camera based on the matrix provided
- */
-void gf3d_camera_set_view(Matrix4 view);
 
 /**
  * @brief set the camera properties based on position and direction that the camera should be looking

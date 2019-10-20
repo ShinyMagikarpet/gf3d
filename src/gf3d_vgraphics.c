@@ -75,7 +75,6 @@ void gf3d_vgraphics_logical_device_close();
 void gf3d_vgraphics_extension_init();
 void gf3d_vgraphics_setup_debug();
 void gf3d_vgraphics_semaphores_create();
-
 VkPhysicalDevice gf3d_vgraphics_select_device();
 VkDeviceCreateInfo gf3d_vgraphics_get_device_info(Bool enableValidationLayers);
 
@@ -101,7 +100,6 @@ void gf3d_vgraphics_init(
 )
 {
     VkDevice device;
-    
     gfc_matrix_identity(gf3d_vgraphics.ubo.model);
     gfc_matrix_identity(gf3d_vgraphics.ubo.view);
     gfc_matrix_identity(gf3d_vgraphics.ubo.proj);
@@ -663,6 +661,11 @@ void gf3d_vgraphics_rotate_camera(float degrees)
         degrees,
         vector3d(0,0,1));
 
+}
+
+void gf3d_vgraphics_move_camera(float distance) {
+
+	gfc_matrix_translate(gf3d_vgraphics.ubo.view, vector3d(distance, 0, 0));
 }
 
 Pipeline *gf3d_vgraphics_get_graphics_pipeline()

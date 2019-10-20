@@ -8,7 +8,7 @@
 VkShaderModule gf3d_shaders_create_module(char *shader,size_t size,VkDevice device)
 {
     VkShaderModule module = {0};
-    VkShaderModuleCreateInfo createInfo = {0};
+    VkShaderModuleCreateInfo createInfo = {(VkStructureType)0};
     
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
     createInfo.codeSize = size;
@@ -41,7 +41,7 @@ char *gf3d_shaders_load_data(char * filename,size_t *rsize)
         return NULL;
     }
     rewind(file);
-    buffer = gfc_allocate_array(sizeof(char),size);
+    buffer = (char *)gfc_allocate_array(sizeof(char),size);
     if (!buffer)
     {
         slog("failed to allocate memory for shader file %s",filename);

@@ -132,7 +132,7 @@ void gf3d_model_draw(Model *model,Uint32 bufferFrame, VkCommandBuffer commandBuf
 void gf3d_model_update_basic_model_descriptor_set(Model *model,VkDescriptorSet descriptorSet,Uint32 chainIndex,Matrix4 modelMat)
 {
     VkDescriptorImageInfo imageInfo = {0};
-    VkWriteDescriptorSet descriptorWrite[2] = {0};
+    VkWriteDescriptorSet descriptorWrite[2] = {(VkStructureType)0};
     VkDescriptorBufferInfo bufferInfo = {0};
 
     if (!model)

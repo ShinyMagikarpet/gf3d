@@ -1,4 +1,4 @@
-#include <SDL.h>            
+#include <SDL.h>
 
 #include "simple_logger.h"
 #include "gfc_vector.h"
@@ -14,6 +14,7 @@
 #include "entity.h"
 #include "gfc_input.h"
 #include "Player.h"
+#include "gf3d_space.h"
 
 int main(int argc,char *argv[])
 {
@@ -27,7 +28,17 @@ int main(int argc,char *argv[])
     //Matrix4 modelMat;
     //Model *model2;
     //Matrix4 modelMat2;
-    
+
+	Space* space = gf2d_space_new_full(
+		3,
+		gf3d_box(0, 0, 0, 2000, 2000, 2000),
+		0.1,
+		vector3d(0, 0.1, 0),
+		1,
+		20
+
+	);
+
     for (a = 1; a < argc;a++)
     {
         if (strcmp(argv[a],"-disable_validate") == 0)
@@ -46,8 +57,6 @@ int main(int argc,char *argv[])
         0,                      //fullscreen
         validate                //validation
     );
-
-	
     
 	gf3d_entity_manager_init(16);
 	
@@ -73,10 +82,10 @@ int main(int argc,char *argv[])
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
         //update game things here
-        
-
 		gfc_input_update();
-		gf3d_entity_think(player);
+		gf3d_entity_think_all();
+		
+		gf3d_space_update(space);
 		//slog("Entity name is %s", player->name);
 
         //gf3d_vgraphics_rotate_camera(0.001);
@@ -96,10 +105,10 @@ int main(int argc,char *argv[])
         bufferFrame = gf3d_vgraphics_render_begin();
         gf3d_pipeline_reset_frame(gf3d_vgraphics_get_graphics_pipeline(),bufferFrame);
         commandBuffer = gf3d_command_rendering_begin(bufferFrame);
-
+		
 			//gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
 			//gf3d_entity_draw(player, bufferFrame, commandBuffer);
-			gf3d_entity_draw_all(bufferFrame, commandBuffer);
+		gf3d_entity_draw_all(bufferFrame, commandBuffer);
                 //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
@@ -115,6 +124,7 @@ int main(int argc,char *argv[])
     vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());    
     //cleanup
     slog("gf3d program end");
+	gf3d_space_free(space);
     slog_sync();
     return 0;
 }

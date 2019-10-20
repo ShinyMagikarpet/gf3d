@@ -105,6 +105,12 @@
     <ClInclude Include="..\include\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\gf3d_shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\gf3d_space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\gfc\simple_json\src\simple_json.c">
@@ -155,9 +161,6 @@
     <ClCompile Include="..\gfc\src\gfc_vector.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gf3d_camera.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -201,6 +204,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gf3d_shape.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gf3d_space.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

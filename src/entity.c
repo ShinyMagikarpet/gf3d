@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-
 #include "simple_logger.h"
-
 #include "entity.h"
 
 typedef struct
@@ -102,7 +98,7 @@ void gf3d_entity_think_all() {
 	int i;
 	for (i = 0; i < gf3d_entity_manager.entity_max; i++) {
 		if (gf3d_entity_manager.entity_list[i]._inuse == 0) {
-			continue;
+			break;
 		}
 		gf3d_entity_think(&gf3d_entity_manager.entity_list[i]);
 	}

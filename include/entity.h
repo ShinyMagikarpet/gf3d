@@ -26,12 +26,8 @@ typedef struct Entity_S
 	void (*update)(struct Entity_S* self);   /**<function called on entity update*/
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/
 	void(*draw)(struct Entity_S* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
-	float           health;
-	float           healthmax;
-	float           armor;
-	float           experience;
-	float           level;
-	float           otherStuff;
+
+
 	void* data;                     /**<additional entity specific data*/
 
 }Entity;
