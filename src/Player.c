@@ -12,11 +12,11 @@ void player_update(Entity* self);
 Entity* Player_New() {
 
 	player = gf3d_entity_new();
-	player->model = gf3d_model_load("dino");
+	player->model = gf3d_model_load("sphere");
 	gfc_matrix_identity(player->modelMat);
 
 	player->position = vector3d(0, 0, 0);
-	
+	player->shape = gf3d_shape_sphere(1, player->position);
 	player->think = player_think;
 
 	return player;
@@ -32,11 +32,8 @@ void player_think(Entity* self) {
 			0.002,
 			vector3d(0, 0, -1)
 		);*/
-		player->position.x += MOVE_SPEED;
-		gfc_matrix_make_translation(self->modelMat, player->position);
-		//gf3d_camera_move(vector3d(1, 0, 0));
-		
 
+		gf3d_entity_move(self, vector3d(MOVE_SPEED, 0, 0));
 
 	}
 
@@ -48,19 +45,14 @@ void player_think(Entity* self) {
 			0.002,
 			vector3d(0, 0, -1)
 		);*/
-		player->position.x -= MOVE_SPEED;
-		gfc_matrix_make_translation(self->modelMat, player->position);
-		//gfc_matrix_translate(self->modelMat, vector3d(-0.1,0,0));
-		//gf3d_camera_move(vector3d(-0.4, 0, 0));
 
+		gf3d_entity_move(self, vector3d(-MOVE_SPEED, 0, 0));
 
 	}
 
 	if (gfc_input_key_down("w")) {
 
-		
-		player->position.y -= MOVE_SPEED;
-		gfc_matrix_make_translation(self->modelMat, player->position);
+		gf3d_entity_move(self, vector3d(0, -MOVE_SPEED, 0));
 
 	}
 
@@ -73,8 +65,7 @@ void player_think(Entity* self) {
 			vector3d(0, 0, -1)
 		);*/
 
-		player->position.y += MOVE_SPEED;
-		gfc_matrix_make_translation(self->modelMat, player->position);
+		gf3d_entity_move(self, vector3d(0, MOVE_SPEED, 0));
 
 	}
 
@@ -105,10 +96,15 @@ void player_think(Entity* self) {
 
 		//gfc_matrix_translate(player->modelMat, vector3d(0, 0.01, 0));
 
-
+		
 	}
+
+	//gf3d_entity_move(self, vector3d(0, 0, -9));
+	player->shape.s.s.point.pos = player->position;
+
 }
 
 void player_update(Entity* self) {
 
+	//gf3d_entity_move(self, vector3d(0, 0, 1));
 }

@@ -3,9 +3,10 @@
 
 #include <SDL.h>
 #include "gfc_vector.h"
+#include <stdbool.h>
 typedef struct
 {
-	Vector3D p;
+	Vector3D pos;
 }Point;
 
 typedef struct
@@ -15,7 +16,8 @@ typedef struct
 
 typedef struct {
 	
-	double r;
+	float radius;
+	Point point;
 }Sphere;
 
 typedef struct
@@ -28,6 +30,7 @@ typedef enum
 	ST_Point,
 	ST_Line,
 	ST_Box,
+	ST_Sphere
 
 }ShapeTypes;
 
@@ -39,9 +42,28 @@ typedef struct
 		Box b;
 		Line e;
 		Point p;
+		Sphere s;
 	}s;
 
 }Shape;
+
+/**
+ * @brief change the position of the shape based on the movement vector
+ * @param shape a pointer to the shape to move
+ * @param move the amount to move the shape
+ */
+void gf3d_shape_move(Shape* shape, Vector3D move);
+
+/**
+ * @brief copy one shape into another
+ * @param dst a pointer to the shape you want to copy into
+ * @param src the shape you want to copy FROM
+ */
+void gf3d_shape_copy(Shape* dst, Shape src);
+
+bool gf3d_point_in_sphere(Point point, Sphere sphere);
+
+Point gf3d_closest_point(Sphere sphere, Point point);
 
 float gf3d_line_length(Line line);
 
@@ -71,15 +93,24 @@ Shape gf3d_shape_box(float x, float y, float z, float w, float h, float d);
 Shape gf3d_shape_from_box(Box b);
 
 /**
- * @brief set all parameters of a GF2D rect at once
- * @param box the box to set
- * @param a the x component
- * @param b the y component
- * @param c the z component
- * @param d the width
- * @param e the height
- * @param f the depth
+ * @brief set parameters to create sphere shape
+ * @param radius the radius of the sphere
+ * @param pos position of the center of the sphere
  */
+
+Shape gf3d_shape_sphere(float radius, Vector3D pos);
+
+bool gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2);
+
+Uint8 gf3d_sphere_overlap_poc(Sphere a, Sphere b, Vector3D* poc, Vector3D* normal);
+
+Uint8 gf3d_shape_overlap(Shape a, Shape b);
+
+Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal);
+
+#ifndef gf3d_sphere_set
+#define gf3d_sphere_set(sphere,r,a,b,c) (sphere.radius = r, sphere.point.pos.x = a, sphere.point.pos.y = b, sphere.point.pos.z = c)
+#endif
 
 #ifndef gf3d_box_set
 #define gf3d_box_set(box,a,b,c,d,e,f) (box.x = a,box.y = b, box.z = c, box.w =d, box.h = e, box.d = f)

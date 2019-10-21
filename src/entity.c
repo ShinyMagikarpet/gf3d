@@ -112,3 +112,9 @@ void gf3d_entity_update_all() {
 
 }
 
+void gf3d_entity_move(Entity* ent, Vector3D dir) {
+
+	vector3d_add(ent->position, ent->position, dir);
+	gfc_matrix_make_translation(ent->modelMat, ent->position);
+}
+

@@ -25,9 +25,16 @@ int main(int argc,char *argv[])
     Uint32 bufferFrame = 0;
     VkCommandBuffer commandBuffer;
     //Model *model;
-    //Matrix4 modelMat;
+    Matrix4 modelMat;
     //Model *model2;
     //Matrix4 modelMat2;
+
+	//Not sure if this is working
+	Sphere sphere;
+	gf3d_sphere_set(sphere, 1, 0, 0, 0);
+
+	Sphere sphere2;
+	gf3d_sphere_set(sphere, 1, 2, 0, 0);
 
 	Space* space = gf2d_space_new_full(
 		3,
@@ -60,12 +67,21 @@ int main(int argc,char *argv[])
     
 	gf3d_entity_manager_init(16);
 	
+	Entity* ent = gf3d_entity_new();
+	ent->model = gf3d_model_load("sphere");
+	gfc_matrix_identity(ent->modelMat);
+	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
+	ent->position = vector3d(2, 0, 0);
+	ent->shape = gf3d_shape_sphere(1, vector3d(2, 0, 0));
+
 	Entity *player = Player_New();
+
+
+	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
 	//player->model = gf3d_model_load("dino");
 	//gfc_matrix_identity(player->modelMat);
 	
 	gfc_input_init("config/input.cfg");
-	
 
     // main game loop
     slog("gf3d main loop begin");
@@ -107,12 +123,17 @@ int main(int argc,char *argv[])
         commandBuffer = gf3d_command_rendering_begin(bufferFrame);
 		
 			//gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
-			//gf3d_entity_draw(player, bufferFrame, commandBuffer);
+			//gf3d_entity_draw(ent, bufferFrame, commandBuffer);
 		gf3d_entity_draw_all(bufferFrame, commandBuffer);
-                //gf3d_model_draw(model,bufferFrame,commandBuffer,modelMat);
+                //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-			
+		if (gf3d_sphere_sphere_overlap(player->shape.s.s, ent->shape.s.s)) {
+			slog("These spheres are touching");
+		}
+		else {
+			slog("These sphere aren't touching");
+		}
                 
             gf3d_command_rendering_end(commandBuffer);
             
