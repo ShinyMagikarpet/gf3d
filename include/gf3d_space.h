@@ -3,6 +3,7 @@
 
 #include "gfc_matrix.h"
 #include "gfc_list.h"
+#include "gf3d_body.h"
 #include "gf3d_shape.h"
 
 typedef struct Space_S{

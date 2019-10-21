@@ -73,6 +73,21 @@ int main(int argc,char *argv[])
 	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
 	ent->position = vector3d(2, 0, 0);
 	ent->shape = gf3d_shape_sphere(1, vector3d(2, 0, 0));
+	ent->position = ent->shape.s.s.point.pos;
+	gf3d_body_set(
+		&ent->body,
+		0,
+		0,
+		0,
+		0,
+		ent->position,
+		vector3d(0, 0, 0),
+		1,
+		0,
+		0,
+		&ent->shape,
+		NULL,
+		NULL);
 
 	Entity *player = Player_New();
 
@@ -128,7 +143,9 @@ int main(int argc,char *argv[])
                 //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-		if (gf3d_sphere_sphere_overlap(player->shape.s.s, ent->shape.s.s)) {
+		//if (gf3d_sphere_sphere_overlap(player->shape.s.s, ent->shape.s.s)) {
+		//slog("body shape pos x = %f", ent->body.shape->s.s.point.pos);
+		if(gf3d_body_body_collide(&player->body, &ent->body)){
 			slog("These spheres are touching");
 		}
 		else {

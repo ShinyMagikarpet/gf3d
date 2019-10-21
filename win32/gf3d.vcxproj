@@ -44,12 +44,14 @@
     <IncludePath>C:\Users\David\NJIT\IT485\gf3d\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
+    <SourcePath>C:\Users\David\NJIT\IT485\gf3d\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Users\David\NJIT\IT485\gf3d\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
     <OutDir>..</OutDir>
+    <SourcePath>C:\Users\David\NJIT\IT485\gf3d\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

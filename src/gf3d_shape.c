@@ -70,8 +70,9 @@ Shape gf3d_shape_sphere(float radius, Vector3D pos) {
 	return shape;
 }
 
-bool gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2) {
-
+Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2) {
+	slog("x pos is %f", sphere1.point.pos.x);
+	slog("x pos is %f", sphere2.point.pos.x);
 	float radiiSum = sphere1.radius + sphere2.radius;
 	Vector3D subtractVec;
 	vector3d_sub(subtractVec, sphere1.point.pos, sphere2.point.pos);
@@ -114,7 +115,10 @@ Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal)
 		switch (b.type)
 		{
 		case ST_Sphere:
-			return gf3d_sphere_overlap_poc(a.s.s, b.s.s, poc, normal);
+			//return gf3d_sphere_overlap_poc(a.s.s, b.s.s, poc, normal);
+			//slog("x pos is %f", a.s.s.point.pos.x);
+			//slog("x pos is %f", b.s.s.point.pos.x);
+			return gf3d_sphere_sphere_overlap(a.s.s, b.s.s);
 		}
 	}
 	return 0;
@@ -122,5 +126,7 @@ Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal)
 
 Uint8 gf3d_shape_overlap(Shape a, Shape b)
 {
+	//slog("shape position x is %f", a.s.s.point.pos.x);
+	//slog("shape position x is %f", b.s.s.point.pos.x);
 	return gf3d_shape_overlap_poc(a, b, NULL, NULL);
 }

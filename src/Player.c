@@ -17,6 +17,20 @@ Entity* Player_New() {
 
 	player->position = vector3d(0, 0, 0);
 	player->shape = gf3d_shape_sphere(1, player->position);
+	gf3d_body_set(
+		&player->body,
+		0,
+		0,
+		0,
+		0,
+		player->position,
+		vector3d(0, 0, 0),
+		1,
+		0,
+		0,
+		&player->shape,
+		NULL,
+		NULL);
 	player->think = player_think;
 
 	return player;

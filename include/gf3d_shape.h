@@ -100,7 +100,7 @@ Shape gf3d_shape_from_box(Box b);
 
 Shape gf3d_shape_sphere(float radius, Vector3D pos);
 
-bool gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2);
+Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2);
 
 Uint8 gf3d_sphere_overlap_poc(Sphere a, Sphere b, Vector3D* poc, Vector3D* normal);
 

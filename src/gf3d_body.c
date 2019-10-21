@@ -36,7 +36,10 @@ void gf3d_body_set(
 	void* data,
 	int     (*touch)(struct Body_S* self, List* collision))
 {
-	if (!body)return;
+	if (!body) {
+		slog("No body");
+		return;
+	}
 	body->cliplayer = cliplayer;
 	body->touchlayer = touchlayer;
 	body->team = team;
@@ -49,6 +52,7 @@ void gf3d_body_set(
 	body->shape = shape;
 	body->data = data;
 	body->touch = touch;
+	//slog("Body shape position x is %f", body->shape->s.s.point.pos.x);
 }
 
 Shape gf3d_body_to_shape(Body* a)
@@ -67,5 +71,7 @@ Uint8 gf3d_body_body_collide(Body* a, Body* b)
 		slog("missing body in collision check");
 		return 0;
 	}
-	return gf3d_shape_overlap(gf3d_body_to_shape(a), gf3d_body_to_shape(b));
+	//slog("body shape position x is %f", a->shape->s.s.point.pos.x);
+	//slog("body shape position x is %f", b->shape->s.s.point.pos.x);
+	return gf3d_shape_overlap(*a->shape, *b->shape);
 }
