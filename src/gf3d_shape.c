@@ -16,9 +16,26 @@ void gf3d_shape_copy(Shape* dst, Shape src) {
 	memcpy(dst, &src, sizeof(Shape));
 }
 
+Line gf3d_line_from_vectors(Vector3D start, Vector3D end) {
+
+	Line line;
+	line.start = start;
+	line.end = end;
+	return line;
+}
+
+Shape gf3d_shape_from_line(Line line) {
+
+	Shape shape;
+	shape.type = ST_Line;
+	shape.s.e.start = line.start;
+	shape.s.e.end = line.end;
+	return shape;
+}
+
 float gf3d_line_length(Line line) {
 	
-	return vector3d_magnitude_between(line.start.pos, line.end.pos);
+	return vector3d_magnitude_between(line.start, line.end);
 }
 
 bool gf3d_point_in_sphere(Point point, Sphere sphere) {
@@ -71,8 +88,8 @@ Shape gf3d_shape_sphere(float radius, Vector3D pos) {
 }
 
 Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2) {
-	slog("x pos is %f", sphere1.point.pos.x);
-	slog("x pos is %f", sphere2.point.pos.x);
+	//slog("x pos is %f", sphere1.point.pos.x);
+	//slog("x pos is %f", sphere2.point.pos.x);
 	float radiiSum = sphere1.radius + sphere2.radius;
 	Vector3D subtractVec;
 	vector3d_sub(subtractVec, sphere1.point.pos, sphere2.point.pos);

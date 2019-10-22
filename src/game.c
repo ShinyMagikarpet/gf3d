@@ -38,7 +38,6 @@ int main(int argc,char *argv[])
 
 	Space* space = gf2d_space_new_full(
 		3,
-		gf3d_box(0, 0, 0, 2000, 2000, 2000),
 		0.1,
 		vector3d(0, 0.1, 0),
 		1,

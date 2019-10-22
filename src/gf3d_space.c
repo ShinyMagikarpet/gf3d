@@ -1,10 +1,9 @@
 #include "gf3d_space.h"
 #include "simple_logger.h"
-
+#include "gf3d_dynamic_body.h"
 
 Space* gf2d_space_new_full(
 	int         precision,
-	Box			bounds,
 	float       timeStep,
 	Vector3D    gravity,
 	float       dampening,
@@ -13,8 +12,7 @@ Space* gf2d_space_new_full(
 	Space* space;
 	space = gf2d_space_new();
 	if (!space)return NULL;
-	gf3d_box_copy(space->bounds, bounds);
-	vector2d_copy(space->gravity, gravity);
+	vector3d_copy(space->gravity, gravity);
 	space->timeStep = timeStep;
 	space->precision = precision;
 	space->dampening = dampening;
@@ -101,5 +99,25 @@ void gf3d_space_add_static_shape(Space* space, Shape shape)
 	memcpy(newShape, &shape, sizeof(Shape));
 	space->staticShapes = gfc_list_append(space->staticShapes, (void*)newShape);
 }
+
+//void gf2d_space_add_body(Space* space, Body* body)
+//{
+//	DynamicBody* db = NULL;
+//	if (!space)
+//	{
+//		slog("no space provided");
+//		return;
+//	}
+//	if (!body)
+//	{
+//		slog("no body provided");
+//		return;
+//	}
+//	db = gf3d_dynamic_body_new();
+//	if (!db)return;
+//	db->body = body;
+//	db->id = space->idpool++;
+//	space->dynamicBodyList = gf2d_list_append(space->dynamicBodyList, (void*)db);
+//}
 
 

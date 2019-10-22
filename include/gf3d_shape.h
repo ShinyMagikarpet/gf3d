@@ -11,7 +11,7 @@ typedef struct
 
 typedef struct
 {
-	Point start, end;
+	Vector3D start, end;
 }Line;
 
 typedef struct {
@@ -46,6 +46,10 @@ typedef struct
 	}s;
 
 }Shape;
+
+Line gf3d_line_from_vectors(Vector3D start, Vector3D end);
+
+Shape gf3d_shape_from_line(Line line);
 
 /**
  * @brief change the position of the shape based on the movement vector

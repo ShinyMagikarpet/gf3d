@@ -10,7 +10,6 @@ typedef struct Space_S{
 	List* dynamicBodyList;       /**<list of bodies in the space*/
 	List* staticShapes;   /**<list of shapes that will collide that do not move*/
 	int         precision;      /**<number of backoff attempts before giving up*/
-	Box			bounds;         /**<absolute bounds of the space*/
 	float       timeStep;       /**<how much each iteration of the simulation progresses time by*/
 	Vector3D    gravity;        /**<global gravity pull direction*/
 	float       dampening;      /**<rate of movement degrade  ambient frictions*/
@@ -35,7 +34,6 @@ Space * gf2d_space_new();
  */
 Space* gf2d_space_new_full(
 	int         precision,
-	Box        bounds,
 	float       timeStep,
 	Vector3D    gravity,
 	float       dampening,

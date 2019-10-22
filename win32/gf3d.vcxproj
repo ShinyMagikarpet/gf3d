@@ -111,7 +111,9 @@
     <ClInclude Include="..\include\entity.h" />
     <ClInclude Include="..\include\gf3d_body.h" />
     <ClInclude Include="..\include\gf3d_camera.h" />
+    <ClInclude Include="..\include\gf3d_collision.h" />
     <ClInclude Include="..\include\gf3d_commands.h" />
+    <ClInclude Include="..\include\gf3d_dynamic_body.h" />
     <ClInclude Include="..\include\gf3d_extensions.h" />
     <ClInclude Include="..\include\gf3d_model.h" />
     <ClInclude Include="..\include\gf3d_pipeline.h" />
@@ -145,7 +147,9 @@
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\gf3d_body.c" />
     <ClCompile Include="..\src\gf3d_camera.c" />
+    <ClCompile Include="..\src\gf3d_collision.c" />
     <ClCompile Include="..\src\gf3d_commands.c" />
+    <ClCompile Include="..\src\gf3d_dynamic_body.c" />
     <ClCompile Include="..\src\gf3d_extensions.c" />
     <ClCompile Include="..\src\gf3d_mesh.c" />
     <ClCompile Include="..\src\gf3d_model.c" />
