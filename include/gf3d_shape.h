@@ -104,6 +104,14 @@ Shape gf3d_shape_from_box(Box b);
 
 Shape gf3d_shape_sphere(float radius, Vector3D pos);
 
+/**
+ * @brief get the normal of the shape relative to a reference shape
+ * @param s the shape to get the normal from
+ * @param s2 the normal should be pointing towards this shape
+ * @return an empty vector if the refPoint is in the shape, a unit vector otherwise
+ */
+Vector3D gf3d_shape_get_normal_for_shape(Shape s, Shape s2);
+
 Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2);
 
 Uint8 gf3d_sphere_overlap_poc(Sphere a, Sphere b, Vector3D* poc, Vector3D* normal);

@@ -1,5 +1,4 @@
 #include <SDL.h>
-
 #include "simple_logger.h"
 #include "gfc_vector.h"
 #include "gfc_matrix.h"
@@ -10,11 +9,11 @@
 #include "gf3d_model.h"
 #include "gf3d_camera.h"
 #include "gf3d_texture.h"
-
 #include "entity.h"
 #include "gfc_input.h"
 #include "Player.h"
 #include "gf3d_space.h"
+
 
 int main(int argc,char *argv[])
 {
@@ -66,7 +65,7 @@ int main(int argc,char *argv[])
     
 	gf3d_entity_manager_init(16);
 	
-	Entity* ent = gf3d_entity_new();
+	/*Entity* ent = gf3d_entity_new();
 	ent->model = gf3d_model_load("sphere");
 	gfc_matrix_identity(ent->modelMat);
 	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
@@ -86,7 +85,7 @@ int main(int argc,char *argv[])
 		0,
 		&ent->shape,
 		NULL,
-		NULL);
+		NULL);*/
 
 	Entity *player = Player_New();
 
@@ -96,7 +95,6 @@ int main(int argc,char *argv[])
 	//gfc_matrix_identity(player->modelMat);
 	
 	gfc_input_init("config/input.cfg");
-
     // main game loop
     slog("gf3d main loop begin");
     //model = gf3d_model_load("dino");
@@ -112,8 +110,10 @@ int main(int argc,char *argv[])
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
         //update game things here
-		gfc_input_update();
+
 		gf3d_entity_think_all();
+
+		gfc_input_update();
 		
 		gf3d_space_update(space);
 		//slog("Entity name is %s", player->name);
@@ -142,14 +142,12 @@ int main(int argc,char *argv[])
                 //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-		//if (gf3d_sphere_sphere_overlap(player->shape.s.s, ent->shape.s.s)) {
-		//slog("body shape pos x = %f", ent->body.shape->s.s.point.pos);
-		if(gf3d_body_body_collide(&player->body, &ent->body)){
+		/*if(gf3d_body_body_collide(&player->body, &ent->body)){
 			slog("These spheres are touching");
 		}
 		else {
 			slog("These sphere aren't touching");
-		}
+		}*/
                 
             gf3d_command_rendering_end(commandBuffer);
             

@@ -13,6 +13,7 @@ void main()
     vec3 lightVector = vec3(0,0,1);
     float cosTheta = dot( fragNormal,lightVector );
     vec4 baseColor = texture(texSampler, fragTexCoord);
-    outColor = baseColor + baseColor * cosTheta;
+    //outColor = baseColor + baseColor * cosTheta;
+    //outColor.x += 1;
     outColor.w = baseColor.w;
 }

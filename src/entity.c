@@ -68,7 +68,7 @@ void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandB
 
 	if (!self)return;
 	
-	gf3d_model_draw(self->model, bufferFrame, commandBuffer, self->modelMat);
+	gf3d_model_draw(self->model, bufferFrame, commandBuffer, self->modelMat, self->frame);
 
 }
 

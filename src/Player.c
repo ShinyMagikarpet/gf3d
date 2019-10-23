@@ -2,6 +2,8 @@
 #include "gfc_input.h"
 #include "gf3d_camera.h"
 #include "gf3d_space.h"
+#include "simple_logger.h"
+
 #define MOVE_SPEED 1
 static Entity* player = NULL;
 
@@ -12,7 +14,8 @@ void player_update(Entity* self);
 Entity* Player_New() {
 
 	player = gf3d_entity_new();
-	player->model = gf3d_model_load("sphere");
+	//player->model = gf3d_model_load("sphere");
+	player->model = gf3d_model_load_animated("sphere_anim", 1, 23);
 	gfc_matrix_identity(player->modelMat);
 
 	player->position = vector3d(0, 0, 0);
@@ -113,9 +116,22 @@ void player_think(Entity* self) {
 		
 	}
 
+	if (gfc_input_key_down(" ")) {
+		player->frame += 1;
+		if (player->frame > 19) {
+			player->frame = 19;
+		}
+	}
+
+	if (gfc_input_key_released(" ")) {
+		slog("HELP");
+		player->frame = 0;
+	}
+
 	//gf3d_entity_move(self, vector3d(0, 0, -9));
 	player->shape.s.s.point.pos = player->position;
-
+	
+	//slog("player frame %i", player->frame);
 }
 
 void player_update(Entity* self) {

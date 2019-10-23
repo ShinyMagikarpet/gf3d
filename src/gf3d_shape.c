@@ -87,6 +87,23 @@ Shape gf3d_shape_sphere(float radius, Vector3D pos) {
 	return shape;
 }
 
+//TODO GET NORMAL FOR SPHERE
+
+Vector3D gf3d_shape_get_normal_for_shape(Shape s, Shape s2) {
+
+	Vector3D out = { 0 };
+	switch (s2.type)
+	{
+	case ST_Sphere:
+		//out = gf3d_shape_get_normal_for_Sphere(s, s2.s.s);
+		break;
+	case ST_Line:
+		//out = gf3d_shape_get_normal_for_Line(s, s2.s.e);
+		break;
+	}
+	return out;
+}
+
 Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2) {
 	//slog("x pos is %f", sphere1.point.pos.x);
 	//slog("x pos is %f", sphere2.point.pos.x);

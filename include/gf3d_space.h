@@ -59,4 +59,6 @@ void gf3d_space_step(Space* space, float t);
  */
 void gf3d_space_add_static_shape(Space* space, Shape shape);
 
+
+
 #endif // !__GF3D_SPACE_H__

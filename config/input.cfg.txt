@@ -9,6 +9,10 @@
           "command": "save",
           "keys": [ "F5" ]
         },
+	{
+          "command": "jump",
+          "keys": [ "SPACE" ]
+        },
         {
           "command": "load",
           "keys": [ "l" ]

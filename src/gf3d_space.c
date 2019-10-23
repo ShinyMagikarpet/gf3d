@@ -48,21 +48,87 @@ void gf3d_space_free(Space* space)
 	slog("Successfully deleted space");
 }
 
+void gf2d_space_dynamic_bodies_step(Space* space, DynamicBody* db, float t)
+{
+	DynamicBody* other;
+	Collision* collision;
+	Vector3D oldPosition;
+	Vector3D reflected, total;
+	int normalCount;
+	int i, count;
+	if ((!space) || (!db))return;
+	// save our place in case of collision
+	vector3d_copy(oldPosition, db->position);
+	vector3d_add(db->position, db->position, db->velocity);
+
+	gf3d_dynamic_body_clear_collisions(db);
+	// check against dynamic bodies
+	count = gfc_list_get_count(space->dynamicBodyList);
+	for (i = 0; i < count;i++)
+	{
+		other = (DynamicBody*)gfc_list_get_nth(space->dynamicBodyList, i);
+		if (!other)continue;
+		if (other == db)continue;   // skip checking outself
+		// check for layer compatibility
+		collision = gf3d_dynamic_body_collision_check(db, other, t);
+		if (collision == NULL)continue;
+		db->collisionList = gfc_list_append(db->collisionList, (void*)collision);
+	}
+
+	if (db->body->worldclip)
+	{
+		//FIX::
+		//gf3d_space_dynamic_bodies_world_clip(space, db, t);
+	}
+	if (db->blocked)
+	{
+		vector2d_copy(db->position, oldPosition);
+		//FIXIT
+		//gf3d_dynamic_body_resolve_overlap(db, space->slop);
+		if (db->body->elasticity > 0)
+		{
+			count = gfc_list_get_count(db->collisionList);
+			vector3d_clear(total);
+			normalCount = 0;
+			for (i = 0; i < count; i++)
+			{
+				collision = (Collision*)gfc_list_get_nth(db->collisionList, i);
+				if (!collision)continue;
+				vector3d_add(db->position, db->position, collision->normal);
+				//FIXIT
+				//reflected = gf3d_dynamic_body_bounce(db, collision->normal);
+				if (vector3d_magnitude_squared(reflected) != 0)
+				{
+					vector3d_add(total, total, reflected);
+					normalCount++;
+				}
+			}
+			if (normalCount)
+			{
+				vector3d_scale(total, total, 1.0 / normalCount);
+				db->velocity = total;
+				vector3d_set_magnitude(&db->velocity, db->speed);
+			}
+		}
+	}
+}
+
 void gf3d_space_step(Space* space, float t)
 {
-	//DynamicBody* db = NULL;
+	DynamicBody* db = NULL;
 	int i, count;
 	if (!space)return;
 	count = gfc_list_get_count(space->dynamicBodyList);
 	for (i = 0; i < count;i++)
 	{
-		//db = (DynamicBody*)gf2d_list_get_nth(space->dynamicBodyList, i);
-		//if (!db)continue;
-		//if (db->blocked)
-		//{
-		//	continue;// no need to move something that has already collided
-		//}
-		//gf2d_space_dynamic_bodies_step(space, db, t);
+		db = (DynamicBody*)gfc_list_get_nth(space->dynamicBodyList, i);
+		if (!db)continue;
+		if (db->blocked)
+		{
+			continue;// no need to move something that has already collided
+		}
+		//FIXIT
+		//gf3d_space_dynamic_bodies_step(space, db, t);
 	}
 }
 
@@ -100,24 +166,24 @@ void gf3d_space_add_static_shape(Space* space, Shape shape)
 	space->staticShapes = gfc_list_append(space->staticShapes, (void*)newShape);
 }
 
-//void gf2d_space_add_body(Space* space, Body* body)
-//{
-//	DynamicBody* db = NULL;
-//	if (!space)
-//	{
-//		slog("no space provided");
-//		return;
-//	}
-//	if (!body)
-//	{
-//		slog("no body provided");
-//		return;
-//	}
-//	db = gf3d_dynamic_body_new();
-//	if (!db)return;
-//	db->body = body;
-//	db->id = space->idpool++;
-//	space->dynamicBodyList = gf2d_list_append(space->dynamicBodyList, (void*)db);
-//}
+void gf2d_space_add_body(Space* space, Body* body)
+{
+	DynamicBody* db = NULL;
+	if (!space)
+	{
+		slog("no space provided");
+		return;
+	}
+	if (!body)
+	{
+		slog("no body provided");
+		return;
+	}
+	db = gf3d_dynamic_body_new();
+	if (!db)return;
+	db->body = body;
+	db->id = space->idpool++;
+	space->dynamicBodyList = gfc_list_append(space->dynamicBodyList, (void*)db);
+}
 
 

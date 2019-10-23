@@ -16,6 +16,7 @@ typedef struct Entity_S
 	char* name;
 	Uint8            _inuse;         /**<flag to keep track if this isntance is in use and should not be reassigned*/
 	Model*			 model;          /**<the 3d model for this entity*/
+	Uint32			 frame;
 	Matrix4			 modelMat;
 	Body			 body;
 	Shape			 shape;

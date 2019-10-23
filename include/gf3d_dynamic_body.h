@@ -69,7 +69,7 @@ Collision* gf3d_dynamic_body_bounds_collision_check(DynamicBody* dba, float time
  * @param normal the direction of reflection
  * @return an empty vector on error or a new vector based on the bounce
  */
-Vector2D gf3d_dynamic_body_bounce(DynamicBody* dba, Vector3D normal);
+Vector3D gf3d_dynamic_body_bounce(DynamicBody* dba, Vector3D normal);
 
 /**
  * @brief removes collisions from the dynamic body
