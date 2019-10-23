@@ -98,7 +98,7 @@ void gf3d_entity_think_all() {
 	int i;
 	for (i = 0; i < gf3d_entity_manager.entity_max; i++) {
 		if (gf3d_entity_manager.entity_list[i]._inuse == 0) {
-			break;
+			continue;
 		}
 		gf3d_entity_think(&gf3d_entity_manager.entity_list[i]);
 	}
@@ -118,3 +118,19 @@ void gf3d_entity_move(Entity* ent, Vector3D dir) {
 	gfc_matrix_make_translation(ent->modelMat, ent->position);
 }
 
+Body* get_entity_bodies(int i) {
+	return &gf3d_entity_manager.entity_list[i].body;
+}
+
+Uint32 get_entity_size() {
+	int size = 0;
+	for (int i = 0; i < gf3d_entity_manager.entity_max; i++) {
+		//slog("entity usage = %i", gf3d_entity_manager.entity_list[i]._inuse);
+		if (gf3d_entity_manager.entity_list[i]._inuse == 1) {
+			size++;
+			continue;
+		}
+	}
+
+	return size;
+}

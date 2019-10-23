@@ -165,6 +165,12 @@
     <ClCompile Include="..\src\gf3d_vqueues.c" />
     <ClCompile Include="..\src\Player.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\default.frag" />
+    <None Include="..\shaders\default.vert" />
+    <None Include="..\shaders\frag.spv" />
+    <None Include="..\shaders\vert.spv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

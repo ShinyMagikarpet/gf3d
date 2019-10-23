@@ -15,6 +15,7 @@ typedef struct Entity_S
 {
 	char* name;
 	Uint8            _inuse;         /**<flag to keep track if this isntance is in use and should not be reassigned*/
+	char*			 tag;
 	Model*			 model;          /**<the 3d model for this entity*/
 	Uint32			 frame;
 	Matrix4			 modelMat;
@@ -77,6 +78,10 @@ void gf3d_entity_update(Entity* self);
 void gf3d_entity_update_all();
 
 void gf3d_entity_move(Entity* ent, Vector3D dir);
+
+Body* get_entity_bodies(int i);
+
+Uint32 get_entity_size();
 
 #endif // !__ENTITY_H__
 

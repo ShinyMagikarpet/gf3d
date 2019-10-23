@@ -4,7 +4,7 @@
 #include "gf3d_space.h"
 #include "simple_logger.h"
 
-#define MOVE_SPEED 1
+#define MOVE_SPEED 0.01
 static Entity* player = NULL;
 
 void player_think(Entity* self);
@@ -14,6 +14,7 @@ void player_update(Entity* self);
 Entity* Player_New() {
 
 	player = gf3d_entity_new();
+	player->tag = "player";
 	//player->model = gf3d_model_load("sphere");
 	player->model = gf3d_model_load_animated("sphere_anim", 1, 23);
 	gfc_matrix_identity(player->modelMat);
@@ -25,7 +26,7 @@ Entity* Player_New() {
 		0,
 		0,
 		0,
-		0,
+		1,
 		player->position,
 		vector3d(0, 0, 0),
 		1,
@@ -128,6 +129,25 @@ void player_think(Entity* self) {
 		player->frame = 0;
 	}
 
+	for (int i = 0; i < get_entity_size(); i++) {
+
+		Body *ent_body = get_entity_bodies(i);
+
+		if (ent_body == &player->body) {
+			slog("Don't check against self");
+			continue;
+		}
+
+		if (gf3d_body_body_collide(&player->body, ent_body)) {
+			//ent->_inuse = 0;
+			
+		}
+		else {
+			//slog("These sphere aren't touching");
+		}
+	}
+	
+	//slog("total entities %i", get_entity_size());
 	//gf3d_entity_move(self, vector3d(0, 0, -9));
 	player->shape.s.s.point.pos = player->position;
 	

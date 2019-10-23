@@ -65,10 +65,11 @@ int main(int argc,char *argv[])
     
 	gf3d_entity_manager_init(16);
 	
-	/*Entity* ent = gf3d_entity_new();
-	ent->model = gf3d_model_load("sphere");
+	Entity* ent = gf3d_entity_new();
+	ent->model = gf3d_model_load_animated("sphere_anim", 1, 3);	
 	gfc_matrix_identity(ent->modelMat);
 	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
+	ent->frame = 1;
 	ent->position = vector3d(2, 0, 0);
 	ent->shape = gf3d_shape_sphere(1, vector3d(2, 0, 0));
 	ent->position = ent->shape.s.s.point.pos;
@@ -85,7 +86,7 @@ int main(int argc,char *argv[])
 		0,
 		&ent->shape,
 		NULL,
-		NULL);*/
+		NULL);
 
 	Entity *player = Player_New();
 
@@ -114,6 +115,8 @@ int main(int argc,char *argv[])
 		gf3d_entity_think_all();
 
 		gfc_input_update();
+
+		gf3d_entity_update_all();
 		
 		gf3d_space_update(space);
 		//slog("Entity name is %s", player->name);
@@ -142,12 +145,7 @@ int main(int argc,char *argv[])
                 //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);
 
-		/*if(gf3d_body_body_collide(&player->body, &ent->body)){
-			slog("These spheres are touching");
-		}
-		else {
-			slog("These sphere aren't touching");
-		}*/
+		
                 
             gf3d_command_rendering_end(commandBuffer);
             
