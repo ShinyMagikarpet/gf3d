@@ -70,7 +70,8 @@ Uint8 gf3d_body_body_collide(Body* a, Body* b)
 	{
 		slog("missing body in collision check");
 		return 0;
-	}
+	}	
+
 
 	//slog("body shape position x is %f", a->shape->s.s.point.pos.x);
 	//slog("body shape position x is %f", b->shape->s.s.point.pos.x);

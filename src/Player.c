@@ -4,7 +4,7 @@
 #include "gf3d_space.h"
 #include "simple_logger.h"
 
-#define MOVE_SPEED 0.01
+#define MOVE_SPEED 0.02
 static Entity* player = NULL;
 
 void player_think(Entity* self);
@@ -36,7 +36,7 @@ Entity* Player_New() {
 		NULL,
 		NULL);
 	player->think = player_think;
-
+	player->update = player_update;
 	return player;
 }
 
@@ -51,7 +51,8 @@ void player_think(Entity* self) {
 			vector3d(0, 0, -1)
 		);*/
 
-		gf3d_entity_move(self, vector3d(MOVE_SPEED, 0, 0));
+		player->velocity.x = MOVE_SPEED;
+		//gf3d_entity_move(self, vector3d(MOVE_SPEED, 0, 0));
 
 	}
 
@@ -63,14 +64,15 @@ void player_think(Entity* self) {
 			0.002,
 			vector3d(0, 0, -1)
 		);*/
-
-		gf3d_entity_move(self, vector3d(-MOVE_SPEED, 0, 0));
+		player->velocity.x = -MOVE_SPEED;
+		//gf3d_entity_move(self, vector3d(-MOVE_SPEED, 0, 0));
 
 	}
 
 	if (gfc_input_key_down("w")) {
 
-		gf3d_entity_move(self, vector3d(0, -MOVE_SPEED, 0));
+		player->velocity.y = -MOVE_SPEED;
+		//gf3d_entity_move(self, vector3d(0, -MOVE_SPEED, 0));
 
 	}
 
@@ -83,7 +85,9 @@ void player_think(Entity* self) {
 			vector3d(0, 0, -1)
 		);*/
 
-		gf3d_entity_move(self, vector3d(0, MOVE_SPEED, 0));
+		player->velocity.y = MOVE_SPEED;
+
+		//gf3d_entity_move(self, vector3d(0, MOVE_SPEED, 0));
 
 	}
 
@@ -125,36 +129,47 @@ void player_think(Entity* self) {
 	}
 
 	if (gfc_input_key_released(" ")) {
-		slog("HELP");
 		player->frame = 0;
-	}
-
-	for (int i = 0; i < get_entity_size(); i++) {
-
-		Body *ent_body = get_entity_bodies(i);
-
-		if (ent_body == &player->body) {
-			slog("Don't check against self");
-			continue;
-		}
-
-		if (gf3d_body_body_collide(&player->body, ent_body)) {
-			//ent->_inuse = 0;
-			
-		}
-		else {
-			//slog("These sphere aren't touching");
-		}
 	}
 	
 	//slog("total entities %i", get_entity_size());
 	//gf3d_entity_move(self, vector3d(0, 0, -9));
-	player->shape.s.s.point.pos = player->position;
 	
 	//slog("player frame %i", player->frame);
 }
 
 void player_update(Entity* self) {
 
-	//gf3d_entity_move(self, vector3d(0, 0, 1));
+	Vector3D oldPos = self->shape.s.s.point.pos;
+
+	//gf3d_entity_move(self, self->velocity);
+	
+	self->shape.s.s.point.pos.x += self->velocity.x;
+	self->shape.s.s.point.pos.y += self->velocity.y;
+	self->shape.s.s.point.pos.z += self->velocity.z;
+
+	for (int i = 0; i < get_entity_size(); i++) {
+
+		Body* ent_body = get_entity_bodies(i);
+
+		if (ent_body == &player->body) {
+			continue;
+		}
+
+		if (gf3d_body_body_collide(&player->body, ent_body)) {
+			//ent->_inuse = 0;
+			slog("TOUCHING");
+			//gf3d_entity_move(self, self->velocity);
+			//player->position = oldPos;
+			self->shape.s.s.point.pos = oldPos;
+			slog("%f, %f, %f", oldPos.x, oldPos.y, oldPos.z);
+		}
+		else {
+			//slog("These sphere aren't touching");
+			gf3d_entity_move(self, self->velocity);
+		}
+	}
+	//player->body.position = player->position;
+	
+	player->velocity = vector3d(0, 0, 0);
 }

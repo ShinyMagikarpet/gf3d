@@ -118,7 +118,7 @@ int main(int argc,char *argv[])
 
 		gf3d_entity_update_all();
 		
-		gf3d_space_update(space);
+		//gf3d_space_update(space);
 		//slog("Entity name is %s", player->name);
 
         //gf3d_vgraphics_rotate_camera(0.001);

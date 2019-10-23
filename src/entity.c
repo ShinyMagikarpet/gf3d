@@ -106,10 +106,23 @@ void gf3d_entity_think_all() {
 
 void gf3d_entity_update(Entity* self) {
 
+	if (!self)return;
+	if (!self->_inuse)return;
+
+	if (self->update != NULL) {
+		self->update(self);
+	}
 }
 
 void gf3d_entity_update_all() {
 
+	int i;
+	for (i = 0; i < gf3d_entity_manager.entity_max; i++) {
+		if (gf3d_entity_manager.entity_list[i]._inuse == 0) {
+			continue;
+		}
+		gf3d_entity_update(&gf3d_entity_manager.entity_list[i]);
+	}
 }
 
 void gf3d_entity_move(Entity* ent, Vector3D dir) {
