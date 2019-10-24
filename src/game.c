@@ -12,6 +12,7 @@
 #include "entity.h"
 #include "gfc_input.h"
 #include "Player.h"
+#include "ground.h"
 #include "gf3d_space.h"
 
 
@@ -35,14 +36,14 @@ int main(int argc,char *argv[])
 	Sphere sphere2;
 	gf3d_sphere_set(sphere, 1, 2, 0, 0);
 
-	Space* space = gf2d_space_new_full(
-		3,
-		0.1,
-		vector3d(0, 0.1, 0),
-		1,
-		20
+	//Space* space = gf2d_space_new_full(
+	//	3,
+	//	0.1,
+	//	vector3d(0, 0.1, 0),
+	//	1,
+	//	20
 
-	);
+	//);
 
     for (a = 1; a < argc;a++)
     {
@@ -65,14 +66,14 @@ int main(int argc,char *argv[])
     
 	gf3d_entity_manager_init(16);
 	
-	Entity* ent = gf3d_entity_new();
+	/*Entity* ent = gf3d_entity_new();
 	ent->model = gf3d_model_load_animated("sphere_anim", 1, 3);	
 	gfc_matrix_identity(ent->modelMat);
 	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
 	ent->frame = 1;
 	ent->position = vector3d(2, 0, 0);
 	ent->shape = gf3d_shape_sphere(1, vector3d(2, 0, 0));
-	ent->position = ent->shape.s.s.point.pos;
+	ent->position = ent->shape.s.sp.point.pos;
 	gf3d_body_set(
 		&ent->body,
 		0,
@@ -86,9 +87,13 @@ int main(int argc,char *argv[])
 		0,
 		&ent->shape,
 		NULL,
-		NULL);
+		NULL);*/
 
 	Entity *player = Player_New();
+	Entity* ground = Ground_New(vector3d(0, 0, -4), 0.2);
+	//ent->modelMat[3][3] -= 0.2;
+	
+	//Entity* ground = Ground_New(vector3d(0, 0, -5), vector3d(1, 1, 1));
 
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
@@ -118,6 +123,7 @@ int main(int argc,char *argv[])
 
 		gf3d_entity_update_all();
 		
+		gfc_matrix_slog(player->modelMat);
 		//gf3d_space_update(space);
 		//slog("Entity name is %s", player->name);
 
@@ -157,7 +163,7 @@ int main(int argc,char *argv[])
     vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());    
     //cleanup
     slog("gf3d program end");
-	gf3d_space_free(space);
+	//gf3d_space_free(space);
     slog_sync();
     return 0;
 }

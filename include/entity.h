@@ -4,6 +4,8 @@
 #include "gf3d_model.h"
 #include "gf3d_space.h"
 
+#define GRAVITY 0.6
+
 typedef enum
 {
 	ES_Idle = 0,
@@ -21,9 +23,11 @@ typedef struct Entity_S
 	Matrix4			 modelMat;
 	Body			 body;
 	Shape			 shape;
+	Ray				 rayf;			 /**<forward direction for entity*/
+	Ray				 rayd;			 /**<downward direction for entity*/
 	Vector3D         position;       /**<position of the entity in 3d space*/
 	Vector3D         velocity;       /**<velocity of the entity in 3d space*/
-	Vector3D         acceleration;   /**<acceleration of the entity in 3d space*/
+	Vector3D         gravity;   /**<acceleration of the entity in 3d space*/
 	Vector3D         rotation;       /**<yaw, pitch, and roll of the entity*/
 	Vector3D         scale;          /**<*please default to 1,1,1*/
 	EntityState      state;          /**<current state of the entity*/

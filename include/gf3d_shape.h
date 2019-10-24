@@ -14,6 +14,12 @@ typedef struct
 	Vector3D start, end;
 }Line;
 
+typedef struct
+{
+	Vector3D pos;
+	Vector3D dir;
+}Ray;
+
 typedef struct {
 	
 	float radius;
@@ -30,7 +36,8 @@ typedef enum
 	ST_Point,
 	ST_Line,
 	ST_Box,
-	ST_Sphere
+	ST_Sphere,
+	ST_Ray
 
 }ShapeTypes;
 
@@ -40,9 +47,10 @@ typedef struct
 	union
 	{
 		Box b;
-		Line e;
+		Line l;
 		Point p;
-		Sphere s;
+		Sphere sp;
+		Ray ray;
 	}s;
 
 }Shape;
@@ -50,6 +58,18 @@ typedef struct
 Line gf3d_line_from_vectors(Vector3D start, Vector3D end);
 
 Shape gf3d_shape_from_line(Line line);
+
+float radians_to_degrees(float rad);
+
+/**
+ * @brief Sets a raycast with position and direction
+ * @param position the point where the ray starts
+ * @param dir the direction that the ray points
+ * @return the new ray
+ */
+Ray gf3d_ray_set(Vector3D position, Vector3D dir);
+
+Ray FromPoints(Vector3D position, Vector3D dir);
 
 /**
  * @brief change the position of the shape based on the movement vector

@@ -5,9 +5,9 @@
 void gf3d_shape_move(Shape* shape, Vector3D move) {
 
 	if (!shape)return;
-	shape->s.s.point.pos.x += move.x;
-	shape->s.s.point.pos.y += move.y;
-	shape->s.s.point.pos.z += move.z;
+	shape->s.sp.point.pos.x += move.x;
+	shape->s.sp.point.pos.y += move.y;
+	shape->s.sp.point.pos.z += move.z;
 }
 
 void gf3d_shape_copy(Shape* dst, Shape src) {
@@ -28,13 +28,34 @@ Shape gf3d_shape_from_line(Line line) {
 
 	Shape shape;
 	shape.type = ST_Line;
-	shape.s.e.start = line.start;
-	shape.s.e.end = line.end;
+	shape.s.l.start = line.start;
+	shape.s.l.end = line.end;
 	return shape;
 }
 
+Ray gf3d_ray_set(Vector3D position, Vector3D dir) {
+	Ray ray;
+	ray.pos = position;
+	ray.dir = dir;
+	return ray;
+}
+
+Ray FromPoints(Vector3D position, Vector3D dir){
+	Ray ray;
+	Vector3D normal;
+	ray.pos = position;
+	vector3d_sub(normal, dir, position);
+	vector3d_normalize(&normal);
+	ray.dir = normal;
+	return ray;
+
+}
+
+float radians_to_degrees(float rad) {
+	return rad * (180 / M_PI);
+}
+
 float gf3d_line_length(Line line) {
-	
 	return vector3d_magnitude_between(line.start, line.end);
 }
 
@@ -82,8 +103,8 @@ Shape gf3d_shape_sphere(float radius, Vector3D pos) {
 
 	Shape shape;
 	shape.type = ST_Sphere;
-	shape.s.s.radius = radius;
-	shape.s.s.point.pos = pos;
+	shape.s.sp.radius = radius;
+	shape.s.sp.point.pos = pos;
 	return shape;
 }
 
@@ -149,10 +170,7 @@ Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal)
 		switch (b.type)
 		{
 		case ST_Sphere:
-			//return gf3d_sphere_overlap_poc(a.s.s, b.s.s, poc, normal);
-			//slog("x pos is %f", a.s.s.point.pos.x);
-			//slog("x pos is %f", b.s.s.point.pos.x);
-			return gf3d_sphere_sphere_overlap(a.s.s, b.s.s);
+			return gf3d_sphere_sphere_overlap(a.s.sp, b.s.sp);
 		}
 	}
 	return 0;
