@@ -126,6 +126,9 @@
     <ClInclude Include="..\include\ground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\collectable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\gfc\simple_json\src\simple_json.c">
@@ -240,6 +243,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ground.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\collectable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

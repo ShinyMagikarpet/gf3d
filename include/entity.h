@@ -4,7 +4,7 @@
 #include "gf3d_model.h"
 #include "gf3d_space.h"
 
-#define GRAVITY 0.6
+#define GRAVITY 0.1f
 
 typedef enum
 {
@@ -17,6 +17,7 @@ typedef struct Entity_S
 {
 	char* name;
 	Uint8            _inuse;         /**<flag to keep track if this isntance is in use and should not be reassigned*/
+	Uint8			_ID;
 	char*			 tag;
 	Model*			 model;          /**<the 3d model for this entity*/
 	Uint32			 frame;
@@ -27,10 +28,12 @@ typedef struct Entity_S
 	Ray				 rayd;			 /**<downward direction for entity*/
 	Vector3D         position;       /**<position of the entity in 3d space*/
 	Vector3D         velocity;       /**<velocity of the entity in 3d space*/
-	Vector3D         gravity;   /**<acceleration of the entity in 3d space*/
+	Vector3D         gravity;		/**<acceleration of the entity in 3d space*/
 	Vector3D         rotation;       /**<yaw, pitch, and roll of the entity*/
 	Vector3D         scale;          /**<*please default to 1,1,1*/
 	EntityState      state;          /**<current state of the entity*/
+	float			jumpTime;		 /**<Time to be in air*/
+	Uint8			grounded;
 	void (*think)(struct Entity_S* self);   /**<function called on entity think*/
 	void (*update)(struct Entity_S* self);   /**<function called on entity update*/
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/
@@ -86,6 +89,12 @@ void gf3d_entity_move(Entity* ent, Vector3D dir);
 Body* get_entity_bodies(int i);
 
 Uint32 get_entity_size();
+
+void slog_entity_positions();
+
+void slog_entity_names();
+
+Entity* entity_near();
 
 #endif // !__ENTITY_H__
 

@@ -13,7 +13,7 @@
 #include "gfc_input.h"
 #include "Player.h"
 #include "ground.h"
-#include "gf3d_space.h"
+#include "collectable.h"
 
 
 int main(int argc,char *argv[])
@@ -24,26 +24,8 @@ int main(int argc,char *argv[])
     const Uint8 * keys;
     Uint32 bufferFrame = 0;
     VkCommandBuffer commandBuffer;
-    //Model *model;
+    Model *model;
     Matrix4 modelMat;
-    //Model *model2;
-    //Matrix4 modelMat2;
-
-	//Not sure if this is working
-	Sphere sphere;
-	gf3d_sphere_set(sphere, 1, 0, 0, 0);
-
-	Sphere sphere2;
-	gf3d_sphere_set(sphere, 1, 2, 0, 0);
-
-	//Space* space = gf2d_space_new_full(
-	//	3,
-	//	0.1,
-	//	vector3d(0, 0.1, 0),
-	//	1,
-	//	20
-
-	//);
 
     for (a = 1; a < argc;a++)
     {
@@ -65,35 +47,26 @@ int main(int argc,char *argv[])
     );
     
 	gf3d_entity_manager_init(16);
-	
-	/*Entity* ent = gf3d_entity_new();
-	ent->model = gf3d_model_load_animated("sphere_anim", 1, 3);	
-	gfc_matrix_identity(ent->modelMat);
-	gfc_matrix_translate(ent->modelMat, vector3d(2, 0, 0));
-	ent->frame = 1;
-	ent->position = vector3d(2, 0, 0);
-	ent->shape = gf3d_shape_sphere(1, vector3d(2, 0, 0));
-	ent->position = ent->shape.s.sp.point.pos;
-	gf3d_body_set(
-		&ent->body,
-		0,
-		0,
-		0,
-		0,
-		ent->position,
-		vector3d(0, 0, 0),
-		1,
-		0,
-		0,
-		&ent->shape,
-		NULL,
-		NULL);*/
 
-	Entity *player = Player_New();
-	Entity* ground = Ground_New(vector3d(0, 0, -4), 0.2);
-	//ent->modelMat[3][3] -= 0.2;
-	
+
+	//Entity* player = Player_New();
+	Entity* ground = Ground_New(vector3d(5, 0, -7), 5, "ground1");
+	//Entity* ground2 = Ground_New(vector3d(-10, 0, -7), 5, "ground2");
+	//Entity* ground3 = Ground_New(vector3d(-25, 0, -7), 5, "ground3");
+	//Collectable coin = Collectable_New(vector3d(0, 0, 5), Collectable_Red);
+	//Entity* ground4 = Ground_New(vector3d(0, 0, 5), 1, "ground4");
+	//Entity* ground5 = Ground_New(vector3d(5, 0, 5), 1, "ground5");
+
+	Entity* coin = gf3d_entity_new();
+	coin->model = gf3d_model_load_animated("Coin", "white", 1, 13);
+	gfc_matrix_identity(coin->modelMat);
+
+	//gfc_matrix_identity(modelMat);
+	//model = gf3d_model_load_animated("cube", 1, 3, 0);
+	//slog("%f, %f, %f", ground->body.shape->s.sp.point.pos.x, ground->body.shape->s.sp.point.pos.y, ground->body.shape->s.sp.point.pos.z);
+	//slog("%f, %f, %f", ground->body.shape->s.sp.point.pos.x, ground->body.shape->s.sp.point.pos.y, ground->body.shape->s.sp.point.pos.z);
 	//Entity* ground = Ground_New(vector3d(0, 0, -5), vector3d(1, 1, 1));
+
 
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
@@ -103,10 +76,9 @@ int main(int argc,char *argv[])
 	gfc_input_init("config/input.cfg");
     // main game loop
     slog("gf3d main loop begin");
-    //model = gf3d_model_load("dino");
+    //model = gf3d_model_load_animated("cube",1, 1, 0);
     //gfc_matrix_identity(modelMat);
-    //model2 = gf3d_model_load("dino");
-    //gfc_matrix_identity(modelMat2);
+
     /*gfc_matrix_make_translation(
             modelMat2,
             vector3d(10,0,0)
@@ -123,9 +95,7 @@ int main(int argc,char *argv[])
 
 		gf3d_entity_update_all();
 		
-		gfc_matrix_slog(player->modelMat);
 		//gf3d_space_update(space);
-		//slog("Entity name is %s", player->name);
 
         //gf3d_vgraphics_rotate_camera(0.001);
         /*gfc_matrix_rotate(
@@ -145,7 +115,7 @@ int main(int argc,char *argv[])
         gf3d_pipeline_reset_frame(gf3d_vgraphics_get_graphics_pipeline(),bufferFrame);
         commandBuffer = gf3d_command_rendering_begin(bufferFrame);
 		
-			//gf3d_model_draw(player->model, bufferFrame, commandBuffer, player->modelMat);
+		//gf3d_model_draw(model, bufferFrame, commandBuffer, modelMat, 1);
 			//gf3d_entity_draw(ent, bufferFrame, commandBuffer);
 		gf3d_entity_draw_all(bufferFrame, commandBuffer);
                 //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);

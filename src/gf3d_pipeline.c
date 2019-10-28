@@ -526,6 +526,8 @@ VkDescriptorSet * gf3d_pipeline_get_descriptor_set(Pipeline *pipe, Uint32 frame)
     }
     if (pipe->descriptorCursor[frame] > pipe->descriptorSetCount)
     {
+		slog("descriptor set frame %i", pipe->descriptorCursor[frame]);
+		slog("descriptor set count %i", pipe->descriptorSetCount);
         slog("cannot allocate any more descriptor sets this frame!");
         return NULL;
     }

@@ -41,6 +41,7 @@ Entity* gf3d_entity_new()
 		//. found a free entity
 		memset(&gf3d_entity_manager.entity_list[i], 0, sizeof(Entity));
 		gf3d_entity_manager.entity_list[i]._inuse = 1;
+		gf3d_entity_manager.entity_list[i]._ID = i;
 		slog("Generated new entity");
 		return &gf3d_entity_manager.entity_list[i];
 	}
@@ -146,4 +147,22 @@ Uint32 get_entity_size() {
 	}
 
 	return size;
+}
+
+void slog_entity_positions() {
+
+	Entity* ent;
+	for (int i = 0; i < get_entity_size(); i++) {
+		ent = &gf3d_entity_manager.entity_list[i];
+		slog("Position: %f, %f, %f", ent->position.x, ent->position.y, ent->position.z);
+	}
+}
+
+void slog_entity_names() {
+
+	Entity* ent;
+	for (int i = 0; i < get_entity_size(); i++) {
+		ent = &gf3d_entity_manager.entity_list[i];
+		slog("Entity name: %s", ent->name);
+	}
 }

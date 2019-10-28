@@ -78,7 +78,7 @@ Model* gf3d_model_new()
 	return NULL;
 }
 
-Model* gf3d_model_load_animated(char* filename, Uint32 startFrame, Uint32 endFrame)
+Model* gf3d_model_load_animated(char* filename, char* textureFile, Uint32 startFrame, Uint32 endFrame)
 {
 	TextLine assetname;
 	Model* model;
@@ -99,15 +99,16 @@ Model* gf3d_model_load_animated(char* filename, Uint32 startFrame, Uint32 endFra
 		gf3d_model_free(model);
 		return NULL;
 	}
-	for (i = 0; i < count; i++)
-	{
+
+	for (i = 0; i < count; i++){
 		snprintf(assetname, GFCLINELEN, "models/%s_%06i.obj", filename, startFrame + i);
 		model->mesh[i] = gf3d_mesh_load(assetname);
 	}
+	
 
-	snprintf(assetname, GFCLINELEN, "images/%s.png", filename);
+
+	snprintf(assetname, GFCLINELEN, "images/%s.png", textureFile);
 	model->texture = gf3d_texture_load(assetname);
-
 	return model;
 }
 
@@ -123,7 +124,6 @@ Model* gf3d_model_load(char* filename)
 
 	snprintf(assetname, GFCLINELEN, "images/%s.png", filename);
 	model->texture = gf3d_texture_load(assetname);
-
 	return model;
 }
 
@@ -175,6 +175,8 @@ void gf3d_model_draw(Model* model, Uint32 bufferFrame, VkCommandBuffer commandBu
 	}
 	gf3d_model_update_basic_model_descriptor_set(model, *descriptorSet, bufferFrame, modelMat);
 	gf3d_mesh_render(model->mesh[frame], commandBuffer, descriptorSet);
+	
+	
 }
 
 void gf3d_model_update_basic_model_descriptor_set(Model* model, VkDescriptorSet descriptorSet, Uint32 chainIndex, Matrix4 modelMat)

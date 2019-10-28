@@ -53,6 +53,8 @@ typedef struct
 		Ray ray;
 	}s;
 
+	void* data;
+
 }Shape;
 
 Line gf3d_line_from_vectors(Vector3D start, Vector3D end);

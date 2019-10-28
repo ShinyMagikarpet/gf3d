@@ -18,10 +18,10 @@ Entity* Player_New() {
 
 	player = gf3d_entity_new();
 	player->tag = "player";
+	player->name = "player";
 	//player->model = gf3d_model_load("sphere");
-	player->model = gf3d_model_load_animated("sphere_anim", 1, 23);
+	player->model = gf3d_model_load_animated("sphere_anim", "sphere_anim", 1, 23);
 	gfc_matrix_identity(player->modelMat);
-
 	player->position = vector3d(0, 0, 0);
 	player->rotation = vector3d(0, 0, 0);
 	player->shape = gf3d_shape_sphere(1, player->position);
@@ -40,8 +40,10 @@ Entity* Player_New() {
 		&player->shape,
 		NULL,
 		NULL);
+	player->shape.data = player;
 	player->think = player_think;
 	player->update = player_update;
+	player->grounded = 0;
 	return player;
 }
 
@@ -114,7 +116,7 @@ void player_think(Entity* self) {
 		
 	}
 
-	if (gfc_input_key_down(" ")) {
+	if (gfc_input_key_down(" ") && player->grounded) {
 		player->frame += 1;
 		if (player->frame > 19) {
 			player->frame = 19;
@@ -125,43 +127,60 @@ void player_think(Entity* self) {
 		player->frame = 0;
 	}
 
-	if (gfc_input_key_pressed(" ")) {
-		player->velocity.z += JUMP_HEIGHT;
+	if (gfc_input_key_pressed(" ") && player->grounded) {
+		player->jumpTime = 2.0f;
 	}
 	
 	//slog("total entities %i", get_entity_size());
 	//gf3d_entity_move(self, vector3d(0, 0, -9));
-	player->velocity.z -= GRAVITY;
+	if (player->jumpTime > 0.0f) {
+		player->jumpTime -= 0.1;
+		player->velocity.z += GRAVITY;
+	}
+	else {
+		player->jumpTime = 0.0f;
+		player->velocity.z -= GRAVITY;
+	}
+	
 	//slog("player frame %i", player->frame);
 }
 
 void player_update(Entity* self) {
 
 	Vector3D oldPos = self->shape.s.sp.point.pos;
-
+	Uint8 collided = 0;
 	//gf3d_entity_move(self, self->velocity);
 	
 	self->shape.s.sp.point.pos.x += self->velocity.x;
 	self->shape.s.sp.point.pos.y += self->velocity.y;
 	self->shape.s.sp.point.pos.z += self->velocity.z;
 
-	for (int i = 0; i < get_entity_size(); i++) {
+	for (int i = 1; i < get_entity_size(); i++) {
 
 		Body* ent_body = get_entity_bodies(i);
-
-		if (ent_body == &player->body) {
+		Entity* other = ent_body->shape->data;
+		//slog("Testing against %s", other->name);
+		if (strcmp(other->name, "player") == 0) {
 			continue;
 		}
-
 		if (gf3d_body_body_collide(&player->body, ent_body)) {
-			//ent->_inuse = 0;
-			self->shape.s.sp.point.pos = oldPos;
-			break;
+			Entity* other = ent_body->shape->data;
+			if (strcmp(other->tag, "ground") == 0) {
+				player->grounded = 1;
+			}
+			collided = 1;
+			//slog("Hitting %s", other->name);
+			//self->shape.s.sp.point.pos = oldPos;
+			//break;
 		}
-		else {
-			//slog("These sphere aren't touching");
-			gf3d_entity_move(self, self->velocity);
-		}
+	}
+
+	if (collided) {
+		self->shape.s.sp.point.pos = oldPos;
+	}
+	else {
+		gf3d_entity_move(self, self->velocity);
+		player->grounded = 0;
 	}
 	//player->body.position = player->position;
 	gfc_matrix_rotate(

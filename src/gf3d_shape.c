@@ -1,5 +1,6 @@
 #include "gf3d_shape.h"
 #include "simple_logger.h"
+#include "entity.h"
 
 
 void gf3d_shape_move(Shape* shape, Vector3D move) {
@@ -126,8 +127,7 @@ Vector3D gf3d_shape_get_normal_for_shape(Shape s, Shape s2) {
 }
 
 Uint8 gf3d_sphere_sphere_overlap(Sphere sphere1, Sphere sphere2) {
-	//slog("x pos is %f", sphere1.point.pos.x);
-	//slog("x pos is %f", sphere2.point.pos.x);
+
 	float radiiSum = sphere1.radius + sphere2.radius;
 	Vector3D subtractVec;
 	vector3d_sub(subtractVec, sphere1.point.pos, sphere2.point.pos);
@@ -164,6 +164,9 @@ Uint8 gf3d_sphere_overlap_poc(Sphere a, Sphere b, Vector3D* poc, Vector3D* norma
 
 Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal)
 {
+	//slog("x1 pos is %f", a.data.point.pos.x);
+	Entity* ground = b.data;
+	//slog("%s pos is %f",ground->name, b.s.sp.point.pos.x);
 	switch (a.type)
 	{
 	case ST_Sphere:
