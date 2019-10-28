@@ -2,6 +2,7 @@
 #include "gfc_input.h"
 #include "gf3d_camera.h"
 #include "gf3d_space.h"
+#include "collectable.h"
 #include "simple_logger.h"
 
 #define MOVE_SPEED 0.1
@@ -145,6 +146,23 @@ void player_think(Entity* self) {
 	//slog("player frame %i", player->frame);
 }
 
+void player_set_collectable(Collectable* collectable) {
+
+	switch (collectable->color){
+
+	case Collectable_Red:
+		player->red++;
+		break;
+	case Collectable_Blue:
+		player->blue++;
+		break;
+	case Collectable_Yellow:
+		player->yellow++;
+		break;
+	}
+
+}
+
 void player_update(Entity* self) {
 
 	Vector3D oldPos = self->shape.s.sp.point.pos;
@@ -155,7 +173,7 @@ void player_update(Entity* self) {
 	self->shape.s.sp.point.pos.y += self->velocity.y;
 	self->shape.s.sp.point.pos.z += self->velocity.z;
 
-	for (int i = 1; i < get_entity_size(); i++) {
+	for (int i = 0; i < get_entity_size(); i++) {
 
 		Body* ent_body = get_entity_bodies(i);
 		Entity* other = (Entity*)ent_body->shape->data;
@@ -179,9 +197,12 @@ void player_update(Entity* self) {
 				collided = 1;
 			}
 			else if (strcmp(other->tag, "collectable") == 0) {
+				Collectable* collectable = other->data;
+
+				player_set_collectable(collectable);
+				slog("Colliding with collectable %s", &collectable->color);
 				other->_inuse = 0;
 			}
-			collided = 1;
 
 		}
 	}
@@ -200,6 +221,7 @@ void player_update(Entity* self) {
 		self->rotation.z,
 		vector3d(0, 0, 1)
 	);
+	slog("Player collectables Red: %i, Blue: %i, Yellow: %i", player->red, player->blue, player->yellow);
 	//slog("player roation in degrees - %f", radians_to_degrees(self->rotation.z));
 	player->rayf = FromPoints(self->position, self->rayf.dir);
 	//slog("Ray dir - %f, %f, %f", self->rayf.dir.x, self->rayf.dir.y, self->rayf.dir.z);

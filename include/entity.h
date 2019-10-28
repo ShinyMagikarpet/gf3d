@@ -34,6 +34,9 @@ typedef struct Entity_S
 	EntityState      state;          /**<current state of the entity*/
 	float			jumpTime;		 /**<Time to be in air*/
 	Uint8			grounded;
+	Uint8			red;
+	Uint8			blue;
+	Uint8			yellow;
 	void (*think)(struct Entity_S* self);   /**<function called on entity think*/
 	void (*update)(struct Entity_S* self);   /**<function called on entity update*/
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/

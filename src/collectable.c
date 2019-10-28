@@ -29,7 +29,6 @@ Collectable Collectable_New(Vector3D position, CollectableColor color) {
 	default:
 		collectable.ent->model = gf3d_model_load_animated("Coin", "white", 1, 13);
 	}
-	//collectable.ent->model = gf3d_model_load_animated("Coin", "sphere_anim", 1, 13);
 	collectable.ent->shape = gf3d_shape_sphere(1, position);
 	gfc_matrix_translate(collectable.ent->modelMat, position);
 	collectable.ent->frame = 1;
