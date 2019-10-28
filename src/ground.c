@@ -14,7 +14,7 @@ Entity* Ground_New(Vector3D pos, float scale, char* name) {
 	ground->name = name;
 	ground->position = pos;
 	gfc_matrix_identity(ground->modelMat);
-	ground->model = gf3d_model_load_animated("sphere_anim", "sphere_anim", 1, 3);
+	ground->model = gf3d_model_load_animated("sphere_anim", "white", 1, 3);
 	ground->shape = gf3d_shape_sphere(scale, pos);
 	gfc_matrix_translate(ground->modelMat, pos);
 	gfc_matrix_scale(ground->modelMat, scale);

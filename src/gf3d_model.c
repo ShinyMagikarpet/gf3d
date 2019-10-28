@@ -162,7 +162,7 @@ void gf3d_model_draw(Model* model, Uint32 bufferFrame, VkCommandBuffer commandBu
 		slog("cannot render a NULL model");
 		return;
 	}
-	if (frame >= model->frameCount)
+	if (frame > model->frameCount)
 	{
 		slog("cannot render model frame %i, greater than frameCount", frame);
 		return;

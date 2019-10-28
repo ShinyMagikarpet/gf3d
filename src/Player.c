@@ -39,7 +39,7 @@ Entity* Player_New() {
 		0,
 		&player->shape,
 		NULL,
-		NULL);
+		player);
 	player->shape.data = player;
 	player->think = player_think;
 	player->update = player_update;
@@ -158,11 +158,17 @@ void player_update(Entity* self) {
 	for (int i = 1; i < get_entity_size(); i++) {
 
 		Body* ent_body = get_entity_bodies(i);
-		Entity* other = ent_body->shape->data;
+		Entity* other = (Entity*)ent_body->shape->data;
 		//slog("Testing against %s", other->name);
-		if (strcmp(other->name, "player") == 0) {
+
+		if (!ent_body->shape) {
 			continue;
 		}
+
+		if (&player->body == ent_body) {
+			continue;
+		}
+
 		if (gf3d_body_body_collide(&player->body, ent_body)) {
 			Entity* other = ent_body->shape->data;
 			if (strcmp(other->tag, "ground") == 0) {
