@@ -169,15 +169,20 @@ void player_update(Entity* self) {
 			continue;
 		}
 
+		if (!other->_inuse) {
+			continue;
+		}
 		if (gf3d_body_body_collide(&player->body, ent_body)) {
 			Entity* other = ent_body->shape->data;
 			if (strcmp(other->tag, "ground") == 0) {
 				player->grounded = 1;
+				collided = 1;
+			}
+			else if (strcmp(other->tag, "collectable") == 0) {
+				other->_inuse = 0;
 			}
 			collided = 1;
-			//slog("Hitting %s", other->name);
-			//self->shape.s.sp.point.pos = oldPos;
-			//break;
+
 		}
 	}
 

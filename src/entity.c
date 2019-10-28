@@ -140,7 +140,7 @@ Uint32 get_entity_size() {
 	int size = 0;
 	for (int i = 0; i < gf3d_entity_manager.entity_max; i++) {
 		//slog("entity usage = %i", gf3d_entity_manager.entity_list[i]._inuse);
-		if (gf3d_entity_manager.entity_list[i]._inuse == 1) {
+		if (gf3d_entity_manager.entity_list[i]._ID == i) {
 			size++;
 			continue;
 		}

@@ -51,11 +51,12 @@ int main(int argc,char *argv[])
 	Collectable coin = Collectable_New(vector3d(-5,0,0), Collectable_Yellow);
 	Collectable coin2 = Collectable_New(vector3d(5,0,0), Collectable_Red);
 	Collectable coin3 = Collectable_New(vector3d(5,0,5), Collectable_Blue);
-	Collectable* c = coin3.ent->data;
-	slog("The color of this coin is %i", c->color);
+
+	//Collectable* c = coin3.ent->data;
+	//slog("The color of this coin is %i", c->color);
 
 	Entity* player = Player_New();
-	//Entity* ground = Ground_New(vector3d(5, 0, -7), 5, "ground1");
+	Entity* ground = Ground_New(vector3d(5, 0, -9), 5, "ground1");
 	//Entity* ground2 = Ground_New(vector3d(-10, 0, -7), 5, "ground2");
 	//Entity* ground3 = Ground_New(vector3d(-25, 0, -7), 5, "ground3");
 	//Collectable coin = Collectable_New(vector3d(0, 0, 5), Collectable_Red);
