@@ -10,14 +10,17 @@ typedef enum
 {
 	ES_Idle = 0,
 	ES_Dying = 1,
-	ES_Dead = 2
+	ES_Dead = 2,
+	ES_Attacking = 3,
+	ES_Ground_Pound = 4,
+	ES_Spin_Jump = 5
 }EntityState;
 
 typedef struct Entity_S
 {
 	char* name;
 	Uint8            _inuse;         /**<flag to keep track if this isntance is in use and should not be reassigned*/
-	Uint8			_ID;
+	Uint8			 _ID;
 	char*			 tag;
 	Model*			 model;          /**<the 3d model for this entity*/
 	Uint32			 frame;
@@ -41,7 +44,9 @@ typedef struct Entity_S
 	void (*update)(struct Entity_S* self);   /**<function called on entity update*/
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/
 	void(*draw)(struct Entity_S* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
-
+	Uint8			charged;
+	float			dash;
+	Vector3D		oldPosition;
 
 	void* data;                     /**<additional entity specific data*/
 

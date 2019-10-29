@@ -3,7 +3,7 @@
 
 #include "entity.h"
 
-Entity* Player_New();
+Entity* Player_New(Vector3D position);
 
 void Player_Free();
 #endif // !__PLAYER_H__
