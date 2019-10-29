@@ -60,9 +60,9 @@ int main(int argc,char *argv[])
 	//Entity* ground3 = Ground_New(vector3d(-25, 0, -7), 5, "ground3");
 
 
-	Collectable coin2 = Collectable_New(vector3d(5, 0, 0), Collectable_Red);
+	Collectable coin2 = Collectable_New(vector3d(3, 0, 0), Collectable_Red);
 	coin2.ent->data = &coin2;
-	Collectable coin3 = Collectable_New(vector3d(0, 0, 2), Collectable_Blue);
+	Collectable coin3 = Collectable_New(vector3d(0, 0, -8), Collectable_Blue);
 	coin3.ent->data = &coin3;
 
 	//Collectable coin = Collectable_New(vector3d(0, 0, 5), Collectable_Red);
@@ -92,6 +92,12 @@ int main(int argc,char *argv[])
         //update game things here
 
 		gf3d_entity_think_all();
+
+		if (gfc_input_key_pressed("1")) {
+			coin.ent->_inuse = 1;
+			coin2.ent->_inuse = 1;
+			coin3.ent->_inuse = 1;
+		}
 
 		gfc_input_update();
 

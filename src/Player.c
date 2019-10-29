@@ -52,6 +52,10 @@ Entity* Player_New(Vector3D position) {
 
 void player_think(Entity* self) {
 
+	if (gfc_input_key_pressed("c")) {
+		slog("Player collectables Red: %i, Blue: %i, Yellow: %i", player->red, player->blue, player->yellow);
+	}
+
 	if (gfc_input_key_down("LSHIFT")) {
 		slog("Player is dashing");
 		player->dash = MOVE_SPEED;
@@ -177,7 +181,7 @@ void player_think(Entity* self) {
 			player->velocity.z += 0.05f;
 		}
 	}
-
+	
 	if (gfc_input_key_pressed("r")) {
 		player->position = vector3d(10, 0, 10);
 		player->shape.s.sp.point.pos = player->position;
@@ -279,12 +283,11 @@ void player_update(Entity* self) {
 		self->rotation.z,
 		vector3d(0, 0, 1)
 	);
-	slog("Player collectables Red: %i, Blue: %i, Yellow: %i", player->red, player->blue, player->yellow);
+
 	//slog("player roation in degrees - %f", radians_to_degrees(self->rotation.z));
 	player->rayf = FromPoints(self->position, self->rayf.dir);
 	//slog("Ray dir - %f, %f, %f", self->rayf.dir.x, self->rayf.dir.y, self->rayf.dir.z);
 	player->velocity = vector3d(0, 0, 0);
-	slog("%f, %f, %f", player->shape.s.sp.point.pos.x, player->shape.s.sp.point.pos.y, player->shape.s.sp.point.pos.z);
 	if (player->state == ES_Attacking) {
 		player->state = ES_Idle;
 		player->shape.s.sp.point.pos = player->oldPosition;
