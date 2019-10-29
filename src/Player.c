@@ -47,6 +47,7 @@ Entity* Player_New(Vector3D position) {
 	player->grounded = 0;
 	player->charged = 0;
 	player->dash = 0;
+	player->doubleJump = 0;
 	return player;
 }
 
@@ -161,9 +162,19 @@ void player_think(Entity* self) {
 		}
 	}
 
-	if (gfc_input_key_pressed(" ") && player->grounded) {
-		player->jumpTime = JUMP_HEIGHT;
+	if (gfc_input_key_pressed(" ")) {
+
+		if (player->grounded) {
+			player->jumpTime = JUMP_HEIGHT;
+		}
+		else if (!player->grounded && !player->doubleJump) {
+			player->jumpTime = JUMP_HEIGHT + 0.5;
+			player->doubleJump = 1;
+		}
+		
 	}
+
+	
 	
 	//slog("total entities %i", get_entity_size());
 	//gf3d_entity_move(self, vector3d(0, 0, -9));
@@ -257,6 +268,7 @@ void player_update(Entity* self) {
 				player->grounded = 1;
 				player->state = ES_Idle;
 				collided = 1;
+				player->doubleJump = 0;
 			}
 			else if (strcmp(other->tag, "collectable") == 0) {
 				Collectable* collectable = other->data;

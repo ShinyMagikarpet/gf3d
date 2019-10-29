@@ -45,6 +45,7 @@ typedef struct Entity_S
 	void (*touch)(struct Entity_S* self, struct Entity_S* other);   /**<function called on entity think*/
 	void(*draw)(struct Entity_S* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer);
 	Uint8			charged;
+	Uint8			doubleJump;
 	float			dash;
 	Vector3D		oldPosition;
 
