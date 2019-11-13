@@ -294,4 +294,9 @@ Texture *gf3d_texture_load(char *filename)
     return tex;
 }
 
+void gf3d_texture_draw(Texture* tex) {
+
+
+}
+
 /*eol@eof*/

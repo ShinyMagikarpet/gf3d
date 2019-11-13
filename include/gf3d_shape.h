@@ -26,6 +26,11 @@ typedef struct {
 	Point point;
 }Sphere;
 
+typedef struct {
+
+	float x, y, w, h;
+}Rect;
+
 typedef struct
 {
 	double x, y, z, w, h, d;
@@ -37,7 +42,8 @@ typedef enum
 	ST_Line,
 	ST_Box,
 	ST_Sphere,
-	ST_Ray
+	ST_Ray,
+	ST_Rect
 
 }ShapeTypes;
 
@@ -51,6 +57,7 @@ typedef struct
 		Point p;
 		Sphere sp;
 		Ray ray;
+		Rect rect;
 	}s;
 
 	void* data;
@@ -153,6 +160,12 @@ Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal);
 #ifndef gf3d_box_copy
 #define gf3d_box_copy(dst,src) (dst.x = src.x,dst.y = src.y, dst.z = src.z, dst.w = src.w, dst.h = src.h, dst.d = src.d)
 #endif // !gf3d_box_copy
+
+#ifndef gf3d_rect_set
+#define gf3d_rect_set(r,a,b,c,d) (r.x = a,r.y = b, r.w =c, r.h = d)
+#endif
+
+#define gf3d_rect_copy(dst,src) (dst.x = src.x,dst.y = src.y,dst.w = src.w,dst.h = src.h)
 
 
 #endif // !__GF3D_SHAPE_H__

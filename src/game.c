@@ -14,6 +14,8 @@
 #include "Player.h"
 #include "ground.h"
 #include "collectable.h"
+#include "gfc_audio.h"
+#include "gf3d_texture.h"
 
 
 int main(int argc,char *argv[])
@@ -26,6 +28,7 @@ int main(int argc,char *argv[])
     VkCommandBuffer commandBuffer;
     Model *model;
     Matrix4 modelMat;
+	Sound* music = NULL;
 
     for (a = 1; a < argc;a++)
     {
@@ -35,6 +38,8 @@ int main(int argc,char *argv[])
         }
     }
     
+	
+
     init_logger("gf3d.log");    
     slog("gf3d begin");
     gf3d_vgraphics_init(
@@ -47,6 +52,12 @@ int main(int argc,char *argv[])
     );
     
 	gf3d_entity_manager_init(16);
+	gfc_audio_init(256, 16, 4, 1, 1, 1);
+	music = gfc_sound_load("Sound/NJIT_Theme_Song.mp3", 1, 0);
+	gfc_sound_play(music, -1, 0.6, 1, 1);
+	gf3d_texture_init(1024);
+
+	Texture* texture = gf3d_texture_load("images/bg_flat.png");
 
 	//Collectable* c = coin3.ent->data;
 	//slog("The color of this coin is %i", c->color);
@@ -99,6 +110,8 @@ int main(int argc,char *argv[])
 			coin3.ent->_inuse = 1;
 		}
 
+		
+
 		gfc_input_update();
 
 		gf3d_entity_update_all();
@@ -132,7 +145,7 @@ int main(int argc,char *argv[])
 
 		
                 
-            gf3d_command_rendering_end(commandBuffer);
+        gf3d_command_rendering_end(commandBuffer);
             
         gf3d_vgraphics_render_end(bufferFrame);
 
