@@ -182,7 +182,7 @@ void gf3d_model_draw(Model* model, Uint32 bufferFrame, VkCommandBuffer commandBu
 void gf3d_model_update_basic_model_descriptor_set(Model* model, VkDescriptorSet descriptorSet, Uint32 chainIndex, Matrix4 modelMat)
 {
 	VkDescriptorImageInfo imageInfo = { 0 };
-	VkWriteDescriptorSet descriptorWrite[2] = { 0 };
+	VkWriteDescriptorSet descriptorWrite[3] = { 0 };
 	VkDescriptorBufferInfo bufferInfo = { 0 };
 
 	if (!model)
@@ -221,6 +221,16 @@ void gf3d_model_update_basic_model_descriptor_set(Model* model, VkDescriptorSet 
 	descriptorWrite[1].descriptorCount = 1;
 	descriptorWrite[1].pImageInfo = &imageInfo;
 	descriptorWrite[1].pTexelBufferView = NULL; // Optional
+
+	////Trying to get transparency from shader
+	//descriptorWrite[2].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+	//descriptorWrite[2].dstSet = descriptorSet;
+	//descriptorWrite[2].dstBinding = 1;
+	//descriptorWrite[2].dstArrayElement = 0;
+	//descriptorWrite[2].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	//descriptorWrite[2].descriptorCount = 1;
+	//descriptorWrite[2].pImageInfo = &imageInfo;
+	//descriptorWrite[2].pTexelBufferView = NULL;
 
 	vkUpdateDescriptorSets(gf3d_model.device, 2, descriptorWrite, 0, NULL);
 }

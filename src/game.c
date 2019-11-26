@@ -18,6 +18,7 @@
 #include "gf3d_texture.h"
 
 
+
 int main(int argc,char *argv[])
 {
     int done = 0;
@@ -56,9 +57,7 @@ int main(int argc,char *argv[])
 	music = gfc_sound_load("Sound/NJIT_Theme_Song.mp3", 1, 0);
 	gfc_sound_play(music, -1, 0.6, 1, 1);
 	gf3d_texture_init(1024);
-
-	Texture* texture = gf3d_texture_load("images/bg_flat.png");
-
+	//Texture* texture = gf3d_texture_load("images/bg_flat.png");
 	//Collectable* c = coin3.ent->data;
 	//slog("The color of this coin is %i", c->color);
 
@@ -89,13 +88,14 @@ int main(int argc,char *argv[])
 	gfc_input_init("config/input.cfg");
     // main game loop
     slog("gf3d main loop begin");
-    //model = gf3d_model_load_animated("cube",1, 1, 0);
+    //model = gf3d_model_load_animated("Skybox", "Sky-Textures.jpg",1, 2);
     //gfc_matrix_identity(modelMat);
 
     /*gfc_matrix_make_translation(
             modelMat2,
             vector3d(10,0,0)
         );*/
+
     while(!done)
     {
         SDL_PumpEvents();   // update SDL's internal event structures
@@ -136,9 +136,8 @@ int main(int argc,char *argv[])
         bufferFrame = gf3d_vgraphics_render_begin();
         gf3d_pipeline_reset_frame(gf3d_vgraphics_get_graphics_pipeline(),bufferFrame);
         commandBuffer = gf3d_command_rendering_begin(bufferFrame);
-		
-		//gf3d_model_draw(model, bufferFrame, commandBuffer, modelMat, 1);
-			//gf3d_entity_draw(ent, bufferFrame, commandBuffer);
+		gf3d_model_draw(model, bufferFrame, commandBuffer, modelMat, 1);
+		//gf3d_entity_draw(ent, bufferFrame, commandBuffer);
 		gf3d_entity_draw_all(bufferFrame, commandBuffer);
                 //gf3d_model_draw(ent->model,bufferFrame,commandBuffer,modelMat);
                 //gf3d_model_draw(model2,bufferFrame,commandBuffer,modelMat2);

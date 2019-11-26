@@ -161,7 +161,6 @@ Uint8 gf3d_sphere_overlap_poc(Sphere a, Sphere b, Vector3D* poc, Vector3D* norma
 	return 0;
 }
 
-
 Uint8 gf3d_shape_overlap_poc(Shape a, Shape b, Vector3D* poc, Vector3D* normal)
 {
 	//slog("x1 pos is %f", a.data.point.pos.x);

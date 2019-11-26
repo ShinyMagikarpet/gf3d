@@ -30,7 +30,7 @@ typedef struct
 /**
  * @brief setup pipeline system
  */
-void gf3d_pipeline_init();
+void gf3d_pipeline_init(Uint32 max_pipelines);
 
 /**
  * @brief free a created pipeline

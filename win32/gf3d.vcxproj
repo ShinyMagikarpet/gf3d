@@ -42,14 +42,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\David\NJIT\IT485\gf3d\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\David\NJIT\IT485\Build\Debug;C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <SourcePath>C:\Users\David\NJIT\IT485\gf3d\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Users\David\NJIT\IT485\gf3d\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\David\NJIT\IT485\Build\Debug;C:\Users\David\NJIT\newton-dynamics-master\sdk\projects\visualStudio_2015_dll\Win32\newton\Release;C:\Users\David\NJIT\bullet3-master\bin;C:\Users\David\NJIT\SDL\SDL_libs;C:\VulkanSDK\1.1.121.1\Lib32;$(LibraryPath)</LibraryPath>
     <OutDir>..</OutDir>
     <SourcePath>C:\Users\David\NJIT\IT485\gf3d\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -60,13 +60,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\David\NJIT\newton-dynamics-master\sdk\dgNewton;C:\Users\David\NJIT\bullet3-master\src;C:\Users\David\NJIT\SDL\SDL2-2.0.10\include;\VulkanSDK\1.1.121.1\Include\;\Users\David\NJIT\IT485\gf3d\gfc\simple_logger\include;\Users\David\NJIT\IT485\gf3d\gfc\simple_json\include;\Users\David\NJIT\IT485\gf3d\gfc\include;C:\Users\David\NJIT\SDL\SDL2_mixer-2.0.4\include;C:\Users\David\NJIT\SDL\SDL2_ttf-2.0.15\include;C:\Users\David\NJIT\SDL\SDL2_image-2.0.5\include</AdditionalIncludeDirectories>
-      <CompileAs>Default</CompileAs>
+      <AdditionalIncludeDirectories>C:\Users\David\NJIT\newton-dynamics-master\sdk\dgNewton;C:\Users\David\NJIT\bullet3-master\src;C:\Users\David\NJIT\SDL\SDL2-2.0.10\include;\VulkanSDK\1.1.121.1\Include\;\Users\David\NJIT\IT485\gf3d\gfc\simple_logger\include;\Users\David\NJIT\IT485\gf3d\gfc\simple_json\include;\Users\David\NJIT\IT485\gf3d\gfc\include;C:\Users\David\NJIT\SDL\SDL2_mixer-2.0.4\include;C:\Users\David\NJIT\SDL\SDL2_ttf-2.0.15\include;C:\Users\David\NJIT\SDL\SDL2_image-2.0.5\include;C:\Users\David\NJIT\IT485\cimgui\cimgui</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2_ttf.lib;sdl2_mixer.lib;sdl2_image.lib;SDL2.lib;SDL2main.lib;vulkan-1.lib;BulletCollision_vs2010.lib;BulletDynamics_vs2010.lib;LinearMath_vs2010.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl2_ttf.lib;sdl2_mixer.lib;sdl2_image.lib;SDL2.lib;SDL2main.lib;vulkan-1.lib;BulletCollision_vs2010.lib;BulletDynamics_vs2010.lib;LinearMath_vs2010.lib;newton.lib;cimgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,15 +78,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\David\NJIT\newton-dynamics-master\sdk\dgNewton;C:\Users\David\NJIT\bullet3-master\src;C:\Users\David\NJIT\SDL\SDL2-2.0.10\include;\VulkanSDK\1.1.121.1\Include\;\Users\David\NJIT\IT485\gf3d\gfc\simple_logger\include;\Users\David\NJIT\IT485\gf3d\gfc\simple_json\include;\Users\David\NJIT\IT485\gf3d\gfc\include;C:\Users\David\NJIT\SDL\SDL2_mixer-2.0.4\include;C:\Users\David\NJIT\SDL\SDL2_ttf-2.0.15\include;C:\Users\David\NJIT\SDL\SDL2_image-2.0.5\include</AdditionalIncludeDirectories>
-      <CompileAs>Default</CompileAs>
+      <AdditionalIncludeDirectories>C:\Users\David\NJIT\newton-dynamics-master\sdk\dgNewton;C:\Users\David\NJIT\bullet3-master\src;C:\Users\David\NJIT\SDL\SDL2-2.0.10\include;\VulkanSDK\1.1.121.1\Include\;\Users\David\NJIT\IT485\gf3d\gfc\simple_logger\include;\Users\David\NJIT\IT485\gf3d\gfc\simple_json\include;\Users\David\NJIT\IT485\gf3d\gfc\include;C:\Users\David\NJIT\SDL\SDL2_mixer-2.0.4\include;C:\Users\David\NJIT\SDL\SDL2_ttf-2.0.15\include;C:\Users\David\NJIT\SDL\SDL2_image-2.0.5\include;C:\Users\David\NJIT\IT485\cimgui\cimgui</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sdl2_ttf.lib;sdl2_mixer.lib;sdl2_image.lib;SDL2.lib;SDL2main.lib;vulkan-1.lib;BulletCollision_vs2010.lib;BulletDynamics_vs2010.lib;LinearMath_vs2010.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl2_ttf.lib;sdl2_mixer.lib;sdl2_image.lib;SDL2.lib;SDL2main.lib;vulkan-1.lib;BulletCollision_vs2010.lib;BulletDynamics_vs2010.lib;LinearMath_vs2010.lib;newton.lib;cimgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
