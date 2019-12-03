@@ -7,11 +7,6 @@ layout(location = 1) in vec2 fragTexCoord;
 
 layout(location = 0) out vec4 outColor;
 
-layout(set = 3, binding = 0) uniform Transparency{
-	float value;
-	vec2 pos;
-} transparency;
-
 void main()
 {
     vec3 lightVector = vec3(1,0,-1);
@@ -21,9 +16,5 @@ void main()
     vec4 baseColor = texture(texSampler, fragTexCoord * sin(2));
     outColor = baseColor + cosTheta * cosTheta2;
     vec4 _COLOR = vec4(1, 0, 0.5, 1);
-    outColor = _COLOR * outColor;
-	//if(transparency.value == 1){
-	//	outColor.w = transparency.value;
-	//}
-    //outColor.w = transparency.value;
+    //outColor = _COLOR * outColor;
 }

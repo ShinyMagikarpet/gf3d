@@ -56,6 +56,13 @@ void gf3d_mesh_init(Uint32 mesh_max)
     gf3d_mesh.attributeDescriptions[2].format = VK_FORMAT_R32G32_SFLOAT;
     gf3d_mesh.attributeDescriptions[2].offset = offsetof(Vertex, texel);
 
+	/*gf3d_mesh.attributeDescriptions[3].binding = 0;
+	gf3d_mesh.attributeDescriptions[3].location = 3;
+	gf3d_mesh.attributeDescriptions[3].format = VK_FORMAT_R32_SFLOAT;
+	gf3d_mesh.attributeDescriptions[3].offset = offsetof(Vertex, number);
+	slog("pooooooooooooooooooooooop %i", gf3d_mesh.attributeDescriptions[3].offset);*/
+	//gf3d_mesh.attributeDescriptions[3]
+
     gf3d_mesh.mesh_list = (Mesh *)gfc_allocate_array(sizeof(Mesh),mesh_max);
     slog("mesh system initialized");
 }

@@ -10,6 +10,7 @@ typedef struct
     Vector3D vertex;
     Vector3D normal;
     Vector2D texel;
+	float number;
 }Vertex;
 
 typedef struct
