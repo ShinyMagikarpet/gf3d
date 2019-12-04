@@ -2,6 +2,7 @@
 #define __COLLECTABLE_H__
 
 #include "entity.h"
+#include "gf3d_sprite.h"
 
 typedef enum
 {
@@ -14,6 +15,7 @@ typedef struct Collectable_S {
 
 	Entity* ent;
 	CollectableColor color;
+	Sprite* sprite;
 
 }Collectable;
 

@@ -4,6 +4,7 @@
 #include "gf3d_space.h"
 #include "collectable.h"
 #include "simple_logger.h"
+#include "gf3d_sprite.h"
 
 #define MOVE_SPEED 0.1
 #define ROTATE_SPEED 0.05
@@ -276,6 +277,7 @@ void player_update(Entity* self) {
 				player_set_collectable(collectable);
 				slog("Colliding with collectable %s", &collectable->color);
 				other->_inuse = 0;
+				collectable->sprite->_inuse = 0;
 			}
 
 		}

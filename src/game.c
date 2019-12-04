@@ -89,12 +89,12 @@ int main(int argc,char *argv[])
 
 	float frame = 0;
 	Uint32 mouseFrame = 0;
-	Sprite* mouse = NULL;
-	mouse = gf3d_sprite_load("images/pointer.png", 32, 32, 16);
+	//Sprite* mouse = NULL;
+	//mouse = gf3d_sprite_load("images/pointer.png", 32, 32, 16);
 	int mousex, mousey;
 
-	Sprite* sprite = NULL;
-	sprite = gf3d_sprite_load("images/red.png", 64, 64, 1);
+	//Sprite* sprite = NULL;
+	//sprite = gf3d_sprite_load("images/pink.png", 64, 64, 1);
 	
 	gfc_input_init("config/input.cfg");
     // main game loop
@@ -166,8 +166,9 @@ int main(int argc,char *argv[])
 
 		commandBuffer = gf3d_command_rendering_begin(bufferFrame, gf3d_vgraphics_get_graphics_overlay_pipeline());
         
-		gf3d_sprite_draw(mouse, vector2d(mousex, mousey), mouseFrame, bufferFrame, commandBuffer);
-		gf3d_sprite_draw(sprite, vector2d(frame, 0), mouseFrame, bufferFrame, commandBuffer);
+		//gf3d_sprite_draw(mouse, vector2d(mousex, mousey), mouseFrame, bufferFrame, commandBuffer);
+		//gf3d_sprite_draw(sprite, vector2d(frame, 0), mouseFrame, bufferFrame, commandBuffer);
+		gf3d_sprite_draw_all(bufferFrame, commandBuffer);
 
 		gf3d_command_rendering_end(commandBuffer);
 

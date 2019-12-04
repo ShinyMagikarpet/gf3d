@@ -43,6 +43,8 @@ typedef struct
 	VkBuffer* uniformBuffers;         /**<handles for the UBO*/
 	VkDeviceMemory* uniformBuffersMemory;   /**<memory handle for the UBO memory*/
 	Uint32                      uniformBufferCount;     /**<how many UBOs for the sprite*/
+	Vector2D					position; /**<Position of sprite in screen space*/
+	Uint32						frame;
 }Sprite;
 
 /**
@@ -77,6 +79,11 @@ void gf3d_sprite_free(Sprite* sprite);
  * @param commandBuffer the command to use to execute the draw call
  */
 void gf3d_sprite_draw(Sprite* sprite, Vector2D position, Uint32 frame, Uint32 buffer_frame, VkCommandBuffer commandBuffer);
+
+/**
+* @brief draws all sprites in sprite manager
+*/
+void gf3d_sprite_draw_all(Uint32 bufferframe, VkCommandBuffer commandbuffer);
 
 /**
  * @brief get the binding description for a sprite

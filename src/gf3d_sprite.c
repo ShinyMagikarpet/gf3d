@@ -245,6 +245,22 @@ void gf3d_sprite_draw(Sprite* sprite, Vector2D position, Uint32 frame, Uint32 bu
 	gf3d_sprite_render(sprite, commandBuffer, descriptorSet);
 }
 
+void gf3d_sprite_draw_all(Uint32 bufferframe, VkCommandBuffer commandbuffer) {
+
+	for (int i = 0; i < gf3d_sprite.max_sprites; i++) {
+		if (gf3d_sprite.sprite_list[i]._inuse == 0) {
+			continue;
+		}
+		gf3d_sprite_draw(
+			&gf3d_sprite.sprite_list[i],
+			gf3d_sprite.sprite_list[i].position,
+			gf3d_sprite.sprite_list[i].frame,
+			bufferframe,
+			commandbuffer
+			);
+	}
+}
+
 void gf3d_sprite_create_vertex_buffer(Sprite* sprite)
 {
 	void* data = NULL;
