@@ -14,16 +14,16 @@
  * @brief init Vulkan / SDL, setup device and initialize infrastructure for 3d graphics
  */
 void gf3d_vgraphics_init(
-    char *windowName,
-    int renderWidth,
-    int renderHeight,
-    Vector4D bgcolor,
-    Bool fullscreen,
-    Bool enableValidation
+	char* windowName,
+	int renderWidth,
+	int renderHeight,
+	Vector4D bgcolor,
+	Bool fullscreen,
+	Bool enableValidation
 );
 
 /**
- * @brief After initialization 
+ * @brief After initialization
  */
 VkDevice gf3d_vgraphics_get_default_logical_device();
 
@@ -36,7 +36,7 @@ void gf3d_vgraphics_clear();
 Uint32 gf3d_vgraphics_render_begin();
 void gf3d_vgraphics_render_end(Uint32 imageIndex);
 
-int gf3d_vgraphics_create_buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer * buffer, VkDeviceMemory * bufferMemory);
+int gf3d_vgraphics_create_buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer* buffer, VkDeviceMemory* bufferMemory);
 
 void gf3d_vgraphics_copy_buffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
@@ -44,14 +44,13 @@ uint32_t gf3d_vgraphics_find_memory_type(uint32_t typeFilter, VkMemoryPropertyFl
 
 void gf3d_vgraphics_rotate_camera(float degrees);
 
-void gf3d_vgraphics_move_camera(float distance);
-
 VkBuffer gf3d_vgraphics_get_uniform_buffer_by_index(Uint32 index);
 UniformBufferObject gf3d_vgraphics_get_uniform_buffer_object();
 
-Pipeline *gf3d_vgraphics_get_graphics_pipeline();
+Pipeline* gf3d_vgraphics_get_graphics_model_pipeline();
+Pipeline* gf3d_vgraphics_get_graphics_overlay_pipeline();
 
-Command *gf3d_vgraphics_get_graphics_command_pool();
+Command* gf3d_vgraphics_get_graphics_command_pool();
 
 VkImageView gf3d_vgraphics_create_image_view(VkImage image, VkFormat format);
 

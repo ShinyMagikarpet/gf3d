@@ -1,116 +1,89 @@
-#ifndef __GF2D_SPRITE_H__
-#define __GF2D_SPRITE_H__
+#ifndef __GF3D_SPRITE_H__
+#define __GF3D_SPRITE_H__
 
-#include <SDL.h>
+/**
+ * gf3d_sprite
+ * @license The MIT License (MIT)
+   @copyright Copyright (c) 2019 EngineerOfLies
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+
 #include "gfc_types.h"
 #include "gfc_vector.h"
+#include "gfc_matrix.h"
 #include "gfc_text.h"
 
-typedef struct Sprite_S
+#include "gf3d_texture.h"
+
+typedef struct
 {
-	int ref_count;
-	TextLine filepath;
-	SDL_Texture* texture;
-	SDL_Surface* surface;
-	Uint32 frames_per_line;
-	Uint32 frame_w, frame_h;
+	Uint8                       _inuse;
+	TextLine                    filename;               /**<the name of the file used to create the sprite*/
+	Uint32                      frameCount;             /**<how many frames are loaded for this model*/
+	Texture* texture;                /**<texture memory pointer*/
+	Uint8                       framesPerLine;          /**<how many frames are per line in the sprite sheet*/
+	Uint32                      frameWidth, frameHeight; /*<the size, in pixels, of the individual sprite frames*/
+	VkBuffer                    buffer;                 /**<vertex buffer for the sprite (always 4 vertices)*/
+	VkDeviceMemory              bufferMemory;           /**<memory handle for the vertex buffer*/
+	VkDescriptorSet* descriptorSet;          /**<descriptor sets used for this sprite to render*/
+	VkBuffer* uniformBuffers;         /**<handles for the UBO*/
+	VkDeviceMemory* uniformBuffersMemory;   /**<memory handle for the UBO memory*/
+	Uint32                      uniformBufferCount;     /**<how many UBOs for the sprite*/
 }Sprite;
 
 /**
- * @brief initializes the sprite manager
- * @param max the maximum number of sprites the system will handle at once
+ * @brief initialize the internal management system for sprites, auto-cleaned up on program exit
+ * @param max_sprites how many concurrent sprites to support
+ * @param chain_length how many images are available in the swap chain
+ * @param device the logical vulkan device to be rendering to
  */
-void gf2d_sprite_init(Uint32 max);
+void gf3d_sprite_manager_init(Uint32 max_sprites, Uint32 chain_length, VkDevice device);
 
 /**
- * @brief loads a simple image using the sprite system
- * @param filename the image file to load
- * @returns NULL on error or the sprite loaded
+ * @brief loads a sprite sheet into memory
+ * @param frame_width how wide an individual frame is on the sprite sheet
+ * @param frame_height how high an individual frame is on the sprite sheet
+ * @param frames_per_line how many frames across are on the sprite sheet
+ * @return NULL on error (check logs) or a pointer to a sprite that can be draw to the 2d overlay
  */
-Sprite* gf2d_sprite_load_image(char* filename);
+Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint32 frames_per_line);
 
 /**
- * @brief draw a simple image to screen at the position provided
- * @param image the sprite image to draw
- * @param position the x and y position to draw the image at (top left corner)
+ * @brief free a previously loaded sprite
+ * @param sprite a pointer to the sprite to be freed
  */
-void gf2d_sprite_draw_image(Sprite* image, Vector2D position);
+void gf3d_sprite_free(Sprite* sprite);
 
 /**
- * @brief loads a sprite from file using the sprite system
- * @param filename the sprite sheet to load
- * @param frameWidth the width of an individual sprite frame
- * @param frameHeigh the height of an individual sprite frame
- * @param framesPerLine how many frames go in a row in the sprite sheet
- * @param keepSurface if you plan on doing surface editing with this sprite, set to true otherwise the surface data is cleaned up
- */
-Sprite* gf2d_sprite_load_all(
-	char* filename,
-	Sint32 frameWidth,
-	Sint32 frameHeigh,
-	Sint32 framesPerLine,
-	Bool    keepSurface
-);
-
-/**
- * @brief draw a sprite to the screen
+ * @brief draw a sprite frame to the current buffer frame
  * @param sprite the sprite to draw
- * @param position here on the screen to draw it
- * @param scale (optional) if you want to scale the sprite
- * @param scaleCenter (optional) scale the sprite from the position in the sprite
- * @param rotation (optional) the position of the rotation center and the angle in degrees to rotate
- * @param flip (optional) set to 1 if you want to flip in the horizontal,vertical axis
- * @param colorShift (optional) if you want to gamma shift the sprite or set an alpha value
- * @param frame which frame to draw
+ * @param position where on the screen to draw the sprite
+ * @param frame the frame of the sprite to draw
+ * @param buffer_frame the current rendering context
+ * @param commandBuffer the command to use to execute the draw call
  */
-void gf2d_sprite_draw(
-	Sprite* sprite,
-	Vector2D position,
-	Vector2D* scale,
-	Vector2D* scaleCenter,
-	Vector3D* rotation,
-	Vector2D* flip,
-	Vector4D* colorShift,
-	Uint32 frame);
+void gf3d_sprite_draw(Sprite* sprite, Vector2D position, Uint32 frame, Uint32 buffer_frame, VkCommandBuffer commandBuffer);
 
 /**
- * @brief free a sprite back to the sprite manager
- * Stays in memory until the space is needed
- * @param sprite the sprite to free
+ * @brief get the binding description for a sprite
  */
-void gf2d_sprite_free(Sprite* sprite);
+VkVertexInputBindingDescription* gf3d_sprite_get_bind_description();
 
-/**
- * @brief delete all loaded sprites from memory
- * does not close the sprite system
- */
-void gf2d_sprite_clear_all();
-
-/**
- * @brief draw a sprite to a surface instead of to the screen.
- * @note sprite must have been loaded with surface data preserved
- * @param sprite the sprite to draw
- * @param position where on the target surface to draw it to
- * @param scale (optional) if provided the sprite will be scaled by this factor
- * @param scaleCenter (optional) if provided, this will be used to determin the scaling point, (0,0) is default
- * @param frame the frame to draw to the surface
- * @param surface the surface to draw to
- */
-void gf2d_sprite_draw_to_surface(
-	Sprite* sprite,
-	Vector2D position,
-	Vector2D* scale,
-	Vector2D* scaleCenter,
-	Uint32 frame,
-	SDL_Surface* surface
-);
-
-/**
- * @brief allocate space for a sprite
- * @note both texture and sprite data is left blank
- * @return NULL on error or out of memory, a blank sprite otherwise
- */
-Sprite* gf2d_sprite_new();
+VkVertexInputAttributeDescription* gf3d_sprite_get_attribute_descriptions(Uint32* count);
 
 
 #endif
