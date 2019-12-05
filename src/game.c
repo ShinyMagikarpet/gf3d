@@ -17,6 +17,7 @@
 #include "gfc_audio.h"
 #include "gf3d_texture.h"
 #include "gf3d_sprite.h"
+#include "level.h"
 
 
 
@@ -55,12 +56,9 @@ int main(int argc,char *argv[])
     
 	gf3d_entity_manager_init(16);
 	gfc_audio_init(256, 16, 4, 1, 1, 1);
-	music = gfc_sound_load("Sound/NJIT_Theme_Song.mp3", 1, 0);
-	gfc_sound_play(music, -1, 0.6, 1, 1);
+	//music = gfc_sound_load("Sound/NJIT_Theme_Song.mp3", 1, 0);
+	//gfc_sound_play(music, -1, 0.6, 1, 1);
 	gf3d_texture_init(1024);
-	//Texture* texture = gf3d_texture_load("images/bg_flat.png");
-	//Collectable* c = coin3.ent->data;
-	//slog("The color of this coin is %i", c->color);
 
 	Entity* player = Player_New(vector3d(10, 0, 10));
 	Entity* ground = Ground_New(vector3d(-13, 0, -15), 5, "ground1");
@@ -68,17 +66,13 @@ int main(int argc,char *argv[])
 	Collectable coin = Collectable_New(vector3d(0, 0, 3), Collectable_Yellow);
 	coin.ent->data = &coin;
 
-	//Entity* ground3 = Ground_New(vector3d(-25, 0, -7), 5, "ground3");
-
 
 	Collectable coin2 = Collectable_New(vector3d(3, 0, 0), Collectable_Red);
 	coin2.ent->data = &coin2;
 	Collectable coin3 = Collectable_New(vector3d(0, 0, -8), Collectable_Blue);
 	coin3.ent->data = &coin3;
 
-	//Collectable coin = Collectable_New(vector3d(0, 0, 5), Collectable_Red);
-	//Entity* ground4 = Ground_New(vector3d(0, 0, 5), 1, "ground4");
-	//Entity* ground5 = Ground_New(vector3d(5, 0, 5), 1, "ground5");
+	LevelInfo* level = level_info_load("levels/level1.json");
 
 
 

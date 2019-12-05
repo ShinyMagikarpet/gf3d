@@ -108,12 +108,14 @@
     <ClInclude Include="..\gfc\simple_json\include\simple_json_string.h" />
     <ClInclude Include="..\gfc\simple_json\include\simple_json_value.h" />
     <ClInclude Include="..\gfc\simple_logger\include\simple_logger.h" />
+    <ClInclude Include="..\include\cJSON.h" />
     <ClInclude Include="..\include\collectable.h" />
     <ClInclude Include="..\include\entity.h" />
     <ClInclude Include="..\include\gf3d_body.h" />
     <ClInclude Include="..\include\gf3d_camera.h" />
     <ClInclude Include="..\include\gf3d_collision.h" />
     <ClInclude Include="..\include\gf3d_commands.h" />
+    <ClInclude Include="..\include\gf3d_config.h" />
     <ClInclude Include="..\include\gf3d_dynamic_body.h" />
     <ClInclude Include="..\include\gf3d_extensions.h" />
     <ClInclude Include="..\include\gf3d_model.h" />
@@ -128,7 +130,9 @@
     <ClInclude Include="..\include\gf3d_vgraphics.h" />
     <ClInclude Include="..\include\gf3d_vqueues.h" />
     <ClInclude Include="..\include\ground.h" />
+    <ClInclude Include="..\include\level.h" />
     <ClInclude Include="..\include\Player.h" />
+    <ClInclude Include="..\include\spawn.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\gfc\simple_json\src\simple_json.c" />
@@ -147,6 +151,7 @@
     <ClCompile Include="..\gfc\src\gfc_text.c" />
     <ClCompile Include="..\gfc\src\gfc_types.c" />
     <ClCompile Include="..\gfc\src\gfc_vector.c" />
+    <ClCompile Include="..\src\cJSON.c" />
     <ClCompile Include="..\src\collectable.c" />
     <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />
@@ -154,6 +159,7 @@
     <ClCompile Include="..\src\gf3d_camera.c" />
     <ClCompile Include="..\src\gf3d_collision.c" />
     <ClCompile Include="..\src\gf3d_commands.c" />
+    <ClCompile Include="..\src\gf3d_config.c" />
     <ClCompile Include="..\src\gf3d_dynamic_body.c" />
     <ClCompile Include="..\src\gf3d_extensions.c" />
     <ClCompile Include="..\src\gf3d_mesh.c" />
@@ -170,7 +176,9 @@
     <ClCompile Include="..\src\gf3d_vgraphics.c" />
     <ClCompile Include="..\src\gf3d_vqueues.c" />
     <ClCompile Include="..\src\ground.c" />
+    <ClCompile Include="..\src\level.c" />
     <ClCompile Include="..\src\Player.c" />
+    <ClCompile Include="..\src\spawn.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\default.frag" />

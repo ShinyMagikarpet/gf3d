@@ -1,0 +1,15 @@
+{
+  "test": "grape soda is best soda",
+  "world": {
+    "spawnList": [
+      {
+        "name": "player_start",
+        "position": [ 10, 0, 10 ]
+      },
+      {
+        "name": "coin_start",
+        "position": [ 100, -200, 0 ]
+      }
+    ]
+  }
+}

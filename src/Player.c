@@ -5,6 +5,7 @@
 #include "collectable.h"
 #include "simple_logger.h"
 #include "gf3d_sprite.h"
+#include "simple_json.h"
 
 #define MOVE_SPEED 0.1
 #define ROTATE_SPEED 0.05
@@ -27,7 +28,6 @@ Entity* Player_New(Vector3D position) {
 	player->position = position;
 	player->rotation = vector3d(0, 0, 0);
 	player->shape = gf3d_shape_sphere(1, player->position);
-	player->rayf = gf3d_ray_set(player->position, vector3d(0, 0, 1));
 	gf3d_body_set(
 		&player->body,
 		0,
@@ -50,6 +50,18 @@ Entity* Player_New(Vector3D position) {
 	player->dash = 0;
 	player->doubleJump = 0;
 	return player;
+}
+
+Entity* player_spawn(Vector3D position, SJson* args) {
+
+	if (player != NULL)
+	{
+		vector2d_copy(player->position, position);
+		//level_add_entity(player);
+		return NULL;
+	}
+	return Player_New(position);
+
 }
 
 void player_think(Entity* self) {
@@ -128,9 +140,9 @@ void player_think(Entity* self) {
 	if (gfc_input_key_down("e")) {
 
 		
-			player->state = ES_Attacking;
-			player->velocity.x += 0.5;
-			player->oldPosition = player->position;
+		player->state = ES_Attacking;
+		player->velocity.x += 0.5;
+		player->oldPosition = player->position;
 		
 
 
@@ -299,7 +311,6 @@ void player_update(Entity* self) {
 	);
 
 	//slog("player roation in degrees - %f", radians_to_degrees(self->rotation.z));
-	player->rayf = FromPoints(self->position, self->rayf.dir);
 	//slog("Ray dir - %f, %f, %f", self->rayf.dir.x, self->rayf.dir.y, self->rayf.dir.z);
 	player->velocity = vector3d(0, 0, 0);
 	if (player->state == ES_Attacking) {

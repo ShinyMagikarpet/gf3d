@@ -27,8 +27,6 @@ typedef struct Entity_S
 	Matrix4			 modelMat;
 	Body			 body;
 	Shape			 shape;
-	Ray				 rayf;			 /**<forward direction for entity*/
-	Ray				 rayd;			 /**<downward direction for entity*/
 	Vector3D         position;       /**<position of the entity in 3d space*/
 	Vector3D         velocity;       /**<velocity of the entity in 3d space*/
 	Vector3D         gravity;		/**<acceleration of the entity in 3d space*/

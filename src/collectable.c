@@ -25,12 +25,12 @@ Collectable Collectable_New(Vector3D position, CollectableColor color) {
 	case Collectable_Blue:
 		collectable.ent->model = gf3d_model_load_animated("Coin", "blue", 1, 13);
 		collectable.sprite = gf3d_sprite_load("images/blue.png", 64, 64, 1);
-		vector2d_copy(collectable.sprite->position, vector2d(1080, 10));
+		vector2d_copy(collectable.sprite->position, vector2d(1040, 10));
 		break;
 	case Collectable_Yellow:
 		collectable.ent->model = gf3d_model_load_animated("Coin", "yellow", 1, 13);
 		collectable.sprite = gf3d_sprite_load("images/yellow.png", 64, 64, 1);
-		vector2d_copy(collectable.sprite->position, vector2d(1160, 10));
+		vector2d_copy(collectable.sprite->position, vector2d(1080, 10));
 		break;
 	default:
 		collectable.ent->model = gf3d_model_load_animated("Coin", "white", 1, 13);
