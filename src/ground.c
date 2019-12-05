@@ -38,6 +38,13 @@ Entity* Ground_New(Vector3D pos, float scale, char* name) {
 	return ground;
 }
 
+Entity* ground_spawn(Vector3D position, SJson* args) {
+
+	
+	return Ground_New(position, 5, "ground");
+
+}
+
 void ground_update(Entity* self) {
 	//slog("%s", self->name);
 	if (strcmp(self->name, "ground2") == 0) {

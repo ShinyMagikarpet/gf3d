@@ -1,6 +1,8 @@
 #include "spawn.h"
 #include "level.h"
 #include "Player.h"
+#include "ground.h"
+#include "collectable.h"
 #include "simple_logger.h"
 
 static Spawn spawnlist[] =
@@ -9,10 +11,18 @@ static Spawn spawnlist[] =
 		"player_start",
 		player_spawn
 	},
+	{
+		"ground_spawn",
+		ground_spawn
+	},
+	{
+		"collectable_spawn",
+		collectable_spawn
+	},
 	{0}
 };
 
-void spawn_entity(const char* name, Vector3D position, Uint32 id, SJson* args)
+void spawn_entity(const char* name, Vector3D position, Uint32 id, cJSON* args)
 {
 	Spawn* spawn;
 	Entity* ent;

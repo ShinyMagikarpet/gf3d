@@ -4,13 +4,15 @@
 #include "gfc_text.h"
 #include "gf3d_config.h"
 #include "cJSON.h"
+#include "spawn.h"
 
 
 
 void level_info_free(LevelInfo* linfo){
 
 	if (!linfo)return;
-	sj_free(linfo->spawnList);
+	//sj_free(linfo->spawnList);
+	cJSON_free(linfo->spawnList);
 	free(linfo);
 }
 
@@ -100,7 +102,8 @@ LevelInfo* level_info_load(char* filename){
 
 	cJSON* world2 = cJSON_GetObjectItemCaseSensitive(example, "world");
 	cJSON* spawnList = cJSON_GetObjectItemCaseSensitive(world2, "spawnList");
-	if (spawnList) {
+	linfo->spawnList = spawnList;
+	/*if (spawnList) {
 		cJSON* spawn = NULL;
 		cJSON_ArrayForEach(spawn, spawnList) {
 			cJSON* position = cJSON_GetObjectItemCaseSensitive(spawn, "position");
@@ -108,24 +111,31 @@ LevelInfo* level_info_load(char* filename){
 			slog("Position: %f %f %f", vec3.x, vec3.y, vec3.z);
 		}
 
-	}
+	}*/
 	//cJSON* grape = cJSON_GetObjectItemCaseSensitive(example, "test");
 	//slog(grape->valuestring);
 	cJSON_free(example);
+	cJSON_free(world2);
 	free(string);
 	sj_free(json);
 	//slog("loaded level info for %s", filename);
-	
 	return linfo;
 }
 
-void level_spawn_entities(SJson* spawnList){
+void level_spawn_entities(cJSON* spawnList){
 	int i = 0, count = 0;
-	SJson* item;
 	Vector3D position;
 	int id = 0;
-	count = sj_array_get_count(spawnList);
-	for (i = 0; i < count; i++)
+	cJSON* item = NULL;
+
+	cJSON_ArrayForEach(item, spawnList) {
+		slog(item->child->valuestring);
+		position = cjson_value_as_vector3d(item->child->next);
+		spawn_entity(item->child->valuestring, position, 0, item->child->next->next);
+	}
+
+	cJSON_free(item);
+	/*for (i = 0; i < count; i++)
 	{
 		item = sj_array_get_nth(spawnList, i);
 		if (!item)continue;
@@ -135,5 +145,5 @@ void level_spawn_entities(SJson* spawnList){
 			id = 0;
 		}
 		spawn_entity(sj_get_string_value(sj_object_get_value(item, "name")), position, id, sj_object_get_value(item, "args"));
-	}
+	}*/
 }

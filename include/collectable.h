@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "gf3d_sprite.h"
+#include "cjson.h"
 
 typedef enum
 {
@@ -19,5 +20,12 @@ typedef struct Collectable_S {
 
 }Collectable;
 
-Collectable Collectable_New(Vector3D position, CollectableColor color);
+Collectable* Collectable_New(Vector3D position, CollectableColor color);
+
+Entity* collectable_spawn(Vector3D position, cJSON* args);
+
+void free_collectable(Collectable* collectable);
+
+int check_win_condition();
+
 #endif // !__COLLECTABLE_H__

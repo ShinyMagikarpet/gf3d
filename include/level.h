@@ -54,5 +54,7 @@ LevelInfo* level_info_load(char* filename);
  */
 LevelInfo* level_info_create(const char* backgroundImage, const char* backgroundMusic);
 
+void level_spawn_entities(cJSON* spawnList);
+
 #endif // !__LEVEL_H__
 

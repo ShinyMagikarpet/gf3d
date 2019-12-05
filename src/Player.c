@@ -67,7 +67,7 @@ Entity* player_spawn(Vector3D position, SJson* args) {
 void player_think(Entity* self) {
 
 	if (gfc_input_key_pressed("c")) {
-		slog("Player collectables Red: %i, Blue: %i, Yellow: %i", player->red, player->blue, player->yellow);
+		//slog("Player collectables Red: %i, Blue: %i, Yellow: %i", player->red, player->blue, player->yellow);
 	}
 
 	if (gfc_input_key_down("LSHIFT")) {
@@ -285,7 +285,6 @@ void player_update(Entity* self) {
 			}
 			else if (strcmp(other->tag, "collectable") == 0) {
 				Collectable* collectable = other->data;
-
 				player_set_collectable(collectable);
 				slog("Colliding with collectable %s", &collectable->color);
 				other->_inuse = 0;

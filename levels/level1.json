@@ -1,5 +1,5 @@
 {
-  "test": "grape soda is best soda",
+  "test": "ginger ale is best soda to have with chinese food",
   "world": {
     "spawnList": [
       {
@@ -7,8 +7,27 @@
         "position": [ 10, 0, 10 ]
       },
       {
-        "name": "coin_start",
-        "position": [ 100, -200, 0 ]
+        "name": "ground_spawn",
+        "position": [ -13, 0, -15 ]
+      },
+      {
+        "name": "ground_spawn",
+        "position": [ 10, 0, 0 ]
+      },
+      {
+        "name": "collectable_spawn",
+        "position": [ 0, 0, 3 ],
+        "color": "yellow"
+      },
+      {
+        "name": "collectable_spawn",
+        "position": [ 3, 0, 0 ],
+        "color": "red"
+      },
+      {
+        "name": "collectable_spawn",
+        "position": [ 0, 0, -8 ],
+        "color": "blue"
       }
     ]
   }

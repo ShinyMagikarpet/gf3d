@@ -60,20 +60,19 @@ int main(int argc,char *argv[])
 	//gfc_sound_play(music, -1, 0.6, 1, 1);
 	gf3d_texture_init(1024);
 
-	Entity* player = Player_New(vector3d(10, 0, 10));
-	Entity* ground = Ground_New(vector3d(-13, 0, -15), 5, "ground1");
-	Entity* ground2 = Ground_New(vector3d(10, 0, 0), 5, "ground2");
-	Collectable coin = Collectable_New(vector3d(0, 0, 3), Collectable_Yellow);
-	coin.ent->data = &coin;
+	//Entity* player = Player_New(vector3d(10, 0, 10));
+	//Entity* ground = Ground_New(vector3d(-13, 0, -15), 5, "ground1");
+	//Entity* ground2 = Ground_New(vector3d(10, 0, 0), 5, "ground2");
+	//Collectable coin = Collectable_New(vector3d(0, 0, 3), Collectable_Yellow);
+	//coin.ent->data = &coin;
 
 
-	Collectable coin2 = Collectable_New(vector3d(3, 0, 0), Collectable_Red);
-	coin2.ent->data = &coin2;
-	Collectable coin3 = Collectable_New(vector3d(0, 0, -8), Collectable_Blue);
-	coin3.ent->data = &coin3;
+	//Collectable* coin2 = Collectable_New(vector3d(3, 0, 0), Collectable_Red);
+
+	//Collectable* coin3 = Collectable_New(vector3d(0, 0, -8), Collectable_Blue);
 
 	LevelInfo* level = level_info_load("levels/level1.json");
-
+	level_spawn_entities(level->spawnList);
 
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
@@ -111,9 +110,9 @@ int main(int argc,char *argv[])
 		gf3d_entity_think_all();
 
 		if (gfc_input_key_pressed("1")) {
-			coin.ent->_inuse = 1;
-			coin2.ent->_inuse = 1;
-			coin3.ent->_inuse = 1;
+			//coin.ent->_inuse = 1;
+			//coin2->ent->_inuse = 1;
+			//coin3->ent->_inuse = 1;
 		}
 
 		frame = frame + 0.05;
@@ -174,7 +173,6 @@ int main(int argc,char *argv[])
     vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());    
     //cleanup
     slog("gf3d program end");
-	//gf3d_space_free(space);
     slog_sync();
     return 0;
 }
