@@ -17,6 +17,8 @@ typedef struct Collectable_S {
 	Entity* ent;
 	CollectableColor color;
 	Sprite* sprite;
+	Uint32	_inuse;
+	Uint32 collected;
 
 }Collectable;
 

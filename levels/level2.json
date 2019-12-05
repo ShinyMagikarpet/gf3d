@@ -1,32 +1,32 @@
 {
-  "next": "level2.json",
   "world": {
     "spawnList": [
       {
         "name": "player_start",
-        "position": [ 10, 0, -3.8 ]
+        "position": [ 10, 0, 10 ],
+        "next_level": "levels/level2.json"
       },
       {
         "name": "ground_spawn",
-        "position": [ -5 , 0,  -10 ]
+        "position": [ -13, 0, -15 ]
       },
       {
         "name": "ground_spawn",
-        "position": [ 10, 0, -10 ]
+        "position": [ 10, 0, 0 ]
       },
       {
         "name": "collectable_spawn",
-        "position": [ 10, 0, -0.5 ],
+        "position": [ 0, 0, 3 ],
         "color": "yellow"
       },
       {
         "name": "collectable_spawn",
-        "position": [ 3, 0, -2 ],
+        "position": [ 3, 0, 0 ],
         "color": "red"
       },
       {
         "name": "collectable_spawn",
-        "position": [ -5, 0, -0.5 ],
+        "position": [ 0, 0, -8 ],
         "color": "blue"
       }
     ]

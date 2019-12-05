@@ -4,6 +4,7 @@
 typedef struct {
 	Collectable* collectable_list;
 	Uint32 collectable_size;
+	Uint32 spawnCount;
 }CollectableManager;
 
 static CollectableManager collectable_manager = { 0 };
@@ -38,8 +39,11 @@ Collectable* collectable_new_object()
 	int i;
 	for (i = 0; i < collectable_manager.collectable_size; i++)
 	{
-		if (collectable_manager.collectable_list[i].ent)continue;
+		if (collectable_manager.collectable_list[i]._inuse)continue;
 		memset(&collectable_manager.collectable_list[i], 0, sizeof(Entity));
+		collectable_manager.collectable_list[i]._inuse = 1;
+		collectable_manager.collectable_list[i].collected = 0;
+		collectable_manager.spawnCount++;
 		return &collectable_manager.collectable_list[i];
 	}
 	slog("request for entity failed: all full up");
@@ -139,13 +143,33 @@ Entity* collectable_spawn(Vector3D position, cJSON* args) {
 
 }
 
-
-
 void free_collectable(Collectable* collectable) {
 	if (!collectable) {
 		return;
 	}
 	free(collectable);
+}
+
+int check_win_condition() {
+
+	int win = 0;
+
+	for (int i = 0; i < collectable_manager.spawnCount; i++) {
+
+		if (collectable_manager.collectable_list[i]._inuse) {
+			if (collectable_manager.collectable_list[i].collected == 0) {
+				break;
+			}
+			win++;
+		}
+	}
+
+	if (win == collectable_manager.spawnCount) {
+		slog("Win condition met");
+		return 1;
+	}
+	slog("Didn't meet win condition yet");
+	return 0;
 }
 
 void collectable_update(Entity* self) {

@@ -289,6 +289,8 @@ void player_update(Entity* self) {
 				slog("Colliding with collectable %s", &collectable->color);
 				other->_inuse = 0;
 				collectable->sprite->_inuse = 0;
+				collectable->collected = 1;
+				check_win_condition();
 			}
 
 		}
