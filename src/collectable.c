@@ -39,7 +39,11 @@ Collectable* collectable_new_object()
 	int i;
 	for (i = 0; i < collectable_manager.collectable_size; i++)
 	{
-		if (collectable_manager.collectable_list[i]._inuse)continue;
+		if (collectable_manager.collectable_list[i]._inuse) {
+			if(collectable_manager.collectable_list[i].collected == 0)continue;
+			collectable_manager.collectable_list[i].collected = 0;
+			return &collectable_manager.collectable_list[i];
+		}
 		memset(&collectable_manager.collectable_list[i], 0, sizeof(Entity));
 		collectable_manager.collectable_list[i]._inuse = 1;
 		collectable_manager.collectable_list[i].collected = 0;
@@ -177,7 +181,7 @@ void collectable_update(Entity* self) {
 	if (self->_inuse == 0) {
 		return;
 	}
-
+	slog("in use value: %i", self->_inuse);
 	self->frame += 1;
 	if (self->frame > self->model->frameCount-1) {
 		self->frame = 0;

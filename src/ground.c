@@ -1,5 +1,6 @@
 #include "ground.h"
 #include "simple_logger.h"
+#include "cJSON.h"
 
 void ground_update(Entity* self);
 
@@ -38,10 +39,10 @@ Entity* Ground_New(Vector3D pos, float scale, char* name) {
 	return ground;
 }
 
-Entity* ground_spawn(Vector3D position, SJson* args) {
+Entity* ground_spawn(Vector3D position, cJSON* args) {
 
 	
-	return Ground_New(position, 5, "ground");
+	return Ground_New(position, args->valuedouble, "ground");
 
 }
 

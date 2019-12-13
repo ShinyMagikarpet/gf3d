@@ -1,18 +1,20 @@
 {
+  "next": "level3.json",
   "world": {
     "spawnList": [
       {
         "name": "player_start",
-        "position": [ 10, 0, 12 ],
-        "next_level": "levels/level2.json"
+        "position": [ 10, 0, 12 ]
       },
       {
         "name": "ground_spawn",
-        "position": [ -13, 0, -15 ]
+        "position": [ -13, 0, -15 ],
+        "scale": 5
       },
       {
         "name": "ground_spawn",
-        "position": [ 10, 0, 0 ]
+        "position": [ 10, 0, 0 ],
+        "scale": 5
       },
       {
         "name": "collectable_spawn",

@@ -14,6 +14,7 @@ void main()
     vec3 lightVector2 = vec3(-1, 0, 1);
     float cosTheta2 = sin(dot( fragNormal * 2,lightVector2 )) + 0.7;
     vec4 baseColor = texture(texSampler, fragTexCoord * sin(2));
+	baseColor = vec4(abs(sin(0.5)), 0.0, 0.0, 1.0);
     outColor = baseColor + cosTheta * cosTheta2;
     vec4 _COLOR = vec4(1, 0, 0.5, 1);
     //outColor = _COLOR * outColor;
