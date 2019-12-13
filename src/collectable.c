@@ -165,10 +165,10 @@ int check_win_condition() {
 	}
 
 	if (win == collectable_manager.spawnCount) {
-		slog("Win condition met");
+		//slog("Win condition met");
 		return 1;
 	}
-	slog("Didn't meet win condition yet");
+	//slog("Didn't meet win condition yet");
 	return 0;
 }
 

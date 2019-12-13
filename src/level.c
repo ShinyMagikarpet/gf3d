@@ -30,6 +30,13 @@ LevelInfo* level_info_new(){
 
 }
 
+void level_clear(LevelInfo* linfo) {
+	free(linfo->spawnList);
+	free(linfo->transitionList);
+	gf3d_entity_free_all_but_player();
+	//memset(linfo, 0, sizeof(LevelInfo));
+}
+
 LevelInfo* level_info_create(const char* backgroundImage, const char* backgroundMusic){
 
 	LevelInfo* linfo = NULL;
@@ -96,13 +103,20 @@ LevelInfo* level_info_load(char* filename){
 	if (example == NULL) {
 		slog("This is null");
 	}
-	else {
-		slog("it's aight");
-	}
 
 	cJSON* world2 = cJSON_GetObjectItemCaseSensitive(example, "world");
 	cJSON* spawnList = cJSON_GetObjectItemCaseSensitive(world2, "spawnList");
 	linfo->spawnList = spawnList;
+
+
+	TextLine line = "levels/";
+
+	if (world2->prev) {
+		strcat(line, world2->prev->valuestring);
+		gfc_line_cpy(linfo->nextLevel, line);
+	}
+	
+
 	/*if (spawnList) {
 		cJSON* spawn = NULL;
 		cJSON_ArrayForEach(spawn, spawnList) {

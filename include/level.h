@@ -11,7 +11,7 @@ typedef struct
 	TextLine    backgroundMusic;    /**<background music for this level*/
 	cJSON* spawnList;
 	cJSON* transitionList;			/**<data for level transitions*/
-	char* nextLevel;				/**<nextLevel filename to go to next level*/
+	TextLine nextLevel;				/**<nextLevel filename to go to next level*/
 }LevelInfo;
 
 /**

@@ -102,6 +102,15 @@ int main(int argc,char *argv[])
 
     while(!done)
     {
+		if (check_win_condition()) {
+			if(strcmp(level->nextLevel, "") != 0){
+				level_clear(level);
+				level = level_info_load(level->nextLevel);
+				level_spawn_entities(level->spawnList);
+			}
+			
+		}
+		slog(level->nextLevel);
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
 		SDL_GetMouseState(&mousex, &mousey);

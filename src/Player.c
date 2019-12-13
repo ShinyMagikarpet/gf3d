@@ -26,6 +26,7 @@ Entity* Player_New(Vector3D position) {
 	player->model = gf3d_model_load_animated("sphere_anim", "sphere_anim", 1, 23);
 	gfc_matrix_identity(player->modelMat);
 	player->position = position;
+	player->startPosition = position;
 	player->rotation = vector3d(0, 0, 0);
 	player->shape = gf3d_shape_sphere(1, player->position);
 	gf3d_body_set(
@@ -54,14 +55,18 @@ Entity* Player_New(Vector3D position) {
 
 Entity* player_spawn(Vector3D position, SJson* args) {
 
-	if (player != NULL)
-	{
-		vector2d_copy(player->position, position);
-		//level_add_entity(player);
-		return NULL;
-	}
+	//if (player != NULL)
+	//{
+	//	vector2d_copy(player->position, position);
+	//	//level_add_entity(player);
+	//	return NULL;
+	//}
 	return Player_New(position);
 
+}
+
+Entity* player_get() {
+	return player;
 }
 
 void player_think(Entity* self) {
@@ -207,7 +212,7 @@ void player_think(Entity* self) {
 	}
 	
 	if (gfc_input_key_pressed("r")) {
-		player->position = vector3d(10, 0, 10);
+		player->position = player->startPosition;
 		player->shape.s.sp.point.pos = player->position;
 	}
 	
@@ -290,7 +295,6 @@ void player_update(Entity* self) {
 				other->_inuse = 0;
 				collectable->sprite->_inuse = 0;
 				collectable->collected = 1;
-				check_win_condition();
 			}
 
 		}

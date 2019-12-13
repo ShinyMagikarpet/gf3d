@@ -64,6 +64,17 @@ void gf3d_entity_free(Entity* self)
 	}
 }
 
+void gf3d_entity_free_all_but_player() {
+
+	int i;
+	for (i = 0; i < gf3d_entity_manager.entity_max; i++) {
+		if (gf3d_entity_manager.entity_list[i]._inuse == 0) {
+			continue;
+		}
+		gf3d_entity_free(&gf3d_entity_manager.entity_list[i]);
+	}
+}
+
 void gf3d_entity_draw(Entity* self, Uint32 bufferFrame, VkCommandBuffer commandBuffer)
 {
 

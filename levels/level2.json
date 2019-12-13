@@ -3,7 +3,7 @@
     "spawnList": [
       {
         "name": "player_start",
-        "position": [ 10, 0, 10 ],
+        "position": [ 10, 0, 12 ],
         "next_level": "levels/level2.json"
       },
       {

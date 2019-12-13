@@ -46,7 +46,7 @@ typedef struct Entity_S
 	Uint8			doubleJump;
 	float			dash;
 	Vector3D		oldPosition;
-
+	Vector3D		startPosition;
 	void* data;                     /**<additional entity specific data*/
 
 }Entity;
@@ -68,6 +68,8 @@ Entity* gf3d_entity_new();
  * @param self the entity to free
  */
 void    gf3d_entity_free(Entity* self);
+
+void gf3d_entity_free_all();
 
 /**
 *@brief draw entity
