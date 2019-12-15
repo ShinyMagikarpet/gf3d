@@ -236,9 +236,9 @@ void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matri
 	ubo = gf3d_vgraphics_get_uniform_buffer_object();
 	//Doing some ctuff for shaders here
 	timer += 0.001;
-	if (timer >= 1.0) {
-		timer = 0;
-	}
+	//if (timer >= 1.0) {
+	//	timer = 0;
+	//}
 
 	if (red < 1.0 && green <= 0 && blue <= 0) {
 		red += COLOR_RATE;
@@ -264,7 +264,7 @@ void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matri
 		green = 0;
 		blue = 0;
 	}
-	slog("Red: %f Green: %f Blue %f", red, green, blue);
+
 	ubo.time = timer;
 	ubo.red = red;
 	ubo.green = green;

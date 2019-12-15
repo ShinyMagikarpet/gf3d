@@ -30,6 +30,7 @@ void main()
 {
     gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
     fragNormal = inNormal;
+	fragNormal.x *= sin(ubo.time * fragNormal.z);
     fragTexCoord = inTexCoord;
 	time = ubo.time;
 	red = ubo.red;

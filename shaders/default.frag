@@ -20,9 +20,9 @@ void main()
     float cosTheta2 = dot( fragNormal,lightVector2);
     vec4 baseColor = texture(texSampler, fragTexCoord);
 	//baseColor = vec4(abs(sin(0.5)), 0.0, 0.0, 1.0);
-    outColor = baseColor  * cosTheta;// * cosTheta2;
-	outColor.x *= red;
-	outColor.y *= green;
-	outColor.z *= blue;
+    outColor = baseColor  + baseColor * cosTheta;// * cosTheta2;
+	//outColor.x *= red;
+	//outColor.y *= green;
+	//outColor.z *= blue;
     //outColor = _COLOR * outColor;
 }
