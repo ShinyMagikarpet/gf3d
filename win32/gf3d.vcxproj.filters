@@ -150,6 +150,9 @@
     <ClInclude Include="..\include\gf3d_text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\gfc\simple_json\src\simple_json.c">
@@ -285,6 +288,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gf3d_text.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\light.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

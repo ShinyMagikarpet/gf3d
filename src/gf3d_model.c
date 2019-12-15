@@ -9,6 +9,8 @@
 #include "gf3d_vgraphics.h"
 #include "gf3d_obj_load.h"
 
+#include "light.h"
+
 typedef struct
 {
 	Model* model_list;
@@ -264,7 +266,12 @@ void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matri
 		green = 0;
 		blue = 0;
 	}
-
+	//slog("Red %f Green %f Blue %f", red, green, blue);
+	Light* light = get_light(0);
+	if (light) {
+		vector3d_copy(ubo.lightdir, light->dir);
+		ubo.lightIntensity = light->intensity;
+	}
 	ubo.time = timer;
 	ubo.red = red;
 	ubo.green = green;

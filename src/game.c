@@ -19,7 +19,7 @@
 #include "gf3d_sprite.h"
 #include "level.h"
 #include "gf3d_text.h"
-
+#include "light.h"
 
 
 int main(int argc,char *argv[])
@@ -61,9 +61,12 @@ int main(int argc,char *argv[])
 	//gfc_sound_play(music, -1, 0.6, 1, 1);
 	gf3d_texture_init(1024);
 	text_manager_init(16);
+	light_init(1);
 
 	LevelInfo* level = level_info_load("levels/level1.json");
 	level_spawn_entities(level->spawnList);
+
+	Light* light = create_light(vector3d(1, 0, 0.5), 1);
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
 	//player->model = gf3d_model_load("dino");
@@ -108,12 +111,25 @@ int main(int argc,char *argv[])
 
 		gf3d_entity_think_all();
 
-		if (gfc_input_key_pressed("1")) {
-			//coin.ent->_inuse = 1;
-			//coin2->ent->_inuse = 1;
-			//coin3->ent->_inuse = 1;
+		if (gfc_input_key_held("9")) {
+			if (light->dir.x < 1.0) {
+				light->dir.x += 0.01;
+			}
+			else {
+				light->dir.x = 1.0;
+			}
+			
 		}
 
+		if (gfc_input_key_held("0")) {
+			if (light->dir.x > -1.0) {
+				light->dir.x -= 0.01;
+			}
+			else {
+				light->dir.x = -1.0;
+			}
+		}
+		slog("Light dir %f, %f, %f", light->dir.y, light->dir.z);
 		frame = frame + 0.05;
 		if (frame >= 1200)frame = 0;
 		//mouseFrame = (mouseFrame + 1) % 16;

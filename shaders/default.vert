@@ -9,6 +9,8 @@ layout(binding = 0) uniform UniformBufferObject {
 	float red;
 	float green;
 	float blue;
+	vec3 lightdir;
+	float intensity;
 } ubo;
 
 out gl_PerVertex
@@ -25,15 +27,18 @@ layout(location = 2) out float time;
 layout(location = 3) out float red;
 layout(location = 4) out float green;
 layout(location = 5) out float blue;
+layout(location = 6) out vec3 lightdir;
+layout(location = 7) out float intensity;
 
 void main()
 {
     gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
     fragNormal = inNormal;
-	fragNormal.x *= sin(ubo.time * fragNormal.z);
     fragTexCoord = inTexCoord;
 	time = ubo.time;
 	red = ubo.red;
 	green = ubo.green;
 	blue = ubo.blue;
+	lightdir = ubo.lightdir;
+	intensity = ubo.intensity;
 }
