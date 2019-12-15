@@ -77,17 +77,17 @@ Collectable* Collectable_New(Vector3D position, CollectableColor color) {
 	switch (color) {
 	case Collectable_Red:
 		collectable->ent->model = gf3d_model_load_animated("Coin", "red", 1, 13);
-		collectable->sprite = gf3d_sprite_load("images/red.png", 64, 64, 1);
+		collectable->sprite = gf3d_sprite_load("images/red.png", 64, 64, 1, 0, NULL);
 		vector2d_copy(collectable->sprite->position, vector2d(1000, 10));
 		break;
 	case Collectable_Blue:
 		collectable->ent->model = gf3d_model_load_animated("Coin", "blue", 1, 13);
-		collectable->sprite = gf3d_sprite_load("images/blue.png", 64, 64, 1);
+		collectable->sprite = gf3d_sprite_load("images/blue.png", 64, 64, 1, 0, NULL);
 		vector2d_copy(collectable->sprite->position, vector2d(1040, 10));
 		break;
 	case Collectable_Yellow:
 		collectable->ent->model = gf3d_model_load_animated("Coin", "yellow", 1, 13);
-		collectable->sprite = gf3d_sprite_load("images/yellow.png", 64, 64, 1);
+		collectable->sprite = gf3d_sprite_load("images/yellow.png", 64, 64, 1, 0, NULL);
 		vector2d_copy(collectable->sprite->position, vector2d(1080, 10));
 		break;
 	default:
@@ -181,7 +181,7 @@ void collectable_update(Entity* self) {
 	if (self->_inuse == 0) {
 		return;
 	}
-	slog("in use value: %i", self->_inuse);
+
 	self->frame += 1;
 	if (self->frame > self->model->frameCount-1) {
 		self->frame = 0;

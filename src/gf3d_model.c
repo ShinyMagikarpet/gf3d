@@ -19,7 +19,10 @@ typedef struct
 }ModelManager;
 
 static ModelManager gf3d_model = { 0 };
-
+static float timer = 0.0;
+static float red = 0.0;
+static float green = 0.0;
+static float blue = 0.0;
 void gf3d_model_delete(Model* model);
 
 void gf3d_model_create_uniform_buffer(Model* model);
@@ -225,11 +228,47 @@ void gf3d_model_update_basic_model_descriptor_set(Model* model, VkDescriptorSet 
 	vkUpdateDescriptorSets(gf3d_model.device, 2, descriptorWrite, 0, NULL);
 }
 
+#define COLOR_RATE 0.001
 void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matrix4 modelMat)
 {
 	void* data;
 	UniformBufferObject ubo;
 	ubo = gf3d_vgraphics_get_uniform_buffer_object();
+	//Doing some ctuff for shaders here
+	timer += 0.001;
+	if (timer >= 1.0) {
+		timer = 0;
+	}
+
+	if (red < 1.0 && green <= 0 && blue <= 0) {
+		red += COLOR_RATE;
+		green = 0;
+	}
+	else if (red > 0 && green < 1.0 && blue <= 0) {
+		red -= COLOR_RATE;
+		green += COLOR_RATE;
+		blue = 0;
+	}
+	else if (green > 0 && blue < 1.0) {
+		green -= COLOR_RATE;
+		blue += COLOR_RATE;
+		red = 0;
+	}
+	else if (blue > 0) {
+		blue -= COLOR_RATE;
+		red += COLOR_RATE;
+		green = 0;
+	}
+	else {
+		red = 0;
+		green = 0;
+		blue = 0;
+	}
+	slog("Red: %f Green: %f Blue %f", red, green, blue);
+	ubo.time = timer;
+	ubo.red = red;
+	ubo.green = green;
+	ubo.blue = blue;
 	gfc_matrix_copy(ubo.model, modelMat);
 	vkMapMemory(gf3d_model.device, model->uniformBuffersMemory[currentImage], 0, sizeof(UniformBufferObject), 0, &data);
 

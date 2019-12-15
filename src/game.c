@@ -18,6 +18,7 @@
 #include "gf3d_texture.h"
 #include "gf3d_sprite.h"
 #include "level.h"
+#include "gf3d_text.h"
 
 
 
@@ -59,21 +60,10 @@ int main(int argc,char *argv[])
 	//music = gfc_sound_load("Sound/NJIT_Theme_Song.mp3", 1, 0);
 	//gfc_sound_play(music, -1, 0.6, 1, 1);
 	gf3d_texture_init(1024);
-
-	//Entity* player = Player_New(vector3d(10, 0, 10));
-	//Entity* ground = Ground_New(vector3d(-13, 0, -15), 5, "ground1");
-	//Entity* ground2 = Ground_New(vector3d(10, 0, 0), 5, "ground2");
-	//Collectable coin = Collectable_New(vector3d(0, 0, 3), Collectable_Yellow);
-	//coin.ent->data = &coin;
-
-
-	//Collectable* coin2 = Collectable_New(vector3d(3, 0, 0), Collectable_Red);
-
-	//Collectable* coin3 = Collectable_New(vector3d(0, 0, -8), Collectable_Blue);
+	text_manager_init(16);
 
 	LevelInfo* level = level_info_load("levels/level1.json");
 	level_spawn_entities(level->spawnList);
-
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
 	//player->model = gf3d_model_load("dino");
@@ -110,7 +100,7 @@ int main(int argc,char *argv[])
 			}
 			
 		}
-		slog(level->nextLevel);
+
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
 		SDL_GetMouseState(&mousex, &mousey);

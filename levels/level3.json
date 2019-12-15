@@ -28,7 +28,7 @@
       },
       {
         "name": "collectable_spawn",
-        "position": [ -10, 0, 10 ],
+        "position": [ -15, 0, 10 ],
         "color": "blue"
       }
     ]

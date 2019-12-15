@@ -149,7 +149,7 @@ Sprite* gf3d_sprite_new()
 	return NULL;
 }
 
-Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint32 frames_per_line)
+Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint32 frames_per_line, Uint32 isText, Texture* texture)
 {
 	Sprite* sprite;
 	sprite = gf3d_sprite_new();
@@ -157,7 +157,13 @@ Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint
 	{
 		return NULL;
 	}
-	sprite->texture = gf3d_texture_load(filename);
+	if (isText) {
+		sprite->texture = texture;
+	}
+	else {
+		sprite->texture = gf3d_texture_load(filename);
+	}
+	
 	if (!sprite->texture)
 	{
 		slog("gf3d_sprite_load: failed to load texture for sprite");
