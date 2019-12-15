@@ -9,8 +9,10 @@ layout(binding = 0) uniform UniformBufferObject {
 	float red;
 	float green;
 	float blue;
+	vec4 lightcolor;
 	vec3 lightdir;
 	float intensity;
+	vec3 lightpos;
 } ubo;
 
 out gl_PerVertex
@@ -21,6 +23,7 @@ out gl_PerVertex
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec2 inTexCoord;
+
 layout(location = 0) out vec3 fragNormal;
 layout(location = 1) out vec2 fragTexCoord;
 layout(location = 2) out float time;
@@ -29,10 +32,29 @@ layout(location = 4) out float green;
 layout(location = 5) out float blue;
 layout(location = 6) out vec3 lightdir;
 layout(location = 7) out float intensity;
+layout(location = 8) out vec4 lightcolor;
+layout(location = 9) out float cosTheta;
 
 void main()
 {
+	//position of vertex in clip space
     gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
+
+	//World position of vertex
+	vec3 Position_worldspace = (ubo.model * vec4(inPosition, 1.0)).xyz;
+
+	// Vector that goes from the vertex to the camera, in camera space.
+	// In camera space, the camera is at the origin (0,0,0).
+	vec3 vertexPosition_cameraspace = ( ubo.view * ubo.model * vec4(inPosition, 1.0)).xyz;
+	vec3 EyeDirection_cameraspace = vec3(0,0,0) - vertexPosition_cameraspace;
+
+	// Vector that goes from the vertex to the light, in camera space. M is ommited because it's identity.
+	vec3 LightPosition_cameraspace = ( ubo.view * vec4(ubo.lightpos, 1)).xyz;
+	vec3 LightDirection_cameraspace = LightPosition_cameraspace + EyeDirection_cameraspace;
+
+	// Normal of the the vertex, in camera space
+	vec3 Normal_cameraspace = ( ubo.view * ubo.model * vec4(inNormal, 0)).xyz;
+
     fragNormal = inNormal;
     fragTexCoord = inTexCoord;
 	time = ubo.time;
@@ -41,4 +63,6 @@ void main()
 	blue = ubo.blue;
 	lightdir = ubo.lightdir;
 	intensity = ubo.intensity;
+	lightcolor = ubo.lightcolor;
+	cosTheta = clamp(dot(normalize(Normal_cameraspace), normalize(LightDirection_cameraspace)), 0, 1);
 }

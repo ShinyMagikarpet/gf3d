@@ -66,7 +66,16 @@ int main(int argc,char *argv[])
 	LevelInfo* level = level_info_load("levels/level1.json");
 	level_spawn_entities(level->spawnList);
 
-	Light* light = create_light(vector3d(1, 0, 0.5), 1, 5.0);
+	//Light* light = create_light(vector3d(1, 0, 0.5), vector4d(1, 1, 1, 1), 1, 5.0);
+	Light* light = create_point_light(
+		vector3d(100, 0, 0),
+		vector4d(1, 1, 1, 1),
+		5.0,
+		5.0,
+		1.0,
+		5.0
+	);
+	//vector3d_copy(light->dir, vector3d(1, 0, 1));
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
 	//player->model = gf3d_model_load("dino");
@@ -112,22 +121,24 @@ int main(int argc,char *argv[])
 		gf3d_entity_think_all();
 
 		if (gfc_input_key_held("9")) {
-			if (light->dir.x < 1.0) {
+			/*if (light->dir.x < 1.0) {
 				light->dir.x += 0.01;
 			}
 			else {
 				light->dir.x = 1.0;
-			}
+			}*/
+			light->position.x += 0.01;
 			
 		}
 
 		if (gfc_input_key_held("0")) {
-			if (light->dir.x > -1.0) {
+			/*if (light->dir.x > -1.0) {
 				light->dir.x -= 0.01;
 			}
 			else {
 				light->dir.x = -1.0;
-			}
+			}*/
+			light->position.x -= 0.01;
 		}
 
 		if (gfc_input_key_held("-")) {
@@ -135,7 +146,7 @@ int main(int argc,char *argv[])
 				light->intensity -= 0.01;
 			}
 			else {
-				light->dir.x = 0;
+				light->intensity = 0;
 			}
 		}
 
@@ -148,7 +159,6 @@ int main(int argc,char *argv[])
 			}
 		}
 
-		slog("Light dir %f, %f, %f", light->dir.y, light->dir.z);
 		frame = frame + 0.05;
 		if (frame >= 1200)frame = 0;
 		//mouseFrame = (mouseFrame + 1) % 16;

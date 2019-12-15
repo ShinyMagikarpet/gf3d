@@ -47,7 +47,7 @@ Light* new_light() {
 	return NULL;
 }
 
-Light* create_light(Vector3D direction, float intensity, float maxIntensity) {
+Light* create_light(Vector3D direction, Vector4D color, float intensity, float maxIntensity) {
 	Light* light = NULL;
 	light = new_light();
 	if (!light) {
@@ -56,8 +56,27 @@ Light* create_light(Vector3D direction, float intensity, float maxIntensity) {
 	vector3d_copy(light->dir, direction);
 	light->intensity = intensity;
 	light->maxIntensity = maxIntensity;
+	vector4d_copy(light->color, color);
+	light->isPoint = 0;
 	return light;
 }
+
+Light* create_point_light(Vector3D position, Vector4D color, float radius, float range, float intensity, float maxIntensity) {
+	Light* light = NULL;
+	light = new_light();
+	if (!light) {
+		slog("Failed to create light");
+	}
+	vector4d_copy(light->color, color);
+	vector3d_copy(light->position, position);
+	light->radius = radius;
+	light->range = range;
+	light->intensity = intensity;
+	light->maxIntensity = maxIntensity;
+	light->isPoint = 1;
+	return light;
+}
+
 
 Light* get_light(int index) {
 	return &light_manager.light_list[index];

@@ -269,6 +269,8 @@ void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matri
 	//slog("Red %f Green %f Blue %f", red, green, blue);
 	Light* light = get_light(0);
 	if (light) {
+		vector4d_copy(ubo.lightcolor, light->color);
+		vector3d_copy(ubo.lightposition, light->position);
 		vector3d_copy(ubo.lightdir, light->dir);
 		ubo.lightIntensity = light->intensity;
 	}

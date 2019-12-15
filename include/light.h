@@ -4,8 +4,13 @@
 
 typedef struct {
 	Vector3D dir;
+	Vector3D position;
+	Vector4D color;
+	float radius;
+	float range;
 	float intensity;
 	float maxIntensity;
+	Uint32 isPoint;
 	Uint32 _inuse;
 }Light;
 
@@ -17,7 +22,9 @@ void light_free(Light* light);
 
 Light* new_light();
 
-Light* create_light(Vector3D direction, float intensity, float maxIntensity);
+Light* create_light(Vector3D direction, Vector4D color, float intensity, float maxIntensity);
+
+Light* create_point_light(Vector3D position, Vector4D color, float radius, float range, float intensity, float maxIntensity);
 
 Light* get_light(int index);
 

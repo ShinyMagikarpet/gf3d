@@ -10,18 +10,19 @@ layout(location = 4) in float green;
 layout(location = 5) in float blue;
 layout(location = 6) in vec3 lightdir;
 layout(location = 7) in float intensity;
+layout(location = 8) in vec4 _LIGHTCOLOR;
+layout(location = 9) in float cosTheta;
 
 layout(location = 0) out vec4 outColor;
 
 void main()
 {
-    vec3 lightVector = vec3(1, 0, 1);
-    float cosTheta = dot(fragNormal, lightVector);
-	float cosTheta2 = dot(fragNormal, lightdir);
+	float distance = 1.3;
+	//float cosTheta = clamp(dot(normalize(fragNormal), normalize(lightdir)), 0, 1);
     vec4 baseColor = texture(texSampler, fragTexCoord);
-    outColor = baseColor * intensity * cosTheta2;// * cosTheta; * cosTheta2;
+	vec4 lightcolor = cosTheta * _LIGHTCOLOR;
+    outColor = baseColor * lightcolor * intensity;// * cosTheta; * cosTheta2;
 	//outColor.x *= red;
 	//outColor.y *= green;
 	//outColor.z *= blue;
-    //outColor = _COLOR * outColor;
 }
