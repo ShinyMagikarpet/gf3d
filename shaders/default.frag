@@ -12,6 +12,7 @@ layout(location = 6) in vec3 lightdir;
 layout(location = 7) in float intensity;
 layout(location = 8) in vec4 _LIGHTCOLOR;
 layout(location = 9) in float cosTheta;
+layout(location = 10) in float ldistance;
 
 layout(location = 0) out vec4 outColor;
 
@@ -21,7 +22,7 @@ void main()
 	//float cosTheta = clamp(dot(normalize(fragNormal), normalize(lightdir)), 0, 1);
     vec4 baseColor = texture(texSampler, fragTexCoord);
 	vec4 lightcolor = cosTheta * _LIGHTCOLOR;
-    outColor = baseColor * lightcolor * intensity;// * cosTheta; * cosTheta2;
+    outColor = baseColor * lightcolor * intensity / (ldistance*ldistance);// * cosTheta; * cosTheta2;
 	//outColor.x *= red;
 	//outColor.y *= green;
 	//outColor.z *= blue;

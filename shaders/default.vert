@@ -34,6 +34,7 @@ layout(location = 6) out vec3 lightdir;
 layout(location = 7) out float intensity;
 layout(location = 8) out vec4 lightcolor;
 layout(location = 9) out float cosTheta;
+layout(location = 10) out float ldistance;
 
 void main()
 {
@@ -65,4 +66,5 @@ void main()
 	intensity = ubo.intensity;
 	lightcolor = ubo.lightcolor;
 	cosTheta = clamp(dot(normalize(Normal_cameraspace), normalize(LightDirection_cameraspace)), 0, 1);
+	ldistance = distance(LightPosition_cameraspace, vertexPosition_cameraspace);
 }

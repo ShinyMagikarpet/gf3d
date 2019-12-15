@@ -68,12 +68,12 @@ int main(int argc,char *argv[])
 
 	//Light* light = create_light(vector3d(1, 0, 0.5), vector4d(1, 1, 1, 1), 1, 5.0);
 	Light* light = create_point_light(
-		vector3d(100, 0, 0),
+		vector3d(1, 0, 0),
 		vector4d(1, 1, 1, 1),
 		5.0,
 		5.0,
-		1.0,
-		5.0
+		60.0,
+		75.0
 	);
 	//vector3d_copy(light->dir, vector3d(1, 0, 1));
 
@@ -120,30 +120,50 @@ int main(int argc,char *argv[])
 
 		gf3d_entity_think_all();
 
-		if (gfc_input_key_held("9")) {
+		if (gfc_input_key_held("LEFT")) {
 			/*if (light->dir.x < 1.0) {
 				light->dir.x += 0.01;
 			}
 			else {
 				light->dir.x = 1.0;
 			}*/
-			light->position.x += 0.01;
+			light->position.x += 0.1;
 			
 		}
 
-		if (gfc_input_key_held("0")) {
+		if (gfc_input_key_held("RIGHT")) {
 			/*if (light->dir.x > -1.0) {
 				light->dir.x -= 0.01;
 			}
 			else {
 				light->dir.x = -1.0;
 			}*/
-			light->position.x -= 0.01;
+			light->position.x -= 0.1;
+		}
+
+		if (gfc_input_key_held("DOWN")) {
+			/*if (light->dir.x > -1.0) {
+				light->dir.x -= 0.01;
+			}
+			else {
+				light->dir.x = -1.0;
+			}*/
+			light->position.z -= 0.1;
+		}
+
+		if (gfc_input_key_held("UP")) {
+			/*if (light->dir.x > -1.0) {
+				light->dir.x -= 0.01;
+			}
+			else {
+				light->dir.x = -1.0;
+			}*/
+			light->position.z += 0.1;
 		}
 
 		if (gfc_input_key_held("-")) {
 			if (light->intensity > 0) {
-				light->intensity -= 0.01;
+				light->intensity -= 0.1;
 			}
 			else {
 				light->intensity = 0;
@@ -152,7 +172,7 @@ int main(int argc,char *argv[])
 
 		if (gfc_input_key_held("=")) {
 			if (light->intensity < light->maxIntensity) {
-				light->intensity += 0.01;
+				light->intensity += 0.1;
 			}
 			else {
 				light->intensity = light->maxIntensity;
