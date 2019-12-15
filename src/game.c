@@ -66,7 +66,7 @@ int main(int argc,char *argv[])
 	LevelInfo* level = level_info_load("levels/level1.json");
 	level_spawn_entities(level->spawnList);
 
-	Light* light = create_light(vector3d(1, 0, 0.5), 1);
+	Light* light = create_light(vector3d(1, 0, 0.5), 1, 5.0);
 
 	//gfc_matrix_translate(modelMat, vector3d(0, 0, 0));
 	//player->model = gf3d_model_load("dino");
@@ -129,6 +129,25 @@ int main(int argc,char *argv[])
 				light->dir.x = -1.0;
 			}
 		}
+
+		if (gfc_input_key_held("-")) {
+			if (light->intensity > 0) {
+				light->intensity -= 0.01;
+			}
+			else {
+				light->dir.x = 0;
+			}
+		}
+
+		if (gfc_input_key_held("=")) {
+			if (light->intensity < light->maxIntensity) {
+				light->intensity += 0.01;
+			}
+			else {
+				light->intensity = light->maxIntensity;
+			}
+		}
+
 		slog("Light dir %f, %f, %f", light->dir.y, light->dir.z);
 		frame = frame + 0.05;
 		if (frame >= 1200)frame = 0;

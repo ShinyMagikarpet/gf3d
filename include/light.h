@@ -5,6 +5,7 @@
 typedef struct {
 	Vector3D dir;
 	float intensity;
+	float maxIntensity;
 	Uint32 _inuse;
 }Light;
 
@@ -16,7 +17,7 @@ void light_free(Light* light);
 
 Light* new_light();
 
-Light* create_light(Vector3D direction, float intensity);
+Light* create_light(Vector3D direction, float intensity, float maxIntensity);
 
 Light* get_light(int index);
 

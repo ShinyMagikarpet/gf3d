@@ -47,7 +47,7 @@ Light* new_light() {
 	return NULL;
 }
 
-Light* create_light(Vector3D direction, float intensity) {
+Light* create_light(Vector3D direction, float intensity, float maxIntensity) {
 	Light* light = NULL;
 	light = new_light();
 	if (!light) {
@@ -55,6 +55,7 @@ Light* create_light(Vector3D direction, float intensity) {
 	}
 	vector3d_copy(light->dir, direction);
 	light->intensity = intensity;
+	light->maxIntensity = maxIntensity;
 	return light;
 }
 
