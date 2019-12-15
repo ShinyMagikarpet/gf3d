@@ -11,7 +11,7 @@
 #define ROTATE_SPEED 0.05
 #define JUMP_HEIGHT 2.0
 static Entity* player = NULL;
-
+static Sprite* lives[3] = { 0 };
 void player_think(Entity* self);
 void player_update(Entity* self);
 void player_touch(Entity* self, Entity* other);
@@ -50,6 +50,14 @@ Entity* Player_New(Vector3D position) {
 	player->charged = 0;
 	player->dash = 0;
 	player->doubleJump = 0;
+
+	for (int i = 0; i < 3; i++) {
+		lives[i] = gf3d_sprite_load("images/The_Devil.png", 198, 201, 0.5, 1, 0, NULL);
+		lives[i]->texture->height *= 2;
+		lives[i]->texture->width *= 2;
+		vector2d_copy(lives[i]->position, vector2d(10 + 60 * i+1, 600));
+	}
+
 	return player;
 }
 

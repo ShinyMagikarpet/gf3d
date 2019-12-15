@@ -113,7 +113,7 @@ void gf3d_text_create(TextBox* textbox) {
 		slog("Could not make surface for texture");
 	}
 	textbox->texture = texture;
-	textbox->sprite = gf3d_sprite_load("", 128, 64, 1, 1, textbox->texture);
+	//textbox->sprite = gf3d_sprite_load("", 128, 64, 1, 1, textbox->texture);
 	if (!textbox->sprite) {
 		slog("failed to create sprite for textbox");
 	}

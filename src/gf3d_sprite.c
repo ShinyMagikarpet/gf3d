@@ -149,7 +149,7 @@ Sprite* gf3d_sprite_new()
 	return NULL;
 }
 
-Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint32 frames_per_line, Uint32 isText, Texture* texture)
+Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, float scale, Uint32 frames_per_line, Uint32 isText, Texture* texture)
 {
 	Sprite* sprite;
 	sprite = gf3d_sprite_new();
@@ -162,6 +162,8 @@ Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint
 	}
 	else {
 		sprite->texture = gf3d_texture_load(filename);
+		sprite->texture->height *= scale;
+		sprite->texture->width *= scale;
 	}
 	
 	if (!sprite->texture)
@@ -172,8 +174,8 @@ Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint
 	}
 	if (frame_width < 0)frame_width = sprite->texture->width;
 	if (frame_height < 0)frame_height = sprite->texture->height;
-	sprite->frameWidth = frame_width;
-	sprite->frameHeight = frame_height;
+	sprite->frameWidth = frame_width * scale;
+	sprite->frameHeight = frame_height * scale;
 	sprite->framesPerLine = frames_per_line;
 	gfc_line_cpy(sprite->filename, filename);
 	gf3d_sprite_create_vertex_buffer(sprite);

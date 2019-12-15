@@ -62,7 +62,7 @@ void gf3d_sprite_manager_init(Uint32 max_sprites, Uint32 chain_length, VkDevice 
  * @param frames_per_line how many frames across are on the sprite sheet
  * @return NULL on error (check logs) or a pointer to a sprite that can be draw to the 2d overlay
  */
-Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, Uint32 frames_per_line, Uint32 isText, Texture* texture);
+Sprite* gf3d_sprite_load(char* filename, int frame_width, int frame_height, float scale, Uint32 frames_per_line, Uint32 isText, Texture* texture);
 
 /**
  * @brief free a previously loaded sprite

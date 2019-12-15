@@ -163,7 +163,7 @@ int main(int argc,char *argv[])
 
 		if (gfc_input_key_held("-")) {
 			if (light->intensity > 0) {
-				light->intensity -= 0.1;
+				light->intensity -= 1.0;
 			}
 			else {
 				light->intensity = 0;
@@ -172,7 +172,7 @@ int main(int argc,char *argv[])
 
 		if (gfc_input_key_held("=")) {
 			if (light->intensity < light->maxIntensity) {
-				light->intensity += 0.1;
+				light->intensity += 1.0;
 			}
 			else {
 				light->intensity = light->maxIntensity;

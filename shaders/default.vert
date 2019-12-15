@@ -35,12 +35,13 @@ layout(location = 7) out float intensity;
 layout(location = 8) out vec4 lightcolor;
 layout(location = 9) out float cosTheta;
 layout(location = 10) out float ldistance;
+layout(location = 11) out float cosAlpha;
 
 void main()
 {
 	//position of vertex in clip space
     gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
-
+	//gl_Position.x *= sin(ubo.time * 0.9) + 1.2;
 	//World position of vertex
 	vec3 Position_worldspace = (ubo.model * vec4(inPosition, 1.0)).xyz;
 
@@ -56,7 +57,21 @@ void main()
 	// Normal of the the vertex, in camera space
 	vec3 Normal_cameraspace = ( ubo.view * ubo.model * vec4(inNormal, 0)).xyz;
 
+	vec3 n = normalize(Normal_cameraspace);
+	vec3 l = normalize(LightDirection_cameraspace);
+
+	// Eye vector (towards the camera)
+	vec3 E = normalize(EyeDirection_cameraspace);
+	// Direction in which the triangle reflects the light
+	vec3 R = reflect(-l,n);
+	// Cosine of the angle between the Eye vector and the Reflect vector,
+	// clamped to 0
+	//  - Looking into the reflection -> 1
+	//  - Looking elsewhere -> < 1
+	cosAlpha = clamp( dot( E,R ), 0,1 );
+
     fragNormal = inNormal;
+	fragNormal.y *= sin(ubo.time * 0.9) + 1.2;
     fragTexCoord = inTexCoord;
 	time = ubo.time;
 	red = ubo.red;
@@ -65,6 +80,6 @@ void main()
 	lightdir = ubo.lightdir;
 	intensity = ubo.intensity;
 	lightcolor = ubo.lightcolor;
-	cosTheta = clamp(dot(normalize(Normal_cameraspace), normalize(LightDirection_cameraspace)), 0, 1);
+	cosTheta = clamp(dot(n, l), 0, 1);
 	ldistance = distance(LightPosition_cameraspace, vertexPosition_cameraspace);
 }
