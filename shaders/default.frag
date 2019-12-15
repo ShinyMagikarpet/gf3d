@@ -22,7 +22,8 @@ void main()
 	//float cosTheta = clamp(dot(normalize(fragNormal), normalize(lightdir)), 0, 1);
     vec4 baseColor = texture(texSampler, fragTexCoord);
 	vec4 lightcolor = cosTheta * _LIGHTCOLOR;
-    outColor = baseColor * lightcolor * intensity / (ldistance*ldistance);// * cosTheta; * cosTheta2;
+	vec4 MaterialAmbientColor = vec4(0.1,0.1,0.1, 1) * baseColor;
+    outColor = MaterialAmbientColor + baseColor * lightcolor * intensity / (ldistance*ldistance);// * cosTheta; * cosTheta2;
 	//outColor.x *= red;
 	//outColor.y *= green;
 	//outColor.z *= blue;
