@@ -27,7 +27,7 @@ void main()
 	vec4 MaterialSpecular = lightcolor * intensity * pow(cosAlpha, 64);
     outColor = MaterialAmbientColor + baseColor * lightcolor * intensity  / (ldistance*ldistance);
 	//outColor +=  baseColor * lightcolor * intensity * pow(cosAlpha,5) / (distance*distance);
-	//outColor.x *= red;
-	//outColor.y *= green;
-	//outColor.z *= blue;
+	outColor.x += red;
+	outColor.y += green;
+	outColor.z += blue;
 }

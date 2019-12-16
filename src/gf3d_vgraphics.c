@@ -179,7 +179,7 @@ void gf3d_vgraphics_setup(
 		return;
 	}
 	atexit(SDL_Quit);
-	SDL_ShowCursor(SDL_DISABLE);
+	//SDL_ShowCursor(SDL_DISABLE);
 	if (fullscreen)
 	{
 		if (renderWidth == 0)

@@ -33,6 +33,9 @@ int main(int argc,char *argv[])
     Model *model;
     Matrix4 modelMat;
 	Sound* music = NULL;
+	SDL_Event mouse_event;
+	int inMenu = 1;
+	LevelInfo* level;
 
     for (a = 1; a < argc;a++)
     {
@@ -63,8 +66,8 @@ int main(int argc,char *argv[])
 	text_manager_init(16);
 	light_init(1);
 
-	LevelInfo* level = level_info_load("levels/level1.json");
-	level_spawn_entities(level->spawnList);
+	//LevelInfo* level = level_info_load("levels/level1.json");
+	//level_spawn_entities(level->spawnList);
 
 	//Light* light = create_light(vector3d(1, 0, 0.5), vector4d(1, 1, 1, 1), 1, 5.0);
 	Light* light = create_point_light(
@@ -73,7 +76,7 @@ int main(int argc,char *argv[])
 		5.0,
 		5.0,
 		60.0,
-		75.0
+		100.0
 	);
 	//vector3d_copy(light->dir, vector3d(1, 0, 1));
 
@@ -88,8 +91,9 @@ int main(int argc,char *argv[])
 	//mouse = gf3d_sprite_load("images/pointer.png", 32, 32, 16);
 	int mousex, mousey;
 
-	//Sprite* sprite = NULL;
-	//sprite = gf3d_sprite_load("images/pink.png", 64, 64, 1);
+	Sprite* sprite = NULL;
+	sprite = gf3d_sprite_load("images/Start_Button.png", 661, 241, 1, 1, 0, NULL);
+	vector2d_copy(sprite->position, vector2d(430, 250));
 	
 	gfc_input_init("config/input.cfg");
     // main game loop
@@ -104,85 +108,111 @@ int main(int argc,char *argv[])
 
     while(!done)
     {
-		if (check_win_condition()) {
-			if(strcmp(level->nextLevel, "") != 0){
-				level_clear(level);
-				level = level_info_load(level->nextLevel);
-				level_spawn_entities(level->spawnList);
-			}
-			
-		}
+		if (!inMenu) {
+			if (check_win_condition()) {
+				if (strcmp(level->nextLevel, "") != 0) {
+					level_clear(level);
+					level = level_info_load(level->nextLevel);
+					level_spawn_entities(level->spawnList);
+				}
 
-		if (player_lives_get() <= 0) {
-			player_get()->_inuse = 0;
-			level_clear(level);
-			level = level_info_load("levels/level1.json");
-			level_spawn_entities(level->spawnList);
+			}
+
+			if (player_lives_get() <= 0) {
+				player_get()->_inuse = 0;
+				level_clear(level);
+				//level = level_info_load("levels/level1.json");
+				//level_spawn_entities(level->spawnList);
+				sprite->_inuse = 1;
+				inMenu = 1;
+				slog("%i", sprite->_inuse);
+			}
 		}
 
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
-		SDL_GetMouseState(&mousex, &mousey);
+		if (inMenu) {
+			SDL_PollEvent(&mouse_event);
+			SDL_GetMouseState(&mousex, &mousey);
+			if (mouse_event.type == SDL_MOUSEBUTTONDOWN) {
+				if (mousex >= 430 && mousex <= 760 && mousey >= 250 && mousey <= 380) {
+					level = level_info_load("levels/level1.json");
+					level_spawn_entities(level->spawnList);
+					sprite->_inuse = 0;
+					inMenu = 0;
+				}
+			}
+		}
         //update game things here
 
 		gf3d_entity_think_all();
 
-		if (gfc_input_key_held("LEFT")) {
-			/*if (light->dir.x < 1.0) {
-				light->dir.x += 0.01;
-			}
-			else {
-				light->dir.x = 1.0;
-			}*/
-			light->position.x += 0.1;
-			
-		}
+		if (!inMenu) {
+			if (gfc_input_key_held("LEFT")) {
+				/*if (light->dir.x < 1.0) {
+					light->dir.x += 0.01;
+				}
+				else {
+					light->dir.x = 1.0;
+				}*/
+				light->position.x += 0.1;
 
-		if (gfc_input_key_held("RIGHT")) {
-			/*if (light->dir.x > -1.0) {
-				light->dir.x -= 0.01;
 			}
-			else {
-				light->dir.x = -1.0;
-			}*/
-			light->position.x -= 0.1;
-		}
 
-		if (gfc_input_key_held("DOWN")) {
-			/*if (light->dir.x > -1.0) {
-				light->dir.x -= 0.01;
+			if (gfc_input_key_held("RIGHT")) {
+				/*if (light->dir.x > -1.0) {
+					light->dir.x -= 0.01;
+				}
+				else {
+					light->dir.x = -1.0;
+				}*/
+				light->position.x -= 0.1;
 			}
-			else {
-				light->dir.x = -1.0;
-			}*/
-			light->position.z -= 0.1;
-		}
 
-		if (gfc_input_key_held("UP")) {
-			/*if (light->dir.x > -1.0) {
-				light->dir.x -= 0.01;
+			if (gfc_input_key_held("DOWN")) {
+				/*if (light->dir.x > -1.0) {
+					light->dir.x -= 0.01;
+				}
+				else {
+					light->dir.x = -1.0;
+				}*/
+				light->position.z -= 0.1;
 			}
-			else {
-				light->dir.x = -1.0;
-			}*/
-			light->position.z += 0.1;
-		}
 
-		if (gfc_input_key_held("-")) {
-			if (light->intensity > 0) {
-				light->intensity -= 1.0;
+			if (gfc_input_key_held("UP")) {
+				/*if (light->dir.x > -1.0) {
+					light->dir.x -= 0.01;
+				}
+				else {
+					light->dir.x = -1.0;
+				}*/
+				light->position.z += 0.1;
 			}
-			else {
-				light->intensity = 0;
-			}
-		}
 
-		if (gfc_input_key_held("=")) {
-			if (light->intensity < light->maxIntensity) {
-				light->intensity += 1.0;
+
+			if (gfc_input_key_held("-")) {
+				if (light->intensity > 0) {
+					light->intensity -= 1.0;
+				}
+				else {
+					light->intensity = 0;
+				}
 			}
-			else {
-				light->intensity = light->maxIntensity;
+
+			if (gfc_input_key_held("=")) {
+				if (light->intensity < light->maxIntensity) {
+					light->intensity += 1.0;
+				}
+				else {
+					light->intensity = light->maxIntensity;
+				}
+			}
+
+			if (gfc_input_key_pressed("g")) {
+				if (g_gradient == 0)
+					g_gradient = 1;
+				else
+					g_gradient = 0;
 			}
 		}
 

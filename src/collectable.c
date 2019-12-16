@@ -40,6 +40,7 @@ Collectable* collectable_new_object()
 	for (i = 0; i < collectable_manager.collectable_size; i++)
 	{
 		if (collectable_manager.collectable_list[i]._inuse) {
+			continue;
 			if(collectable_manager.collectable_list[i].collected == 0)continue;
 			collectable_manager.collectable_list[i].collected = 0;
 			return &collectable_manager.collectable_list[i];
@@ -158,6 +159,8 @@ void free_collectable(Collectable* collectable) {
 void free_collectable_all() {
 	int i;
 	for (i = 0; i < collectable_manager.collectable_size; i++) {
+		if (collectable_manager.collectable_list[i]._inuse == 0)continue;
+		collectable_manager.collectable_list[i].sprite->_inuse = 0;
 		free_collectable(&collectable_manager.collectable_list[i]);
 	}
 	collectable_manager.spawnCount = 0;
