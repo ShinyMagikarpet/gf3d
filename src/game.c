@@ -113,13 +113,6 @@ int main(int argc,char *argv[])
 			
 		}
 
-		if (player_lives_get() <= 0) {
-			player_get()->_inuse = 0;
-			level_clear(level);
-			level = level_info_load("levels/level1.json");
-			level_spawn_entities(level->spawnList);
-		}
-
         SDL_PumpEvents();   // update SDL's internal event structures
         keys = SDL_GetKeyboardState(NULL); // get the keyboard state for this frame
 		SDL_GetMouseState(&mousex, &mousey);
@@ -183,6 +176,16 @@ int main(int argc,char *argv[])
 			}
 			else {
 				light->intensity = light->maxIntensity;
+			}
+		}
+
+		if (gfc_input_key_pressed("g")) {
+			slog("Gradient activate!");
+			if (g_gradient == 0) {
+				g_gradient = 1;
+			}
+			else {
+				g_gradient = 0;
 			}
 		}
 

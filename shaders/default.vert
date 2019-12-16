@@ -68,10 +68,10 @@ void main()
 	// clamped to 0
 	//  - Looking into the reflection -> 1
 	//  - Looking elsewhere -> < 1
-	cosAlpha = max(dot( E,R ), 0.0 );
+	cosAlpha = clamp( dot( E,R ), 0,1 );
 
     fragNormal = inNormal;
-	//fragNormal.y *= sin(ubo.time * 0.9) + 1.2;
+	fragNormal.y *= sin(ubo.time * 0.9) + 1.2;
     fragTexCoord = inTexCoord;
 	time = ubo.time;
 	red = ubo.red;

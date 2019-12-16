@@ -14,6 +14,8 @@ typedef struct {
 	Uint32 _inuse;
 }Light;
 
+extern Uint32 g_gradient;
+
 void light_init(Uint32 max_lights);
 
 void close_lights();

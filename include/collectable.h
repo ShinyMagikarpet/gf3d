@@ -28,8 +28,6 @@ Entity* collectable_spawn(Vector3D position, cJSON* args);
 
 void free_collectable(Collectable* collectable);
 
-void free_collectable_all();
-
 int check_win_condition();
 
 #endif // !__COLLECTABLE_H__

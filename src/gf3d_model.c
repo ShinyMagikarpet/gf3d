@@ -241,27 +241,33 @@ void gf3d_model_update_uniform_buffer(Model* model, uint32_t currentImage, Matri
 	//if (timer >= 1.0) {
 	//	timer = 0;
 	//}
-
+	slog("%i", g_gradient);
 	if (red < 1.0 && green <= 0 && blue <= 0) {
-		red += COLOR_RATE;
+		red += COLOR_RATE * g_gradient;
 		green = 0;
 	}
 	else if (red > 0 && green < 1.0 && blue <= 0) {
-		red -= COLOR_RATE;
-		green += COLOR_RATE;
+		red -= COLOR_RATE * g_gradient;
+		green += COLOR_RATE * g_gradient;
 		blue = 0;
 	}
 	else if (green > 0 && blue < 1.0) {
-		green -= COLOR_RATE;
-		blue += COLOR_RATE;
+		green -= COLOR_RATE * g_gradient;
+		blue += COLOR_RATE * g_gradient;
 		red = 0;
 	}
 	else if (blue > 0) {
-		blue -= COLOR_RATE;
-		red += COLOR_RATE;
+		blue -= COLOR_RATE * g_gradient;
+		red += COLOR_RATE * g_gradient;
 		green = 0;
 	}
 	else {
+		red = 0;
+		green = 0;
+		blue = 0;
+	}
+
+	if (g_gradient == 0) {
 		red = 0;
 		green = 0;
 		blue = 0;

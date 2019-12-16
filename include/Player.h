@@ -12,6 +12,4 @@ Entity* player_spawn(Vector3D position, SJson* args);
 
 Entity* player_get();
 
-int player_lives_get();
-
 #endif // !__PLAYER_H__

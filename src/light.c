@@ -8,6 +8,8 @@ typedef struct {
 
 static LightManager light_manager = { 0 };
 
+g_gradient = 0;
+
 void close_lights() {
 	if (light_manager.light_list != NULL)
 	{
