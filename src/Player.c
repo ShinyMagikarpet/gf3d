@@ -12,6 +12,7 @@
 #define JUMP_HEIGHT 2.0
 static Entity* player = NULL;
 static Sprite* lives[3] = { 0 };
+static int player_lives = 3;
 void player_think(Entity* self);
 void player_update(Entity* self);
 void player_touch(Entity* self, Entity* other);
@@ -52,12 +53,13 @@ Entity* Player_New(Vector3D position) {
 	player->doubleJump = 0;
 
 	for (int i = 0; i < 3; i++) {
+		gf3d_sprite_free(lives[i]);
 		lives[i] = gf3d_sprite_load("images/The_Devil.png", 198, 201, 0.5, 1, 0, NULL);
 		lives[i]->texture->height *= 2;
 		lives[i]->texture->width *= 2;
 		vector2d_copy(lives[i]->position, vector2d(10 + 60 * i+1, 600));
 	}
-
+	player_lives = 3;
 	return player;
 }
 
@@ -75,6 +77,10 @@ Entity* player_spawn(Vector3D position, SJson* args) {
 
 Entity* player_get() {
 	return player;
+}
+
+int player_lives_get() {
+	return player_lives;
 }
 
 void player_think(Entity* self) {
@@ -219,7 +225,9 @@ void player_think(Entity* self) {
 		}
 	}
 	
-	if (gfc_input_key_pressed("r")) {
+	if (player->position.z < -20) {
+		lives[player_lives - 1]->_inuse = 0;
+		player_lives--;
 		player->position = player->startPosition;
 		player->shape.s.sp.point.pos = player->position;
 	}
@@ -302,6 +310,7 @@ void player_update(Entity* self) {
 				slog("Colliding with collectable %s", &collectable->color);
 				other->_inuse = 0;
 				collectable->sprite->_inuse = 0;
+				collectable->ent->_inuse = 0;
 				collectable->collected = 1;
 			}
 

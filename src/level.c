@@ -5,6 +5,7 @@
 #include "gf3d_config.h"
 #include "cJSON.h"
 #include "spawn.h"
+#include "collectable.h"
 
 
 
@@ -33,6 +34,7 @@ LevelInfo* level_info_new(){
 void level_clear(LevelInfo* linfo) {
 	free(linfo->spawnList);
 	free(linfo->transitionList);
+	free_collectable_all();
 	gf3d_entity_free_all_but_player();
 	//memset(linfo, 0, sizeof(LevelInfo));
 }

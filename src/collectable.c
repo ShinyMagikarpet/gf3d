@@ -151,7 +151,16 @@ void free_collectable(Collectable* collectable) {
 	if (!collectable) {
 		return;
 	}
-	free(collectable);
+	//free(collectable);
+	memset(collectable, 0, sizeof(Collectable));
+}
+
+void free_collectable_all() {
+	int i;
+	for (i = 0; i < collectable_manager.collectable_size; i++) {
+		free_collectable(&collectable_manager.collectable_list[i]);
+	}
+	collectable_manager.spawnCount = 0;
 }
 
 int check_win_condition() {
